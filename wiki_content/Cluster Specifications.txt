@@ -1,0 +1,151 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1289486353
+TITLE: Cluster Specifications
+
+Table of Contents:
+1
+ 
+CPU and GPU Specifications
+1.1
+ 
+CPU Nodes
+1.2
+ 
+GPU Nodes
+2
+ 
+Operating System
+3
+ 
+Networking Connections
+4
+ 
+Related Pages
+5
+ 
+Back to Main Page
+Related Articles:
+
+
+Node Schematics
+Load Balancing on the Login Nodes
+CPU and GPU Specifications
+There are 145 nodes in the chip cluster divided into partitions. Please refer to this page for more information on the partitions: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1249509377
+ 
+CPU Nodes
+49 nodes purchased in 2018 that each have 2x 18-core Intel(R) Xeon(R) Gold 6140 CPU @ 2.30GHz (Skylake) with 376 GB of CPU memory and 72GB of local storage;
+18 nodes purchased in 2021 that each have 2x 24-core Intel(R) Xeon(R) Gold 6240R CPU @ 2.40GHz (Cascade Lake) with 187 GB of CPU memory and 396GB of local storage; 
+13 nodes purchased in 2024 that each have 2x 32-core Intel(R) Xeon(R) Gold 6548Y+ (Emerald Rapids) with 1024 GB of CPU memory and 1.8TB of local storage;
+38 nodes purchased in 2024 that each have 2x 32-core Intel(R) Xeon(R) Gold 6548Y+ (Emerald Rapids) with 512 GB of CPU memory and 1.8TB of local storage.
+CPU Node Schematics: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1333821495/Node+Schematics#CPU-Node-Schematics
+ 
+GPU Nodes
+The following nodes have a different number of GPUs due to hardware issues
+RTX 2080 TI 
+g20-02 - 5x RTX 2080 TI 
+g20-04 - 4x RTX 2080 TI
+RTX 8000
+g20-12 - 6x RTX 8000
+4 nodes purchased in 2020, with 2x 24-core Intel(R) Xeon(R) Gold 6240R CPU @ 2.40GHz (Cascade Lake) with 384 GB of CPU memory, 8x RTX 2080Ti GPU cards each with 11 GB of GPU memory, and 1.9TB;
+7 nodes purchased in 2020, with 2x 24-core Intel(R) Xeon(R) Gold 6240R CPU @ 2.40GHz (Cascade Lake) with 384 GB of CPU memory, 8x RTX 6000 GPU cards each with 24 GB of GPU memory, and 1.9TB;
+2 nodes purchased in 2020, with 2x 24-core Intel(R) Xeon(R) Gold 6240R CPU @ 2.40GHz (Cascade Lake) with 768 GB of CPU memory, 8x RTX 8000 GPU cards each with 48 GB of GPU memory, and 1.9TB;
+2 nodes purchased in 2024, with 2x 16-core Intel(R) Xeon(R) Gold 6548Y+ (Emerald Rapids) with 256 GB of CPU memory, 2x H100 GPU cards each with 100 GB of GPU memory and NVLink between them, and 7TB of local storage; 
+10 nodes purchased in 2024, with 2x 16-core Intel(R) Xeon(R) Gold 6548Y+ (Emerald Rapids) with 256 GB of CPU memory, 4x L40S GPU cards each with 48 GB of GPU memory, and 7TB of local storage.
+GPU Node Schematics: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1333821495/Node+Schematics#GPU-Node-Schematics
+ 
+ 
+This information is summarized in the table below:
+Year Purchased
+CPU Cores
+CPU Mem
+GPU Cards
+GPU Mem/Card
+Scratch Space
+Number
+CPU Arch
+2018
+36
+376 GB
+0
+N/A
+69G
+49
+Intel Skylake
+2020
+48
+384 GB
+8 (RTX 2080Ti)
+11 GB
+1.9T
+4
+Intel Cascade Lake
+2020
+48
+384 GB
+8 (RTX 6000)
+24 GB
+1.9T
+7
+Intel Cascade Lake
+2020
+48
+768 GB
+8 (RTX 8000)
+48 GB
+1.9T
+2
+Intel Cascade Lake
+2021
+48
+187 GB
+0
+N/A
+397G
+18
+Intel Cascade Lake
+2024
+64
+1024 GB
+0
+N/A
+1.8T
+13
+Intel Emerald Rapids
+2024
+64
+512 GB
+0
+N/A
+1.8T
+38
+Intel Emerald Rapids
+2024
+32
+256 GB
+2 (H100)
+100GB
+7.0T
+2
+Intel Emerald Rapids
+2024
+32
+256 GB
+4 (L40S)
+48GB
+7.0T
+10
+Intel Emerald Rapids
+Operating System
+All nodes are running the RHEL 9.5.
+Networking Connections
+The CPU cluster nodes are all connected to each other and 
+enterprise storage
+ by a high speed backend Infiniband network supporting 100 Gbps. The GPU cluster nodes are all connected to each other and 
+enterprise storage
+ by a high speed backend Ethernet network supporting 10 Gbps.
+Related Pages
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1249509377
+ 
+Back to Main Page

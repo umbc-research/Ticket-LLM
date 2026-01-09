@@ -1,0 +1,11 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1134264329
+TITLE: How do I run an interactive job?
+
+First, start by deciding if you’ll be running on GPUs or not, and then running the slurm command associated with that cluster. For instance, a user who does not need GPU access would run the following command.
+Command: For CPU
+srun --cluster=chip-cpu --account=pi_doit --partition=general --qos=normal --time=1:00:00 --mem=5000 --pty $SHELL
+If you need GPU access, run the following Command:
+srun --cluster=chip-gpu --account=pi_doit --mem=5000 --time=1:00:00 --gres=gpu:1 --pty $SHELL
+ The important part of this is the “--pty $SHELL” which tells Slurm to enter the user into an interactive shell. Here’s an example of what it might look like when you run it:
+[regularUser1@chip ~]$ srun --cluster=chip-gpu --account=pi_doit --mem=5000 --time=1:00:00 --gres=gpu:1 --pty $SHELL
+ 

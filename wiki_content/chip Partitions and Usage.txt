@@ -1,0 +1,282 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1249509377
+TITLE: chip Partitions and Usage
+
+Contents of this Page
+1
+ 
+chip-cpu Cluster
+1.1
+ 
+Usage Requirements
+1.2
+ 
+Partitions
+1.3
+ 
+Preemption
+1.4
+ 
+Usage Examples
+2
+ 
+chip-gpu Cluster
+2.1
+ 
+Usage Requirements
+2.2
+ 
+Partitions
+2.3
+ 
+Preemption
+2.4
+ 
+Usage Examples
+The chip cluster consists of two main clusters: 
+chip-cpu
+ and 
+chip-gpu
+, each with specific partitions and usage requirements. Each cluster is segmented into several partitions, each serving different access needs and user privileges. The partitions ensure equitable distribution and specialized access based on contribution and general availability.
+chip-cpu Cluster
+Open 
+Schematic of hardware partitions defined in 
+chip-cpu
+.
+Usage Requirements
+All jobs on 
+chip-cpu
+ must specify the following for Slurm allocations
+Cluster
+: The Slurm cluster to request allocations from (chip-cpu) (
+--cluster=chip-cpu
+)
+Account
+: Your research group (
+--account
+)
+Time
+: Estimated job duration in minutes (
+--time
+)
+Memory
+: Estimated memory usage in MB (
+--mem
+)
+Partitions
+contrib
+
+├── 2024 (Contributors only)
+
+│   ├── match (No preemption)
+
+│   ├── piA (Preemptable by piA users)
+
+│   ├── piB (Preemptable by piB users)
+
+│   └── piC (Preemptable by piC users)
+
+general (Everyone, no preemption)
+
+├── 2021
+
+└── 2018
+Partition Types
+1. 
+General Partition
+ (
+general
+)
+Open to all users
+No preemption risk
+Includes former taki hardware (
+cpu2021
+ and 
+high_mem
+ nodes)
+2. 
+Faculty-Specific Partitions
+ (
+pi_<umbcAccountName>
+)
+Reserved for specific faculty and their students
+Highest priority for partition owners
+Named pattern: 
+pi_umbcAccountName
+3. 
+Match Partition
+ (
+match
+)
+Contributors only
+No preemption between PI groups
+Resource limits prevent monopolization
+4. 
+Contributor Partition
+ (
+contrib
+)
+Contributors only
+Includes all contributor and DoIT nodes
+Jobs may be preempted by partition owners with “grace” period of 600s (=10min)
+Resource limits prevent monopolization
+Preemption
+On chip-cpu, contributing groups are able to access the contrib partition (as discussed above). Every contributor also has a hardware partition named after the contributing group (e.g., 
+pi_doit
+ has the 
+pi_doit
+ partition). Any contributor may run on any machine within the 
+contrib
+ partition. A job running on hardware dedicated to a specific contributor (e.g., 
+pi_doit
+) may be preempted (meaning that the job is cancelled in our case) by a member of that contributor’s group. Once a job is selected for preemption by Slurm, the job has 10 minutes to run before Slurm sends the signal to interrupt the job.
+Usage Examples
+Everyone can run
+# On general partition
+
+srun --cluster=chip-cpu --partition=general --account=pi_Z --qos=short --time=${time} --mem=${memory} --pty $SHELL
+
+
+
+# On 2021 partition
+
+srun --cluster=chip-cpu --partition=2021 --account=pi_Z --qos=short --time=${time} --mem=${memory} --pty $SHELL
+
+
+
+# On 2018 partition
+
+srun --cluster=chip-cpu --partition=2018 --account=pi_Z --qos=short --time=${time} --mem=${memory} --pty $SHELL
+Contributors can run
+# On their contributed nodes
+
+srun --cluster=chip-cpu --partition=piA --account=pi_A --qos=pi_A --time=${time} --mem=${memory} --pty $SHELL
+
+
+
+# Across entire 2024 partition (preemption risk)
+
+srun --cluster=chip-cpu --partition=2024 --account=pi_A --qos=shared --time=${time} --mem=${memory} --pty $SHELL
+
+
+
+# On match partition
+
+srun --cluster=chip-cpu --partition=match --account=pi_A --qos=shared --time=${time} --mem=${memory} --pty $SHELL
+chip-gpu Cluster
+Open 
+Schematic of hardware partitions defined in 
+chip-gpu
+.
+gpu
+
+├── Faculty-Contributed Partitions
+
+│   ├── pi_A (Preemptable by pi_A users)
+
+│   ├── pi_B (Preemptable by pi_B users)
+
+│   ├── pi_C (Preemptable by pi_C users)
+
+│   ├── pi_D (Preemptable by pi_D users)
+
+│   ├── pi_E (Preemptable by pi_E users)
+
+│   └── pi_F (Preemptable by pi_F users)
+
+└── General (Everyone, no preemption, except after 3 days running the same job)
+
+    └── Default GPU Partition
+Usage Requirements
+All jobs on the 
+chip-gpu
+ cluster must specify:
+Cluster
+: The Slurm cluster to request allocations from (chip-gpu) (
+--cluster=chip-gpu
+)
+Time
+: Estimated job duration in minutes (
+--time
+)
+GRES
+: Generic Resources (GPUs) to be allocated (
+--gres=gpu:$numberOfGPUs
+)
+Memory
+: Estimated memory usage in MB (
+--mem
+)
+Further, for those users attempting to charge PI-specific partitions, the following are also required:
+Account
+: Your research group (
+--account
+)
+Partition
+: Your research group (
+--partition
+)
+Partitions
+Partition Types
+ Default Partition (
+gpu
+)
+Open to all users
+If no partition is specified with 
+--partition
+, this is the partition the allocation is charged to
+Includes all nodes
+Jobs can be preempted after 3 days
+Preemption “grace” period of 600 seconds (=10 minutes)
+General Partition (safe from contributor preemption) (
+gpu-general
+)
+Open to all users
+Includes all nodes purchased with shared funds (NSF MRI/DoIT)
+Jobs can be preempted after 3 days
+Preemption “grace” period of 600 seconds (=10 minutes) 
+General Partition (
+gpu-contrib
+)
+Cannot be used for jobs by any users, only available for viewing the list of preemptible nodes
+Includes all faculty nodes on the GPU cluster (pi_X’s in the graphic)
+Faculty-Specific Partitions(e.g, 
+pi_doit
+)
+Contributors only
+Includes only the faculty-specific node(s)
+Jobs may be preempted by partition owners with GraceTime of 600s (=10min)
+Preemption
+On chip-gpu, every contributor also has a hardware partition named after the contributing group (e.g., 
+pi_doit
+ has the 
+pi_doit
+ partition). Any user may run jobs on these machines via the 
+gpu
+ partition, a job running on hardware dedicated to a specific contributor (e.g., 
+pi_doit
+) may be preempted (meaning that the job is cancelled in our case) by a member of that contributor’s group. Once a job is selected for preemption by Slurm, the job has 10 minutes to run before Slurm sends the signal to interrupt the job. Users wishing to avoid this contributor preemption may charge the 
+gpu-general
+ partition (discussed above).
+Usage Examples
+Everyone Can Run
+# Sample Job Granting a Short (5 minute) Interactive Session
+
+srun --cluster=chip-gpu --time=5 --gres=gpu:1 --mem=500 --pty $SHELL
+
+
+
+# Sample Job Querying NVIDIA-SMI
+
+srun --cluster=chip-gpu --time=5 --gres=gpu:1 --mem=500 nvidia-smi
+Contributor Can Run
+# Faculty-specific partition sample Job Granting a Short (5 minute) Interactive Session
+
+srun --cluster=chip-gpu --time=5 --gres=gpu:1 --mem=500 --account=pi_A --partition=pi_A --pty $SHELL
+
+# Faculty-specific partition sample Job Querying NVIDIA-SMI
+
+srun --cluster=chip-gpu --time=5 --gres=gpu:1 --mem=500 --account=pi_A --partition=pi_A nvidia-smi
+Since the change in the Slurm model governing chip-gpu, contributor reservations are no longer supported.
+For more information on how chip-gpu cluster contributors can access their specific GPU Hardware partitions, see THIS PAGE. 
+Add Page - Accessing PI GPU Partitions - Find Help (FAQs) - Confluence
+ 

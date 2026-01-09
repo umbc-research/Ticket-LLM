@@ -1,0 +1,162 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1219461147/Connecting
+TITLE: Connecting
+
+ 
+Table of Contents
+1
+ 
+Overview
+1.1
+ 
+Requesting a User Account on chip
+1.1.1
+ 
+How to Request an Account
+1.1.2
+ 
+Information Needed for Request
+1.2
+ 
+Accessing the chip Cluster
+1.2.1
+ 
+Structure
+1.3
+ 
+Concurrent SSH Connections
+1.3.1
+ 
+Login Node Resource Limit
+1.3.2
+ 
+VSCode Server Connections
+1.4
+ 
+Related Resources
+1.5
+ 
+Back to Main Page
+Related Articles
+File Transfer To and From chip
+Preview
+ 
+Accessing GUI Applications on Chip Using X11 Forwarding
+Preview
+ 
+User Environment
+Preview
+ 
+How can I avoid duo when logging into Chip?
+Preview
+ 
+How to request a user/group account on chip
+Preview
+ 
+How to check research volume usage on chip?
+Preview
+ 
+Removing Users from Chip
+Preview
+ 
+Overview
+This page serves as a comprehensive guide for users to understand how to access the 
+chip
+ cluster, what credentials are required, and what to expect in their initial environment. The 
+chip
+ cluster is the sole High Performance Computing Facility (HPCF) at UMBC as of April 2025.
+Requesting a User Account on chip
+To access the 
+chip
+ cluster, every user account must be part of a group affiliated with a lab, course, or special project. These cluster groups can only be requested by faculty or staff.
+How to Request an Account
+If you have not logged in to 
+chip
+ before, you must request an account by 
+creating a ticket
+ (Research Computing Action: High Performance Cluster, HPC Action: User Account Creation/Modification).
+ 
+Detailed instructions can be found here: 
+How to Request a Chip Account
+.
+Information Needed for Request
+For New Groups (Faculty/Staff)
+You will need to indicate if the group is for a class or a research lab. For classes, provide the class name; for research, provide a project title and abstract. The requester is automatically provisioned as a user within the new group.
+To Join an Existing Group (Students)
+Select "High Performance Computing" under "Research Computing Action" and "User Account Creation/Modification" under "HPC Action". You will need to provide your PI's UMBC email (the group owner), the project title, project abstract, and relevant fields of research.
+Approval Process
+ 
+Your request ticket is sent to DoIT staff and awaits approval from the group owner. Once approved, your 
+chip
+ account should be created within three business days.
+Note:
+ If you previously had access to the 
+taki
+ or 
+ada
+ clusters, you likely already have an account on 
+chip.
+Accessing the chip Cluster
+Click here for information on how to access Chip from your computer: 
+Accessing Chip
+ 
+To check your home directory usage: 
+How to check home directory usage
+ 
+HPCF Research Volumes (/umbc/rs/$GROUP)
+In addition to your home directory, 
+chip
+ provides 
+research volumes with significant storage space
+, typically starting at 250GB or 1TB for new groups.
+All users within a PI's group have access to these volumes.
+These volumes are where you should store the majority of your data and projects.
+Structure
+For more information on how the User Environment is set up: 
+User Environment
+ 
+Concurrent SSH Connections
+Users can establish 
+concurrent SSH connections
+ to 
+chip
+ from multiple terminals or command prompts.
+Login Node Resource Limit
+The cumulative hardware resources (core usage, memory) consumed by your SSH sessions on the login node must remain 
+below 2 GiB.
+VSCode Server Connections
+Running multiple instances of VSCode server connections can cause issues, and system administrators may kill these instances as needed.
+Related Resources
+For more in-depth guidance on using the 
+chip
+ cluster, please refer to the following helpful pages and tutorials:
+Getting Started on chip
+Preview
+ 
+Basic Slurm Commands
+Preview
+ 
+How to Compile on chip
+Preview
+ 
+How to Run on chip
+Preview
+ 
+Quick Run Guide: How to run things on chip, with/without parallelism, with different compilers, etc.
+Preview
+ 
+How to Edit Code on chip
+Preview
+  (including Emacs, Nano, Vim, VSCode)
+Available Software and Packages
+Preview
+ 
+How to use modules
+Preview
+ 
+Storage
+Preview
+  (including home directories, research volumes, and scratch space)
+ 
+Back to Main Page
+ 
+ 

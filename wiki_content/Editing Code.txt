@@ -1,0 +1,37 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1218871343
+TITLE: Editing Code
+
+Table of Contents:
+1
+ 
+Popular Text Editors
+1.1
+ 
+VSCode
+2
+ 
+Back to Main Page
+Related Articles:
+
+
+How to Edit Code on chip
+There are several code editors one can use to write and modify code on chip, such as emacs, nano, vim, or VSCode, or even quick Bash commands. 
+Popular Text Editors
+For command line interface (CLI), emacs, nano, and vim and the most popular text editors. Chip supports usage of all three through the terminal/command prompt.
+For more information, navigate to the following links:
+Emacs
+How to use Emacs on chip
+ 
+Nano
+How to use Nano on chip
+ 
+Vim
+How to use Vim on chip
+ 
+VSCode
+Visual Studio Code can also be configured to work with chip and be used a text editor. For a walk-through, refer to this tutorial: 
+https://umbc.atlassian.net/wiki/x/CoAOR
+ 
+Back to Main Page
+ 
+ 

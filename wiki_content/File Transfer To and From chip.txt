@@ -1,0 +1,163 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1161756678
+TITLE: File Transfer To and From chip
+
+This page introduces users to different methods of transferring files to and from the chip cluster.
+Table of Contents
+1
+ 
+Table of Contents
+2
+ 
+Command Line Users: scp
+2.1
+ 
+scp: File transfer to chip
+2.2
+ 
+scp: File transfer from chip
+3
+ 
+Command Line Users: rsync
+3.1
+ 
+rsync: File transfer to chip
+3.2
+ 
+rsync: File transfer from chip
+4
+ 
+Command Line Users: Midnight Commander
+4.1
+ 
+Connecting to chip
+4.2
+ 
+Transferring Files
+5
+ 
+Graphical User Interface Software (Windows): WinSCP 
+5.1
+ 
+Connecting to chip
+5.2
+ 
+Transferring Files
+Command Line Users: scp
+A basic command available on most Unix (Linux, Mac, etc.) machines and some other operating systems. For more information on this command, run “man scp” on your terminal to see the manual page.
+scp: File transfer to chip
+Ensure you have your account set up and access configured as detailed in 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439
+. At that point you can transfer files directly to chip, such as code, data sets, etc. directly from your terminal window.
+Open a terminal and run the following:
+$ scp /my/file.txt userid@chip.rs.umbc.edu:/target/directory
+You will then be prompted for your password in the way as when accessing via ssh.
+If you are not on campus wifi or the VPN, you may be prompted for a Duo login.
+For more information on UMBC’s VPN: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/30754220
+For more information on UMBC’s Duo login: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/30743265
+You will need to repeat these steps for every scp command you issue.
+scp: File transfer from chip
+The process to retrieve files from chip is very similar. Run the following:
+$ scp userid@chip.rs.umbc.edu:/target/file .
+You will be prompted for your password and Duo login as above. The " . " will place the file in your current working directory; you may specify a /target/location instead.
+Command Line Users: rsync
+A more robust alternative to scp is rsync, as if there is a network issue you can still finish your file transfer. For more information on this command, run “man rsync” on your terminal to see the manual page.
+rsync: File transfer to chip
+Ensure you have your account set up and access configured as detailed in 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439
+. At that point you can transfer files directly to chip, such as code, data sets, etc. directly from your terminal window.
+Open a terminal and run the following:
+$ rsync -av --progress --partial /my/file.txt userid@chip.rs.umbc.edu:"/target/directory"
+You will then be prompted for your password in the way as when accessing via ssh.
+If you are not on campus wifi or the VPN, you may be prompted for a Duo login.
+For more information on UMBC’s VPN: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/30754220
+For more information on UMBC’s Duo login: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/30743265
+You will need to repeat these steps for every rsync command you issue.
+If the file transfer fails and --partial is set, the target file will be named as the actual file name (i.e. FileYouAreSending.txt), even though the file is not complete. You can later complete the transfer by running rsync again with either --append or --append-verify:
+$ rsync -av --progress --append /my/file.txt userid@chip.rs.umbc.edu:"/target/directory"
+rsync: File transfer from chip
+The process to retrieve files from chip is very similar. Run the following:
+$ rsync -av --progress --partial userid@chip.rs.umbc.edu:"/target/file" .
+You will be prompted for your password (and Duo login if not on campus or VPN) as above. The " . " will place the file in your current working directory; you may specify a /target/location instead.
+If the file transfer fails and --partial is set, the target file will be named as the actual file name (i.e. FileYouAreSending.txt), even though the file is not complete. You can later complete the transfer by running rsync again with either --append or --append-verify:
+$ rsync -av --progress --append /my/file.txt userid@chip.rs.umbc.edu:"/target/directory"
+Command Line Users: Midnight Commander
+GNU Midnight Commander (or 
+mc
+) is a visual, dual-pane file manager. It is released under the GNU General Public License and therefore qualifies as Free Software. For more information and instructions on how to install and use the program, see the Midnight Commander Website: 
+Midnight Commander
+. Even though it is a terminal utility, it has the advantage of using the mouse to navigate the program.
+Connecting to chip
+To connect to chip, first make sure you are in the directory on your workstation from which you want to transfer files to/from chip. After that start Midnight commander by typing 
+mc
+. You should get a window similar to the one below (the color scheme may be different):
+Open 
+This will show a list of files on the left-hand and right-hand sides (LHS/RHS). At the moment they will both be the current working directory, i.e., the directory you were in when you started Midnight Commander. Using your mouse or the 
+F9 
+key followed by the “
+R
+” key, open the dropdown menu 
+Right >> Shell
+ Link as shown below:
+Open 
+ 
+In the box that appears enter 
+sh://userid@chip.rs.umbc.edu:/target/directory
+ where “/target/directory” is the path on chip which Midnight Commander will open in the right pane. This is very similar to the command issued when SSHing into chip. 
+Open 
+You will then be prompted for your password in the way as when accessing via ssh.
+If you are not on campus wifi or the VPN, you may be prompted for a Duo login.
+For more information on UMBC’s VPN: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/30754220
+For more information on UMBC’s Duo login: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/30743265
+Transferring Files
+You can navigate through folders using your keys or mouse (Press 
+F1 
+to access documentation within Midnight Commander) and use the 
+Tab
+ key to switch between the left and right panes. In this example if you are in the left pane, you will transfer from your workstation to chip, and if you are in the right pane you will transfer from chip to your workstation. To transfer a file or folder, highlight it (see below) in the left/right pane, then press 
+F5
+ to copy the file or 
+F6
+ to move (you will transfer data to the opposite pane). You will be prompted with a dialog box (see below). If you are happy with the options click “OK”. The transfer will then begin. To delete a file press 
+F8
+ and to make a new directory press 
+F7
+. When you have finished press 
+F10
+ to quit out of Midnight Commander. 
+Open 
+Highlight a file on the LHS to move/copy, then press 
+F5
+ to copy or 
+F6
+ to move.
+Open 
+Copy dialog box.
+ 
+Graphical User Interface Software (Windows): WinSCP 
+WinSCP is a freeware SCP, SFTP, and FTP client for Microsoft Windows and works similarly to Midnight Commander, but through a graphical user interface (GUI) in Windows. For more information and instructions on how to download, install, and use the program, see the WinSCP Website: 
+WinSCP
+.
+Connecting to chip
+To connect to chip, you will need to configure a new session using the “Login” dialog. This will appear automatically when you start the program or can be invoked by clicking on the “New Tab” button. You will need to enter the information for the connection as shown below:
+Open 
+WinSCP login dialog box.
+ 
+You will need to replace “userid” with your UMBC username. Do 
+not 
+enter a password and click on the “Save” button. You will be prompted to give the connection a name. The default will be something like “userid@chip.rs.umbc.edu“. This will save the connection for future use in the white box on the left hand side of the login dialog box. When you ready select the connection and press “Login”.
+You will be prompted for your password. If you are not on campus wifi or the VPN, you may be prompted for a Duo login.
+For more information on UMBC’s VPN: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/30754220
+For more information on UMBC’s Duo login: 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/30743265
+Transferring Files
+Similar to Midnight Commander, the interface is split in two panels with your local files on the left hand side and the chip folder on the right hand side. Navigate to the desired location on both the local and remote panels. To make a transfer to chip, select the files folders on the left hand side in the local panel, then press the “Upload” button just above the panel. This will upload your selection to the the remote folder you have open on chip in the remote panel. To download simply select files in the remote panel and then press the “Download” button. This will download your selection from chip to the local folder you have open on your computer in the left hand panel.
+Open 
+Example WinSCP session on chip. The left hand side shows the local files/folders and the right hand side show the files/folders on chip.
+ 

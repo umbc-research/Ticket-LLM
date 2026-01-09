@@ -1,0 +1,583 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1032880207/Available+Software+and+Packages
+TITLE: Available Software and Packages
+
+Table of Contents:
+1.1
+ 
+Available Modules and Versions
+2
+ 
+Modules
+2.1
+ 
+More Modules and Available Versions
+2.2
+ 
+All User Modules Grouped By Functionality:
+2.2.1
+ 
+Core & Custom Modules:
+2.2.2
+ 
+For use on 2018 & 2021 Machines:
+3
+ 
+Python Virtual Environments
+4
+ 
+Back to Main Page
+Related Articles:
+
+
+What is the chip module system?
+Using Python on chip
+Jupyter Notebooks
+How to use modules
+Gaussian 16
+Running an LLM using Ollama on chip
+Here's a simplified 
+table of unique available modules
+ and their 
+available versions
+, sorted alphabetically by module name. For each module, only the module name appears once, with a list of all available versions (if applicable). Repeating versions (e.g. Python 3.9.5, 3.9.6, etc.) are collapsed under the module name.
+Available Modules and Versions
+Module Name
+Versions (if applicable)
+Module Name
+Versions (if applicable)
+Anaconda
+2/2019.10, 3/2024.02-1
+Apptainer
+1.3.5, 1.4.0-rc.2
+Bison
+3.0.5, 3.3.2, 3.5.3, 3.7.1, 3.7.6, 3.8.2
+Boost
+1.77.0, 1.79.0
+CMake
+3.17.0, 3.18.4, 3.20.1, 3.21.1 to 3.29.3
+EasyBuild
+4.9.4
+FFTW
+3.3.10 (multiple toolchains)
+GCC/GCCcore
+9.3.0, 10.2.0, 10.3.0, 11.2.0, 11.3.0, 12.2.0, 12.3.0, 13.2.0, 13.3.0
+HDF5
+1.10.7, 1.12.1, 1.14.0, 1.14.3
+Intel Compilers
+2021.2.0, 2021.4.0, 2022.1.0, 2023.1.0, 2024.2.0
+Intel MKL (imkl)
+2021.2.0 to 2024.2.0
+Java
+11, 17, 21
+Julia
+1.7.3, 1.8.2, 1.9.3, 1.10.4
+LLVM
+11.1.0, 12.0.1, 16.0.6
+LibTIFF
+4.2.0, 4.3.0, 4.5.0
+Libxml2
+2.9.10, 2.9.13, 2.10.3, 2.11.x, 2.12.7
+Lua
+5.4.6
+Luajit
+—
+MATLAB
+2023b
+MPFR
+4.1.0
+MPI libraries
+OpenMPI, MPICH, MVAPICH2 (multiple versions)
+Node.js
+14.17.6, 18.17.1, 22.14.0
+OpenBLAS
+Dynamic/0.3.18
+OpenLDAP
+—
+OpenMPI
+4.1.5 (several toolchains and variants)
+Perl
+5.32.0 to 5.38.2
+Python
+3.9.5, 3.9.6, 3.10.4, 3.10.8, 3.11.3, 3.11.5, 3.12.3, 3.12.4
+Python Bundle PYPi
+2023.06, 2023.10
+Python-YAML
+5.4.1, 6.0.1
+Qt5
+5.15.10
+R
+4.2.0
+ROOT
+6.24.06
+Ruby
+3.0.1
+Rust
+1.52.1 to 1.79.0
+ScaLAPACK
+2.1.0, 2.2.0
+SLURM
+23.11.4
+SQLite
+3.35.4 to 3.45.3
+This is not an exhaustive listing of all modules (since there are hundreds like 
+lib*
+, 
+gettext
+, 
+lz*
+, etc.), just a highlight of major tools and environments commonly loaded in HPC, in scientific computing environments.
+You can check available modules in home directory typing “module avail” it will show available module at chip.
+[user1@chip ~]$ module avail
+
+------------------------------------------------------------------- Core & Custom Modules -------------------------------------------------------------------
+
+   CMake/3.17.0                           cmjob                                  intel-tbb-oss/ia32/2021.4.0       ollama/0.6.5
+
+   DefaultModules                  (L)    default-environment                    intel-tbb-oss/intel64/2021.4.0    openblas/dynamic/0.3.18
+
+   EasyBuild/4.9.4                        dot                                    iozone/3_492                      openldap
+
+   abinit/10.0.7                          ds9/8.6                                ipmitool/1.8.18                   openmpi/gcc/64/4.1.5
+
+   apptainer/1.3.5                        fftw3/openmpi/gcc/64/3.3.10            lapack/gcc/64/3.10.0              openmpi/mlnx/gcc/64/4.1.5a1
+
+   apptainer/1.4.0-rc.2            (D)    freeipmi/1.6.8                         lua/5.4.6                         openmpi4/gcc/4.1.5
+
+   blacs/openmpi/gcc/64/1.1patch03        gcc/11.2.0                             luajit                            python/3.12.4
+
+   blas/gcc/64/3.10.0                     gcc10/10.4.0                           mariadb-libs                      python3
+
+   bonnie++/2.00a                         gdb/10.2                               module-git                        python39
+
+   boost/1.77.0                           git/2.33.1                      (L)    module-info                       shared                      (L)
+
+   cluster-tools-dell/9.2                 globalarrays/openmpi/gcc/64/5.8        mpich/ge/gcc/64/3.4.2             shared
+
+   cluster-tools/9.2                      hdf5/1.12.1                            mvapich2/gcc/64/2.3.7             slurm/chip-gpu/23.11.4      (L)
+
+   cm-bios-tools                          hdf5_18/1.8.21                         netcdf/gcc/64/gcc/64/4.8.1        texLive/2025
+
+   cm-pmix3/3.1.7                         hpc_tools/hpc_tools                    netperf/2.7.0                     ucx/1.14.1
+
+   cm-pmix4/4.1.3                         hwloc/1.11.11                          nodejs/22.14.0                    wcstools/3.9.7
+
+   cmd                                    hwloc2/2.7.1                           null
+
+-------------------------------------------------------------- For use on 2018 & 2021 Machines --------------------------------------------------------------
+
+   ATK/2.36.0-GCCcore-11.2.0                                Perl/5.32.0-GCCcore-10.2.0                       imkl/2021.2.0-gompi-2021a
+
+   Anaconda2/2019.10                                        Perl/5.32.1-GCCcore-10.3.0-minimal               imkl/2021.2.0-iimpi-2021a
+
+   Anaconda3/2024.02-1                                      Perl/5.32.1-GCCcore-10.3.0                       imkl/2021.4.0
+
+   Autoconf/2.69-GCCcore-9.3.0                              Perl/5.34.0-GCCcore-11.2.0-minimal               imkl/2022.1.0
+
+   Autoconf/2.69-GCCcore-10.2.0                             Perl/5.34.0-GCCcore-11.2.0                       imkl/2022.2.1
+
+   Autoconf/2.71-GCCcore-10.3.0                             Perl/5.34.1-GCCcore-11.3.0                       imkl/2023.1.0
+
+   Autoconf/2.71-GCCcore-11.2.0                             Perl/5.36.0-GCCcore-12.2.0                       imkl/2023.2.0
+
+   Autoconf/2.71-GCCcore-11.3.0                             Perl/5.36.1-GCCcore-12.3.0                       imkl/2024.2.0                           (D)
+
+   Autoconf/2.71-GCCcore-12.2.0                             Perl/5.38.0-GCCcore-13.2.0                       impi/2021.2.0-intel-compilers-2021.2.0
+
+   Autoconf/2.71-GCCcore-12.3.0                             Perl/5.38.0                                      impi/2021.9.0-intel-compilers-2023.1.0
+
+   Autoconf/2.71-GCCcore-13.2.0                             Perl/5.38.2-GCCcore-13.3.0                (D)    impi/2021.13.0-intel-compilers-2024.2.0 (D)
+
+   Autoconf/2.71                                            Pillow/8.3.2-GCCcore-11.2.0                      intel-compilers/2021.2.0
+
+   Autoconf/2.72-GCCcore-13.3.0                   (D)       PyYAML/5.4.1-GCCcore-11.2.0                      intel-compilers/2021.4.0
+
+   Automake/1.16.1-GCCcore-9.3.0                            PyYAML/6.0.1-GCCcore-13.2.0               (D)    intel-compilers/2022.1.0
+
+   Automake/1.16.2-GCCcore-10.2.0                           Python-bundle-PyPI/2023.06-GCCcore-12.3.0        intel-compilers/2023.1.0
+
+   Automake/1.16.3-GCCcore-10.3.0                           Python-bundle-PyPI/2023.10-GCCcore-13.2.0 (D)    intel-compilers/2024.2.0                (D)
+
+   Automake/1.16.4-GCCcore-11.2.0                           Python/3.9.5-GCCcore-10.3.0-bare                 intel/2021a
+
+   Automake/1.16.5-GCCcore-11.3.0                           Python/3.9.5-GCCcore-10.3.0                      intel/2023a
+
+   Automake/1.16.5-GCCcore-12.2.0                           Python/3.9.6-GCCcore-11.2.0-bare                 intel/2024a                             (D)
+
+   Automake/1.16.5-GCCcore-12.3.0                           Python/3.9.6-GCCcore-11.2.0                      intltool/0.51.0-GCCcore-10.3.0
+
+   Automake/1.16.5-GCCcore-13.2.0                           Python/3.10.4-GCCcore-11.3.0-bare                intltool/0.51.0-GCCcore-11.2.0
+
+   Automake/1.16.5-GCCcore-13.3.0                           Python/3.10.8-GCCcore-12.2.0-bare                intltool/0.51.0-GCCcore-12.3.0
+
+   Automake/1.16.5                                (D)       Python/3.10.8-GCCcore-12.2.0                     intltool/0.51.0-GCCcore-13.3.0          (D)
+
+   Autotools/20180311-GCCcore-9.3.0                         Python/3.11.3-GCCcore-12.3.0                     jbigkit/2.1-GCCcore-10.3.0
+
+   Autotools/20200321-GCCcore-10.2.0                        Python/3.11.5-GCCcore-13.2.0                     jbigkit/2.1-GCCcore-11.2.0
+
+   Autotools/20210128-GCCcore-10.3.0                        Python/3.12.3-GCCcore-13.3.0              (D)    jbigkit/2.1-GCCcore-11.3.0
+
+   Autotools/20210726-GCCcore-11.2.0                        Qt5/5.15.10-GCCcore-12.3.0                       jbigkit/2.1-GCCcore-12.3.0              (D)
+
+   Autotools/20220317-GCCcore-11.3.0                        QuantumESPRESSO/7.3.1-intel-2023a                jemalloc/5.2.1-GCCcore-11.2.0
+
+   Autotools/20220317-GCCcore-12.2.0                        R/4.2.0-foss-2021b                               libGLU/9.0.1-GCCcore-10.3.0
+
+   Autotools/20220317-GCCcore-12.3.0                        ROOT/6.24.06-foss-2021b                          libGLU/9.0.2-GCCcore-11.2.0
+
+   Autotools/20220317-GCCcore-13.2.0                        Ruby/3.0.1-GCCcore-11.2.0                        libGLU/9.0.3-GCCcore-12.3.0             (D)
+
+   Autotools/20220317                                       Rust/1.52.1-GCCcore-10.3.0                       libarchive/3.4.3-GCCcore-10.2.0
+
+   Autotools/20231222-GCCcore-13.3.0              (D)       Rust/1.54.0-GCCcore-11.2.0                       libarchive/3.5.1-GCCcore-10.3.0
+
+   BLIS/0.8.1-GCC-11.2.0                                    Rust/1.65.0-GCCcore-11.3.0                       libarchive/3.5.1-GCCcore-11.2.0
+
+   BLIS/0.9.0-GCC-12.3.0                                    Rust/1.65.0-GCCcore-12.2.0                       libarchive/3.6.1-GCCcore-11.3.0
+
+   BLIS/0.9.0-GCC-13.2.0                          (D)       Rust/1.70.0-GCCcore-12.3.0                       libarchive/3.6.1-GCCcore-12.2.0
+
+   Bison/3.0.5                                              Rust/1.73.0-GCCcore-13.2.0                       libarchive/3.6.2-GCCcore-12.3.0
+
+   Bison/3.3.2                                              Rust/1.79.0-GCCcore-13.3.0                (D)    libarchive/3.7.2-GCCcore-13.2.0
+
+   Bison/3.5.3-GCCcore-9.3.0                                SDL2/2.0.20-GCCcore-11.2.0                       libarchive/3.7.4-GCCcore-13.3.0         (D)
+
+   Bison/3.7.1-GCCcore-10.2.0                               SDL2/2.30.6-GCCcore-13.3.0                (D)    libdeflate/1.10-GCCcore-11.3.0
+
+   Bison/3.7.6-GCCcore-10.3.0                               SQLite/3.35.4-GCCcore-10.3.0                     libdeflate/1.18-GCCcore-12.3.0          (D)
+
+   Bison/3.7.6-GCCcore-11.2.0                               SQLite/3.36-GCCcore-11.2.0                       libdrm/2.4.106-GCCcore-10.3.0
+
+   Bison/3.8.2-GCCcore-11.3.0                               SQLite/3.38.3-GCCcore-11.3.0                     libdrm/2.4.107-GCCcore-11.2.0
+
+   Bison/3.8.2-GCCcore-12.2.0                               SQLite/3.39.4-GCCcore-12.2.0                     libdrm/2.4.115-GCCcore-12.3.0           (D)
+
+   Bison/3.8.2-GCCcore-12.3.0                               SQLite/3.42.0-GCCcore-12.3.0                     libepoxy/1.5.8-GCCcore-11.2.0
+
+   Bison/3.8.2-GCCcore-13.2.0                               SQLite/3.43.1-GCCcore-13.2.0                     libev/4.33-GCC-11.2.0
+
+   Bison/3.8.2-GCCcore-13.3.0                               SQLite/3.45.3-GCCcore-13.3.0              (D)    libevent/2.1.12-GCCcore-10.3.0
+
+   Bison/3.8.2                                    (D)       SWIG/4.1.1-GCCcore-12.3.0                        libevent/2.1.12-GCCcore-11.2.0
+
+   Boost/1.77.0-GCC-11.2.0                                  ScaLAPACK/2.1.0-gompi-2021b-fb                   libevent/2.1.12-GCCcore-11.3.0
+
+   Boost/1.79.0-GCC-11.2.0                        (D)       ScaLAPACK/2.2.0-gompi-2023b-fb            (D)    libevent/2.1.12-GCCcore-12.3.0
+
+   Brotli/1.0.9-GCCcore-10.3.0                              SciPy-bundle/2021.10-foss-2021b                  libevent/2.1.12-GCCcore-13.2.0          (D)
+
+   Brotli/1.0.9-GCCcore-11.2.0                              Stata/19                                         libfabric/1.12.1-GCCcore-10.3.0
+
+   Brotli/1.0.9-GCCcore-12.3.0                              Szip/2.1.1-GCCcore-9.3.0                         libfabric/1.13.2-GCCcore-11.2.0
+
+   Brotli/1.1.0-GCCcore-13.3.0                    (D)       Szip/2.1.1-GCCcore-10.2.0                        libfabric/1.15.1-GCCcore-11.3.0
+
+   CFITSIO/3.49-GCCcore-11.2.0                              Szip/2.1.1-GCCcore-10.3.0                        libfabric/1.18.0-GCCcore-12.3.0
+
+   CFITSIO/4.3.0-GCCcore-12.3.0                   (D)       Szip/2.1.1-GCCcore-11.2.0                        libfabric/1.19.0-GCCcore-13.2.0         (D)
+
+   CLHEP/2.4.4.0-GCC-11.2.0                                 Szip/2.1.1-GCCcore-12.2.0                        libffi/3.3-GCCcore-10.3.0
+
+   CMake/3.18.4-GCCcore-10.2.0                              Szip/2.1.1-GCCcore-12.3.0                        libffi/3.4.2-GCCcore-11.2.0
+
+   CMake/3.18.4                                             Szip/2.1.1-GCCcore-13.2.0                 (D)    libffi/3.4.2-GCCcore-11.3.0
+
+   CMake/3.20.1-GCCcore-10.3.0                              Tcl/8.6.11-GCCcore-10.3.0                        libffi/3.4.4-GCCcore-12.2.0
+
+Modules
+See the main page: 
+What is the chip module system?
+Preview
+ 
+How to load modules: 
+How to use modules
+Preview
+ 
+More Modules and Available Versions
+Module
+Available Versions
+Module
+Available Versions
+M4
+1.4.19, 1.4.19-GCCcore-13.3.0
+MATLAB
+2023b
+METIS
+5.1.0-GCCcore-10.3.0
+MPFR
+4.1.0-GCCcore-11.2.0
+Mako
+1.1.4-GCCcore-11.2.0, 1.2.4-GCCcore-12.3.0, 13.2.0
+Mesa
+21.1.7, 23.1.4, 23.1.9
+Meson
+0.58.2, 1.1.1, 1.2.3, 1.4.0
+NASM
+2.15.05, 2.16.01, 2.16.03
+NLopt
+2.7.0-GCCcore-11.2.0
+NSPR
+4.35-GCCcore-12.3.0
+NSS
+3.89.1-GCCcore-12.3.0
+NVHPC
+22.7-CUDA-11.7.0
+Ninja
+1.10.2, 1.11.1, 1.12.1
+git
+2.23.0 to 2.45.1 (nodocs)
+git-lfs
+3.5.1
+glew
+2.2.0-GCCcore-11.2.0-egl
+glib-networking
+2.72.1-GCCcore-11.2.0
+gompi
+2021a, 2021b, 2022a, 2023a, 2023b
+gperf
+3.1 (various GCCcore versions)
+graphite2
+1.3.14-GCCcore-12.3.0
+groff
+1.22.4, 1.23.0
+gzip
+1.10-GCCcore-11.2.0
+patchelf
+0.18.0-GCCcore-12.3.0, 13.2.0
+pixman
+0.40.0, 0.42.2
+pkg-config
+0.29.2
+pkgconf
+1.8.0 (multi GCCcore), 1.9.5, 2.0.3, 2.2.0
+poetry
+1.5.1-GCCcore-12.3.0, 1.6.1-GCCcore-13.2.0
+psutil
+5.9.4-GCCcore-11.2.0
+pugixml
+1.12.1-GCCcore-11.2.0
+pybind11
+2.7.1, 2.11.1
+pytest
+7.1.3-GCCcore-11.2.0
+re2c
+3.1-GCCcore-12.3.0
+ruamel.yaml
+0.18.6-GCCcore-13.2.0
+scikit-build-core
+0.9.3-GCCcore-13.2.0
+scikit-build
+0.17.6 (for both 12.3.0 and 13.2.0)
+setuptools-rust
+1.6.0-GCCcore-12.3.0, 1.8.0-GCCcore-13.2.0
+All User Modules Grouped By Functionality:
+Core & Custom Modules:
+Build Tools & Version Control
+CMake
+: 3.17.0
+EasyBuild
+: 4.9.4
+git
+: 2.33.1
+Compilers & Libraries
+blas/gcc/64
+: 3.10.0
+blacs/openmpi/gcc/64
+: 1.1patch03
+boost
+: 1.77.0
+fftw3/openmpi/gcc/64
+: 3.3.10
+gcc
+: 11.2.0
+gcc10
+: 10.4.0
+globalarrays/openmpi/gcc/64
+: 5.8
+hdf5
+: 1.12.1
+hdf5_18
+: 1.8.21
+intel-tbb-oss/intel64
+: 2021.4.0 (L)
+intel-tbb-oss/ia32
+: 2021.4.0
+lapack/gcc/64
+: 3.10.0 (L)
+mpich/ge/gcc/64
+: 3.4.2
+mvapich2/gcc/64
+: 2.3.7
+netcdf/gcc/64/gcc/64
+: 4.8.1
+openblas/dynamic
+: 0.3.18
+openmpi/gcc/64
+: 4.1.5
+openmpi/mlnx/gcc/64
+: 4.1.5a1
+openmpi4/gcc
+: 4.1.5
+Programming Languages & Runtimes
+lua
+: 5.4.6
+luajit
+nodejs
+: 22.14.0
+python3
+python39
+python
+: 3.12.4
+Utilities & Benchmarking
+bonnie++
+: 2.00a
+dot
+gdb
+: 10.2
+hpc_tools/hpc_tools
+iozone
+: 3_492
+mariadb-libs
+netperf
+: 2.7.0
+null
+ollama
+: 0.6.5
+shared
+texLive
+: 2025
+wcstools
+: 3.9.7
+For use on 2018 & 2021 Machines:
+Compilers & Core Utilities
+binutils
+: 2.31.1, 2.32, 2.34-GCCcore-9.3.0, 2.34, 2.35-GCCcore-10.2.0, 2.35, 2.36.1-GCCcore-10.3.0, 2.36.1, 2.37-GCCcore-11.2.0, 2.37, 2.38-GCCcore-11.3.0, 2.38, 2.39-GCCcore-12.2.0, 2.39, 2.40-GCCcore-12.3.0, 2.40-GCCcore-13.2.0, 2.40, 2.42-GCCcore-13.3.0 (L), 2.42 (D)
+GCC
+: 10.3.0, 11.2.0, 11.3.0, 12.2.0, 12.3.0, 13.2.0 (D)
+GCCcore
+: 9.3.0, 10.2.0, 10.3.0, 11.2.0, 11.3.0, 12.2.0, 12.3.0, 13.2.0, 13.3.0 (L,D)
+intel-compilers
+: 2021.2.0, 2021.4.0, 2022.1.0, 2023.1.0, 2024.2.0 (L,D)
+intel
+: 2021a, 2023a, 2024a (L,D)
+make
+: 4.3-GCCcore-11.2.0, 4.3-GCCcore-11.3.0, 4.4.1-GCCcore-12.3.0, 4.4.1-GCCcore-13.2.0 (D)
+pkg-config
+: 0.29.2-GCCcore-10.3.0, 0.29.2-GCCcore-11.2.0 (D)
+pkgconf
+: 1.8.0-GCCcore-11.2.0, 1.8.0-GCCcore-11.3.0, 1.8.0, 1.9.3-GCCcore-12.2.0, 1.9.5-GCCcore-12.3.0, 2.0.3-GCCcore-13.2.0, 2.2.0-GCCcore-13.3.0 (D)
+zlib
+: 1.2.11-GCCcore-9.3.0, 1.2.11-GCCcore-10.2.0, 1.2.11-GCCcore-10.3.0, 1.2.11-GCCcore-11.2.0, 1.2.11, 1.2.12-GCCcore-11.3.0, 1.2.12-GCCcore-12.2.0, 1.2.12, 1.2.13-GCCcore-12.3.0, 1.2.13-GCCcore-13.2.0, 1.2.13, 1.3.1-GCCcore-13.3.0 (L), 1.3.1 (D)
+bzip2
+: 1.0.8-GCCcore-9.3.0, 1.0.8-GCCcore-10.2.0, 1.0.8-GCCcore-10.3.0, 1.0.8-GCCcore-11.2.0, 1.0.8-GCCcore-11.3.0, 1.0.8-GCCcore-12.2.0, 1.0.8-GCCcore-12.3.0, 1.0.8-GCCcore-13.2.0, 1.0.8-GCCcore-13.3.0 (D)
+lz4
+: 1.9.3-GCCcore-10.3.0, 1.9.3-GCCcore-11.2.0, 1.9.3-GCCcore-11.3.0, 1.9.4-GCCcore-12.3.0, 1.9.4-GCCcore-13.2.0 (D)
+gzip
+: 1.10-GCCcore-10.3.0, 1.10-GCCcore-11.2.0, 1.12-GCCcore-11.3.0, 1.12-GCCcore-12.3.0, 1.13-GCCcore-13.2.0 (D)
+zstd
+: 1.4.9-GCCcore-10.3.0, 1.5.0-GCCcore-11.2.0, 1.5.2-GCCcore-11.3.0, 1.5.5-GCCcore-12.3.0, 1.5.5-GCCcore-13.2.0 (D)
+Development Tools & Libraries
+Autoconf
+: 2.69-GCCcore-9.3.0, 2.69-GCCcore-10.2.0, 2.71-GCCcore-10.3.0, 2.71-GCCcore-11.2.0, 2.71-GCCcore-11.3.0, 2.71-GCCcore-12.2.0, 2.71-GCCcore-12.3.0, 2.71-GCCcore-13.2.0, 2.71, 2.72-GCCcore-13.3.0 (D)
+Automake
+: 1.16.1-GCCcore-9.3.0, 1.16.2-GCCcore-10.2.0, 1.16.3-GCCcore-10.3.0, 1.16.4-GCCcore-11.2.0, 1.16.5-GCCcore-11.3.0, 1.16.5-GCCcore-12.2.0, 1.16.5-GCCcore-12.3.0, 1.16.5-GCCcore-13.2.0, 1.16.5-GCCcore-13.3.0, 1.16.5 (D)
+Autotools
+: 20180311-GCCcore-9.3.0, 20200321-GCCcore-10.2.0, 20210128-GCCcore-10.3.0, 20210726-GCCcore-11.2.0, 20220317-GCCcore-11.3.0, 20220317-GCCcore-12.2.0, 20220317-GCCcore-12.3.0, 20220317-GCCcore-13.2.0, 20220317, 20231222-GCCcore-13.3.0 (D)
+Bison
+: 3.0.5, 3.3.2, 3.5.3-GCCcore-9.3.0, 3.7.1-GCCcore-10.2.0, 3.7.6-GCCcore-10.3.0, 3.7.6-GCCcore-11.2.0, 3.8.2-GCCcore-11.3.0, 3.8.2-GCCcore-12.2.0, 3.8.2-GCCcore-12.3.0, 3.8.2-GCCcore-13.2.0, 3.8.2-GCCcore-13.3.0, 3.8.2 (D)
+CMake
+: 3.18.4-GCCcore-10.2.0, 3.18.4, 3.20.1-GCCcore-10.3.0, 3.21.1-GCCcore-11.2.0, 3.22.1-GCCcore-11.2.0, 3.23.1-GCCcore-11.3.0, 3.24.3-GCCcore-12.2.0, 3.26.3-GCCcore-12.3.0, 3.27.6-GCCcore-13.2.0, 3.29.3-GCCcore-13.3.0
+flex
+: 2.6.4-GCCcore-9.3.0, 2.6.4-GCCcore-10.2.0, 2.6.4-GCCcore-10.3.0, 2.6.4-GCCcore-11.2.0, 2.6.4-GCCcore-11.3.0, 2.6.4-GCCcore-12.2.0, 2.6.4-GCCcore-12.3.0, 2.6.4-GCCcore-13.2.0, 2.6.4-GCCcore-13.3.0, 2.6.4 (D)
+git
+: 2.23.0-GCCcore-9.3.0-nodocs, 2.28.0-GCCcore-10.2.0-nodocs, 2.32.0-GCCcore-10.3.0-nodocs, 2.33.1-GCCcore-11.2.0-nodocs, 2.38.1-GCCcore-12.2.0-nodocs, 2.41.0-GCCcore-12.3.0-nodocs, 2.42.0-GCCcore-13.2.0, 2.45.1-GCCcore-13.3.0
+git-lfs
+: 3.5.1
+gperf
+: 3.1-GCCcore-10.3.0, 3.1-GCCcore-11.2.0, 3.1-GCCcore-12.3.0, 3.1-GCCcore-13.3.0 (D)
+help2man
+: 1.47.12-GCCcore-9.3.0, 1.47.16-GCCcore-10.2.0, 1.48.3-GCCcore-10.3.0, 1.48.3-GCCcore-11.2.0, 1.49.2-GCCcore-11.3.0, 1.49.2-GCCcore-12.2.0, 1.49.3-GCCcore-12.3.0, 1.49.3-GCCcore-13.2.0, 1.49.3-GCCcore-13.3.0 (D)
+LLVM
+: 11.1.0-GCCcore-10.3.0, 12.0.1-GCCcore-11.2.0, 16.0.6-GCCcore-12.3.0 (D)
+makeinfo
+: 6.7-GCCcore-9.3.0-minimal, 6.7-GCCcore-10.2.0-minimal, 6.7-GCCcore-10.3.0-minimal (D)
+Meson
+: 0.58.0-GCCcore-10.3.0, 0.58.2-GCCcore-11.2.0, 1.1.1-GCCcore-12.3.0, 1.2.3-GCCcore-13.2.0, 1.4.0-GCCcore-13.3.0 (D)
+meson-python
+: 0.15.0-GCCcore-13.2.0
+NASM
+: 2.14.02-GCCcore-9.3.0, 2.15.05-GCCcore-10.2.0, 2.15.05-GCCcore-10.3.0, 2.15.05-GCCcore-11.2.0, 2.15.05-GCCcore-11.3.0, 2.15.05-GCCcore-12.2.0, 2.16.01-GCCcore-12.3.0, 2.16.01-GCCcore-13.2.0, 2.16.03-GCCcore-13.3.0 (D)
+Ninja
+: 1.10.2-GCCcore-10.3.0, 1.10.2-GCCcore-11.2.0, 1.11.1-GCCcore-12.3.0, 1.11.1-GCCcore-13.2.0, 1.12.1-GCCcore-13.3.0 (D)
+patchelf
+: 0.18.0-GCCcore-12.3.0, 0.18.0-GCCcore-13.2.0, 0.18.0-GCCcore-13.3.0 (D)
+re2c
+: 3.1-GCCcore-12.3.0
+scikit-build
+: 0.17.6-GCCcore-12.3.0, 0.17.6-GCCcore-13.2.0 (D)
+scikit-build-core
+: 0.9.3-GCCcore-13.2.0
+setuptools-rust
+: 1.6.0-GCCcore-12.3.0, 1.8.0-GCCcore-13.2.0 (D)
+SWIG
+: 4.1.1-GCCcore-12.3.0
+Scientific & Numerical Libraries
+BLIS
+: 0.8.1-GCC-11.2.0, 0.9.0-GCC-12.3.0, 0.9.0-GCC-13.2.0 (D)
+Boost
+: 1.77.0-GCC-11.2.0, 1.79.0-GCC-11.2.0 (D)
+CFITSIO
+: 3.49-GCCcore-11.2.0, 4.3.0-GCCcore-12.3.0 (D)
+CLHEP
+: 2.4.4.0-GCC-11.2.0
+Eigen
+: 3.3.9-GCCcore-11.2.0, 3.4.0-GCCcore-11.2.0, 3.4.0-GCCcore-12.3.0, 3.4.0-GCCcore-13.2.0 (D)
+ELPA
+: 2023.05.001-intel-2023a
+FFTW
+: 3.3.10-GCC-12.3.0, 3.3.10-GCC-13.2.0, 3.3.10-gompi-2021b (D)
+FFTW.MPI
+: 3.3.10-gompi-2023a, 3.3.10-gompi-2023b (D)
+FlexiBLAS
+: 3.0.4-GCC-11.2.0, 3.3.1-GCC-12.3.0, 3.3.1-GCC-13.2.0 (D)
+GSL
+: 2.7-GCC-11.2.0, 2.7-GCC-12.2.0, 2.7-GCC-12.3.0, 2.7-GCC-13.2.0 (D)
+HDF
+: 4.2.15-GCCcore-10.2.0, 4.2.15-GCCcore-11.2.0, 4.2.15-GCCcore-12.2.0, 4.2.16-GCCcore-12.3.0, 4.2.16-2-GCCcore-12.3.0, 4.2.16-2-GCCcore-13.2.0 (D)
+HDF5
+: 1.10.7-iimpi-2021a, 1.12.1-gompi-2021b, 1.14.0-iimpi-2023a, 1.14.3-gompi-2023b (D)
+imkl-FFTW
+: 2023.1.0-iimpi-2023a, 2024.2.0-iimpi-2024a (L,D)
+imkl
+: 2021.2.0-gompi-2021a, 2021.2.0-iimpi-2021a, 2021.4.0, 2022.1.0, 2022.2.1, 2023.1.0, 2023.2.0, 2024.2.0 (L,D)
+impi
+: 2021.2.0-intel-compilers-2021.2.0, 2021.9.0-intel-compilers-2023.1.0, 2021.13.0-intel-compilers-2024.2.0 (L,D)
+libxc
+: 5.1.5-intel-compilers-2021.2.0, 5.1.6-GCC-11.2.0, 5.2.3-GCC-11.3.0, 5.2.3-intel-compilers-2022.1.0, 6.2.2-intel-compilers-2023.1.0 (D)
+METIS
+: 5.1.0-GCCcore-10.3.0, 5.1.0-GCCcore-11.3.0 (D)
+MPFR
+: 4.1.0-GCCcore-11.2.0
+netCDF
+: 4.8.1-gompi-2021b, 4.9.2-gompi-2023b, 4.9.2-iimpi-2023a (D)
+netCDF-Fortran
+: 4.6.1-gompi-2023b, 4.6.1-iimpi-2023a (D)
+NLopt
+: 2.7.0-GCCcore-11.2.0
+numactl
+: 2.0.14-GCCcore-10.3.0, 2.0.14-GCCcore-11.2.0, 2.0.14-GCCcore-11.3.0, 2.0.16-GCCcore-12.3.0, 2.0.16-GCCcore-13.2.0, 2.0.18-GCCcore-13.3.0 (L,D)
+OpenBLAS
+: 0.3.18-GCC-11.2.0, 0.3.20-GCC-11.3.0-int8, 0.3.23-GCC-12.3.0, 0.3.24-GCC-13.2.0 (D)
+OpenMPI
+: 4.1.1-GCC-10.3.0, 4.1.1-GCC-11.2.0, 4.1.4-GCC-11.3.0, 4.1.5-GCC-12.3.0, 4.1.6-GCC-13.2.0 (D)
+ParMETIS
+: 4.0.3-iimpi-2021a
+PMIx
+: 3.2.3-GCCcore-10.3.0, 4.1.0-GCCcore-11.2.0, 4.1.2-GCCcore-11.3.0, 4.2.4-GCCcore-12.3.0, 4.2.6-GCCcore-13.2.0 (D)
+PROJ
+: 8.1.0-GCCcore-11.2.0
+ScaLAPACK
+: 2.1.0-gompi-2021b-fb, 2.2.0-gompi-2023b-fb (D)
+SciPy-bundle
+: 2021.10-foss-2021b

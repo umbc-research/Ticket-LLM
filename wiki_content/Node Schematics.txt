@@ -1,0 +1,128 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1333821495
+TITLE: Node Schematics
+
+1
+ 
+CPU Node Schematics
+1.1
+ 
+Legend
+1.1.1
+ 
+2018 Node Schematic
+1.1.2
+ 
+2021 Node Schematic
+1.1.3
+ 
+2024 Node Schematic
+2
+ 
+GPU Node Schematics
+2.1
+ 
+Legend
+2.1.1
+ 
+2020 Node Schematic
+2.1.2
+ 
+2024 Node Schematic (H100 Cards)
+2.1.3
+ 
+2024 Node Schematic (L40S Cards)
+For more information about the nodes on chip: 
+Cluster Specifications
+Preview
+ 
+CPU Node Schematics
+Legend
+Text (e.g., "2021 Nodes"):
+ Node Generation/Year (2018/2021/2024)
+Dashed Line Box:
+ Node (Complete Computing Unit)
+Text (e.g., "Xeon Gold 6240R"):
+ CPU Model
+Blue Rectangles:
+ DDR4 or DDR5 Memory Modules (RAM)
+Grey Box:
+ CPU Socket
+Lines between Grey Boxes:
+ Intel UPI Connections (Inter-Socket Communication)
+Red Rectangles:
+ CPU Cores (number per socket specified by text, e.g., "Cores (24/Socket)")
+2018 Node Schematic
+Open 
+CPUs:
+ 2x 18-core Intel(R) Xeon(R) Gold 6140 CPU @ 2.30GHz (Skylake)
+CPU Memory:
+ 376 GB DDR4
+Scratch Storage:
+ 72 GB
+2021 Node Schematic
+Open 
+CPUs:
+ 2x 24-core Intel(R) Xeon(R) Gold 6240R CPU @ 2.40GHz (Cascade Lake)
+CPU Memory:
+ 187 GB DDR4
+Scratch Storage:
+ 396 GB
+2024 Node Schematic
+Open 
+CPUs:
+ 2x 32-core Intel(R) Xeon(R) Gold 6548Y+ (Emerald Rapids)
+CPU Memory:
+ 512/1024 GB DDR5
+Scratch Storage:
+ 1.8 TB
+ 
+GPU Node Schematics
+Legend
+Green Rectangles:
+ GPU Card (e.g., H100, RTX 2080Ti)
+Text on/next to GPU Card:
+ GPU Memory (e.g., 100 GB HBM3)
+Lines from CPU to GPU:
+ PCIe Connection
+Line directly between GPUs:
+ NVLink Connection
+2020 Node Schematic
+Open 
+CPUs:
+ 2x 24-core Intel(R) Xeon(R) Gold 6240R CPU @ 2.40GHz (Cascade Lake)
+CPU Memory:
+ 384 GB DDR4
+GPUs:
+ 8x RTX 2080Ti/6000/8000 (11 GB GDDR6 GPU memory each)
+Scratch Storage:
+ 1.9 TB
+Key Interconnects:
+ Intel UPI (CPU-CPU), PCIe (CPU-GPU)
+2024 Node Schematic (H100 Cards)
+Open 
+ 
+CPUs:
+ 2x 16-core Intel(R) Xeon(R) Gold 6548Y+ (Emerald Rapids)
+CPU Memory:
+ 256 GB DDR5
+GPUs:
+ 2x H100 (100 GB HBM3 GPU memory each)
+Scratch Storage:
+ 7 TB
+Key Interconnects:
+ Intel UPI (CPU-CPU), PCIe (CPU-GPU), 
+NVLink (GPU-GPU)
+2024 Node Schematic (L40S Cards)
+Open 
+ 
+CPUs:
+ 2x 16-core Intel(R) Xeon(R) Gold 6548Y+ (Emerald Rapids)
+CPU Memory:
+ 256 GB DDR5
+GPUs:
+ 4x L40S (48 GB GDDR6 GPU memory each)
+Scratch Storage:
+ 7 TB
+Key Interconnects:
+ Intel UPI (CPU-CPU), PCIe (CPU-GPU)
+ 

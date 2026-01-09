@@ -1,0 +1,41 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1239908360
+TITLE: Tutorials
+
+A collection of tutorials to help users use chip to get their work done efficiently. 
+Each tutorial has its own page - use the link on the first column to navigate. Skip to the links in the second column for help on the specific sub-sections within that tutorial.
+Main Tutorials:
+Getting Started on chip
+Preview
+ 
+How to Compile on chip
+Preview
+ 
+How to Edit Code on chip
+Preview
+ 
+How to Run on chip
+Preview
+ 
+Quick Run Guide: How to run things on chip, with/without parallelism, with different compilers, etc.
+Preview
+ 
+Video Tutorials:
+Getting Started With Chip (July 2025)
+Preview
+ 
+Requesting a User Account on chip  
+Accessing chip
+The Login Node
+Your Home Directory
+Accessing Research Volumes
+chip resources
+chip-cpu
+chip-gpu
+Accessing Resources
+Basic Slurm Commands
+Using slurm to access resources on chip-cpu
+Using slurm to access resources on chip-gpu
+Software Modules
+Using LMod (The Software System)
+Software On Different Nodes
+Back to Main Page

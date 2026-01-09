@@ -1,0 +1,136 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1239810081
+TITLE: Permissions for files/directories
+
+Permissions for Files and Directories on chip
+Managing permissions correctly ensures that your data remains secure in your home directory while allowing for collaboration in shared research volumes.
+1
+ 
+Permissions for Files and Directories on chip
+1.1
+ 
+Default Permission Structure
+1.2
+ 
+File Tree and Permissions Overview
+1.3
+ 
+The Group Special Bit (setgid)
+1.4
+ 
+Modifying Existing Permissions
+1.4.1
+ 
+Common Modes
+1.4.2
+ 
+Key Options
+Default umask on chip
+The default umask setting on the cluster is 00071111. This ensures that by default, new files and directories are accessible to you and your group, but restricted from all other users.
+For more information on how umask works, see resources like the 
+umask Page
+.
+Default Permission Structure
+Permissions on chip are pre-configured based on the type of 
+Persistent Storage
+ being used.
+ 
+Directory Type
+Path Template
+Octal Permission
+Description
+Home Directory
+/home/$USER
+700
+Full access for owner; no access for group/others.
+ 
+Research: Common
+/umbc/rs/$GROUP/common
+770
+Full access for owner and group; no access for others.
+ 
+Research: User
+/umbc/rs/$GROUP/users/$USER
+750
+Full access for owner; read/execute for group; no access for others.
+ 
+File Tree and Permissions Overview
+The following tree illustrates how permissions are typically distributed across your available storage volumes:
+/ (root)
+
+├── home/
+
+│   └── $USER/ [700: rwx------]  <-- Private user environment
+
+└── umbc/rs/
+
+    └── $GROUP/
+
+        ├── common/ [770: rwxrwx---] <-- Shared group collaboration
+
+        └── users/
+
+            └── $USER/ [750: rwxr-x---] <-- Personal research storage
+The Group Special Bit (setgid)
+In shared environments like the 
+Research Common
+ directory, the "group special bit" (also known as 
+setgid
+) is often utilized.
+Purpose
+: When the setgid bit is applied to a directory, any new files or subdirectories created within it automatically inherit the 
+Group ID
+ of the parent directory rather than the primary group of the user who created the file.
+Why it matters on chip
+: This is critical for the 
+/common
+ research volumes to ensure that all members of a PI’s research group can continue to access and collaborate on shared data, regardless of which specific user uploads or creates a file.
+Identification
+: In a long directory listing (
+ls -l
+), this is represented by an 
+'s'
+ in the group execute position (e.g., 
+drwxrws---
+).
+Modifying Existing Permissions
+To change permissions for existing files or directories, use the 
+chmod
+ (change mode) command.
+Generic Syntax:
+chmod [options] [mode] [File_name]
+ 
+ 
+Common Modes
+You can specify modes using either 
+Symbolic
+ (letters) or 
+Octal
+ (numbers) notation.
+Symbolic Examples
+:
+chmod u+rwx [file]
+ – Grants read, write, and execute to the owner.
+chmod go-w [file]
+ – Removes write permissions for the group and others.
+ 
+Octal Examples
+:
+chmod 770 [directory]
+ – Sets 
+rwxrwx---
+ (Owner/Group full access).
+chmod 644 [file]
+ – Sets 
+rw-r--r--
+ (Owner read/write, others read-only).
+Key Options
+-R
+ (Recursive)
+: Applies the change to all files and subdirectories within a directory.
+-v
+ (Verbose)
+: Displays a message for every file processed.
+For a full list of available flags and symbolic operators, refer to the 
+standard Linux chmod documentation
+.
+ 

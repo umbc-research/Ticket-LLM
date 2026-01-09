@@ -1,0 +1,150 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1339654153
+TITLE: How do I use multiple GPUs in a Jupyter Notebook?
+
+Page Contents
+Using multiple GPUs for the first time on a new Jupyter Notebook
+Using multiple GPUs on an existing Jupyter Notebook
+ 
+Related Pages and Sections
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1266647043/More+about+the+srun+sbatch+and+salloc+commands#srun-on-chip-gpu
+ 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1335951387/Basic+Slurm+Commands#Flags-and-What-They-Mean
+ 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1033076786
+ 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1104805915/How+do+I+run+a+new+jupyter+notebook+on+chip#How-do-I-make-sure-jupyter-is-aware-of-my-virtual-environments%3F
+ 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1104805915/How+do+I+run+a+new+jupyter+notebook+on+chip#How-do-I-run-a-new-jupyter-notebook-on-chip%3F
+ 
+Using multiple GPUs for the first time on a new Jupyter Notebook
+Once SSHed into chip,
+Start an interactive session on a GPU Node using the command below. Refer to 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1266647043/More+about+the+srun+sbatch+and+salloc+commands#srun-on-chip-gpu
+ or 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1335951387/Basic+Slurm+Commands#Flags-and-What-They-Mean
+ to learn more
+[user1@chip ~]$ srun --cluster=chip-gpu --mem=50000M --time=1:00:00 --gres=gpu:1 --pty $SHELL
+Navigate to the folder where a python virtual environment can be created
+(base) [user1@g24-11 ~]$ cd /umbc/rs/pi_user2/users/user1/test/
+Create a python virtual environment named ‘test1’ using the command below. Refer to 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1033076786
+ to learn more.
+(base) [user1@g24-11 test]$ python -m venv /umbc/rs/pi_user2/users/user1/test/test1
+Activate the python virtual environment using the command below.
+(base) [user1@g24-11 test]$ source /umbc/rs/pi_user2/users/user1/test/test1/bin/activate
+Install tensorflow[and-cuda] in that environment as shown below.
+(test1) (base) [user1@g24-11 test]$ TMPDIR=/umbc/rs/pi_user2/users/user1/test/test1 python3 -m pip install 'tensorflow[and-cuda]'
+
+Collecting tensorflow[and-cuda]
+
+  Obtaining dependency information for tensorflow[and-cuda] from https://files.pythonhosted.org/packages/ba/1c/370b5546cf7afc29649b2fb74c171ef2493a36f62cf901c1425ead4a56af/tensorflow-2.19.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+
+  Using cached tensorflow-2.19.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+
+...
+
+...
+
+...
+
+Installing collected packages: namex, libclang, flatbuffers, wrapt, wheel, urllib3, typing-extensions, termcolor, tensorflow-io-gcs-filesystem, tensorboard-data-server, six, pygments, protobuf, packaging, opt-einsum, nvidia-nvjitlink-cu12, nvidia-nccl-cu12, nvidia-curand-cu12, nvidia-cuda-runtime-cu12, nvidia-cuda-nvrtc-cu12, nvidia-cuda-nvcc-cu12, nvidia-cuda-cupti-cu12, nvidia-cublas-cu12, numpy, mdurl, MarkupSafe, markdown, idna, grpcio, gast, charset_normalizer, certifi, absl-py, werkzeug, requests, optree, nvidia-cusparse-cu12, nvidia-cufft-cu12, nvidia-cudnn-cu12, ml-dtypes, markdown-it-py, h5py, google-pasta, astunparse, tensorboard, rich, nvidia-cusolver-cu12, keras, tensorflow
+
+Successfully installed MarkupSafe-3.0.2 absl-py-2.3.1 astunparse-1.6.3 certifi-2025.7.14 charset_normalizer-3.4.2 flatbuffers-25.2.10 gast-0.6.0 google-pasta-0.2.0 grpcio-1.73.1 h5py-3.14.0 idna-3.10 keras-3.10.0 libclang-18.1.1 markdown-3.8.2 markdown-it-py-3.0.0 mdurl-0.1.2 ml-dtypes-0.5.1 namex-0.1.0 numpy-2.1.3 nvidia-cublas-cu12-12.5.3.2 nvidia-cuda-cupti-cu12-12.5.82 nvidia-cuda-nvcc-cu12-12.5.82 nvidia-cuda-nvrtc-cu12-12.5.82 nvidia-cuda-runtime-cu12-12.5.82 nvidia-cudnn-cu12-9.3.0.75 nvidia-cufft-cu12-11.2.3.61 nvidia-curand-cu12-10.3.6.82 nvidia-cusolver-cu12-11.6.3.83 nvidia-cusparse-cu12-12.5.1.3 nvidia-nccl-cu12-2.23.4 nvidia-nvjitlink-cu12-12.5.82 opt-einsum-3.4.0 optree-0.16.0 packaging-25.0 protobuf-5.29.5 pygments-2.19.2 requests-2.32.4 rich-14.0.0 six-1.17.0 tensorboard-2.19.0 tensorboard-data-server-0.7.2 tensorflow-2.19.0 tensorflow-io-gcs-filesystem-0.37.1 termcolor-3.1.0 typing-extensions-4.14.1 urllib3-2.5.0 werkzeug-3.1.3 wheel-0.45.1 wrapt-1.17.2
+Test the install from the terminal using and following python script and  
+nvida-smi
+ from the command line - all requested GPUs should be visible
+(test1) (base) [user1@g24-11 test]$ python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+
+2025-07-16 12:16:57.612957: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+2025-07-16 12:16:57.624868: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+E0000 00:00:1752682617.637957 1238852 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+
+E0000 00:00:1752682617.641757 1238852 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+
+W0000 00:00:1752682617.652244 1238852 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+
+W0000 00:00:1752682617.652266 1238852 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+
+W0000 00:00:1752682617.652268 1238852 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+
+W0000 00:00:1752682617.652269 1238852 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+
+2025-07-16 12:16:57.655846: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+Exit the interactive session on the GPU node and go back to the login node by using the 
+exit
+ command.
+Activate the ‘test1’ python virtual environment again
+[user1@chip test]$ source /umbc/rs/pi_user2/users/user1/test/test1/bin/activate
+Run the following command to ensure Jupyter is aware of your virtual environments. Refer to 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1104805915/How+do+I+run+a+new+jupyter+notebook+on+chip#How-do-I-make-sure-jupyter-is-aware-of-my-virtual-environments%3F
+ to learn more.
+(test1) [user1@chip test]$ python -m ipykernel install --user --name test1
+
+Installed kernelspec test1 in /home/user1/.local/share/jupyter/kernels/test1
+Refer to the 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1104805915/How+do+I+run+a+new+jupyter+notebook+on+chip#How-do-I-run-a-new-jupyter-notebook-on-chip%3F
+ link to run a new Jupyter Notebook. In Step 3 of the link, since GPUs are being requested, use the necessary flags (in the SBATCH section of the slurm file) as shown below:
+...
+
+...
+
+#------------------------------------------
+
+#SBATCH --cluster chip-gpu
+
+#SBATCH --job-name jupyterTest
+
+#SBATCH --output=jupyterTest-%j.out
+
+#SBATCH --error=jupyterTest-%j.err
+
+#SBATCH --time=1:00:00
+
+#SBATCH --mem=50000M
+
+#SBATCH --account=pi_user2
+
+#SBATCH --gres=gpu:2
+
+
+
+#------------------------------------------
+
+...
+
+...
+In the Jupyter Notebook that has opened on the web browser, open a new Notebook in the same python virtual environment (test1) by clicking on the ‘test1’ square button under Notebook as shown below
+Open 
+View of the Jupyter Notebook in the web browser
+ 
+Test the install again in a cell in the Notebook - all requested GPUs should be visible
+Open 
+Using the python script to test if the Jupyter Notebook recognizes the GPU cards that were allocated to the user
+ 
+After the last step, the user might need to refer to different methods/APIs within different libraries to ensure that the requested GPU resources are actually being used for their task. For example, the MirroredStrategy() code wrapper can be used for 
+using 
+all the GPUs to train a deep learning model.
+Using multiple GPUs on an existing Jupyter Notebook
+Once SSHed into chip,
+Activate the above python virtual environment (test1) (same as Step 8 in the previous section)
+Refer to the 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1104805915/How+do+I+run+a+new+jupyter+notebook+on+chip#How-do-I-run-an-existing-jupyter-notebook-on-chip%3F
+ link for running an existing Jupyter Notebook.
+In the Jupyter Notebook window that opens in the web browser, open the existing Notebook.
+In the new Notebook, select the python virtual environment created in Step 2 from the top right corner (if it is not already selected)
+Open 
+Selecting the required kernel (bearing the same name as the virtual environment created before)
+ 
+Test the install again in a cell in the Notebook (same as Step 12 in the previous section) - all requested GPUs should be visible.
+Open 
+Using the python script to test if the Jupyter Notebook recognizes the GPU cards that were allocated to the user
+When a user is allocated one or more GPUs on a GPU node, it does NOT mean that the GPUs will be used for their compute tasks/jobs when their jobs are running on it. i.e. even with multiple GPUs allocated, the job(s) submitted by the user might still be running only on the CPUs. In order to use the GPUs allocated to the user, wrapper scripts need to be used. e.g. the MirroredStrategy() api, that distributes the training of a model between multiple GPUs.
+ 

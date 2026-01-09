@@ -1,0 +1,41 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1357283329
+TITLE: Removing Users from Chip
+
+1
+ 
+Leaving/Getting Removed From Chip
+1.1
+ 
+Why would a user be removed from the HPCF?
+1.1.1
+ 
+How to remove a user from Chip
+1.2
+ 
+What does it mean to remove a user from the HPCF clusters?
+1.3
+ 
+Can I be given a copy of my home directory archive?
+1.4
+ 
+Can I ever come back?
+Leaving/Getting Removed From Chip
+Why would a user be removed from the HPCF?
+Any user who no longer has an active affiliation with the university may be removed from the HPCF. Periodic checks are performed to remove students, faculty, or other researchers that have graduated, left the university, or otherwise are no longer active users. 
+For the purposes of the HPCF, alumni are considered inactive users.
+How to remove a user from Chip
+Any PI may also request that users are removed from their research group at any time. If this is the only group to which the user belongs, the user will be completely removed from the cluster.
+Finally, repeated misuse of HPCF resources as outlined in (
+Chip Usage Rules
+ ) may also result in a user being removed from the HPCF.
+What does it mean to remove a user from the HPCF clusters?
+When a user is “removed” from the cluster, they lose login access and are therefore not permitted to use any HPCF resource. Further, the ownership of any data owned by the user in any research group is changed to the PI of that research group – this data is never deleted by DoIT. The user’s home directory is also archived and kept until the end of the academic year.
+Can I be given a copy of my home directory archive?
+Yes! If you are planning to leave the HPCF, submit an RT ticket (
+Send An RT Ticket
+) with this request prior to departure. Be sure to specify on which system the home directory was active.
+Can I ever come back?
+Absolutely! You’ll very likely be treated as a new user and will not be able to access your past home directory. If you return to the same PI group(s), those directories will have their ownership reverted to you. 
+Here’s how to log onto Chip: 
+How to connect to Chip
+ 

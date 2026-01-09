@@ -1,0 +1,25 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1104609306
+TITLE: How to check home directory usage on chip?
+
+User home directories are given 500 MB when the user account is provisioned on chip. If the home directory fills, user logins may fail and other aspects of the chip user environment may not work as expected.
+As a rule, DoIT does not delete data. If a home directory is filled, the user must move or remove files from their home directory.
+Note: Special care should be taken regarding the use of “hidden directories”, i.e., those beginning in “.”, as these are commonly filled while running conda, pip, and other software packages.
+Any user can check the space used in their home directory by using the `df -h` command.
+There are two ways to do this:
+Use the home directory location as an argument to `df -h` …
+[mb17@chip common]$ df -h /home/mb17/
+
+Filesystem                        Size  Used Avail Use% Mounted on
+
+nfs.iss:/ifs/data/chip/home/mb17  500M  128K  500M   1% /home/mb17
+Run `df -h .` from your home directory …
+[mb17@chip common]$ cd /home/mb17
+
+[mb17@chip ~]$ df -h ./
+
+Filesystem                        Size  Used Avail Use% Mounted on
+
+nfs.iss:/ifs/data/chip/home/mb17  500M  128K  500M   1% /home/mb17
+
+[mb17@chip ~]$
+ 

@@ -1,0 +1,251 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1321664513
+TITLE: How do I request GPU memory?
+
+Page Contents
+Example 1
+Example 2
+Identifiers for GPU cards on the '--constraint' flag
+Common Errors
+Unavailable GPU cards requested
+Excessive GPU cards requested
+Excessive CPU memory requested
+Related Pages
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1354399761
+ 
+In a sbatch, srun, or salloc script, the 
+--mem
+ flag refers to the amount of memory requested (and hence allocated) on the CPU of a node, whether the node contains a GPU or not. In other words, specifying the memory using the 
+--mem
+ flag always fetches the CPU memory and never the GPU memory. 
+If the user has a requirement for the GPU memory, that can be specified and requested in the examples shown below.
+Note: GPU memory is allocated per card, meaning that an user cannot request half a card, or a quarter of a card, or any other fraction of a card. They can only request a single card, or multiple cards. On the other hand, CPU memory is pooled, meaning that an user can request a fraction of memory from a CPU node.
+Example 1
+Suppose an user needs 240 GiB of GPU memory and 500GiB of CPU memory. A quick glance at the 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1289486353
+ page suggests that this requirement can be met using a GPU node containing the RTX 8000 GPU cards. There are two such nodes. They can specify the number of GPU cards they need using the 
+--gres
+ flag and the type of GPU card they need (which is available on certain nodes) using the 
+--constraint
+ flag as follows:
+...
+
+#SBATCH --gres=gpu:5
+
+#SBATCH --constraint='RTX_8000'
+
+#SBATCH --mem=500G
+
+...
+in addition to the other flags for running a sbatch job on the chip-gpu.
+The srun command for the same could look like
+srun --cluster=chip-gpu --account=pi_doit --mem=500G --time=1:00:00 --gres=gpu:5 --constraint='RTX_8000' --pty $SHELL
+This will allow slurm to allocate 5 RTX 8000 cards (out of the 8 available) from one of the two nodes containing those cards. Note that the 
+--constraint
+ flag tells slurm that the user needs a node that has the RTX 8000 GPU cards.
+The snippet below shows the output of the srun command which verifies that the requested GPU(s) and GPU memory was allocated to the user:
+[user1@chip ~]$ srun --cluster=chip-gpu --mem=500G --time=1:00:00 --gres=gpu:5 --constraint='RTX_8000' --pty $SHELL
+
+srun: job 77100 queued and waiting for resources
+
+srun: job 77100 has been allocated resources
+
+(base) [user1@g20-12 ~]$ nvidia-smi
+
+Thu Jul 10 12:25:57 2025
+
++-----------------------------------------------------------------------------------------+
+
+| NVIDIA-SMI 575.51.03              Driver Version: 575.51.03      CUDA Version: 12.9     |
+
+|-----------------------------------------+------------------------+----------------------+
+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+
+|                                         |                        |               MIG M. |
+
+|=========================================+========================+======================|
+
+|   0  Quadro RTX 8000                On  |   00000000:1B:00.0 Off |                    0 |
+
+| 33%   24C    P8             12W /  260W |       1MiB /  46080MiB |      0%      Default |
+
+|                                         |                        |                  N/A |
+
++-----------------------------------------+------------------------+----------------------+
+
+|   1  Quadro RTX 8000                On  |   00000000:1C:00.0 Off |                  Off |
+
+| 33%   23C    P5             17W /  260W |       1MiB /  49152MiB |      0%      Default |
+
+|                                         |                        |                  N/A |
+
++-----------------------------------------+------------------------+----------------------+
+
+|   2  Quadro RTX 8000                On  |   00000000:1D:00.0 Off |                  Off |
+
+| 33%   25C    P8              5W /  260W |       1MiB /  49152MiB |      0%      Default |
+
+|                                         |                        |                  N/A |
+
++-----------------------------------------+------------------------+----------------------+
+
+|   3  Quadro RTX 8000                On  |   00000000:1E:00.0 Off |                  Off |
+
+| 33%   24C    P8              9W /  260W |       1MiB /  49152MiB |      0%      Default |
+
+|                                         |                        |                  N/A |
+
++-----------------------------------------+------------------------+----------------------+
+
+|   4  Quadro RTX 8000                On  |   00000000:3D:00.0 Off |                  Off |
+
+| 33%   22C    P8              8W /  260W |       1MiB /  49152MiB |      0%      Default |
+
+|                                         |                        |                  N/A |
+
++-----------------------------------------+------------------------+----------------------+
+
+
+
++-----------------------------------------------------------------------------------------+
+
+| Processes:                                                                              |
+
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+
+|        ID   ID                                                               Usage      |
+
+|=========================================================================================|
+
+|  No running processes found                                                             |
+
++-----------------------------------------------------------------------------------------+
+Example 2
+Suppose an user needs 96 GiB of GPU memory and 200GiB of CPU memory. A quick glance at the 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1289486353
+ page suggests that this requirement can be met using a GPU node containing the RTX 8000 GPU cards 
+or
+ a GPU node containing the L40S GPU cards. There are two nodes with RTX 8000 GPU cards and 10 nodes with L40S cards. They can specify the number of GPU cards they need using the 
+--gres
+ flag and the type of GPU card they need (which is available on certain nodes) using the 
+--constraint
+ flag as follows:
+...
+
+#SBATCH --gres=gpu:2
+
+#SBATCH --constraint='RTX_8000|L40S'
+
+#SBATCH --mem=200G
+
+...
+The srun command for the same could look like
+srun --cluster=chip-gpu --account=pi_doit --mem=200G --time=1:00:00 --gres=gpu:2 --constraint='RTX_8000' --pty $SHELL
+Here, the 
+|
+ in  
+'RTX_8000|L40S'
+ means that either an RTX_8000 GPU card or a L40S GPU card would suffice for the user, as both of them have 48 GiB of GPU memory.
+Note
+: To specify a GPU card that starts with ‘RTX', use an ‘_' to separate the alphabetical and the numeric part of the GPU card name, i.e. ‘RTX_8000’, or ‘RTX_6000’, or 'RTX_2080TI’
+The snippet below shows the output of the srun command which verifies that the requested GPU(s) and GPU memory was allocated to the user:
+[user1@chip ~]$ srun --cluster=chip-gpu --mem=200G --time=1:00:00 --gres=gpu:2 --constraint='RTX_8000' --pty $SHELL
+
+srun: job 78715 queued and waiting for resources
+
+srun: job 78715 has been allocated resources
+
+(base) [user1@g20-12 ~]$ nvidia-smi
+
+Tue Jul 15 12:34:17 2025
+
++-----------------------------------------------------------------------------------------+
+
+| NVIDIA-SMI 575.51.03              Driver Version: 575.51.03      CUDA Version: 12.9     |
+
+|-----------------------------------------+------------------------+----------------------+
+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+
+|                                         |                        |               MIG M. |
+
+|=========================================+========================+======================|
+
+|   0  Quadro RTX 8000                On  |   00000000:1B:00.0 Off |                    0 |
+
+| 33%   25C    P8             11W /  260W |       1MiB /  46080MiB |      0%      Default |
+
+|                                         |                        |                  N/A |
+
++-----------------------------------------+------------------------+----------------------+
+
+|   1  Quadro RTX 8000                On  |   00000000:1C:00.0 Off |                  Off |
+
+| 33%   24C    P8             14W /  260W |       1MiB /  49152MiB |      0%      Default |
+
+|                                         |                        |                  N/A |
+
++-----------------------------------------+------------------------+----------------------+
+
+
+
++-----------------------------------------------------------------------------------------+
+
+| Processes:                                                                              |
+
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+
+|        ID   ID                                                               Usage      |
+
+|=========================================================================================|
+
+|  No running processes found                                                             |
+
++-----------------------------------------------------------------------------------------+
+Identifiers for GPU cards
+The table below specifies the identifiers the user should provide with the constraint flag to request a specific GPU:
+GPU card
+Identifier in '--constraint' flag
+GPU card
+Identifier in '--constraint' flag
+RTX 2080Ti
+RTX_2080,rtx_2080,RTX_2080Ti,rtx_2080ti
+RTX 6000
+RTX_6000, rtx_6000
+RTX 8000
+RTX_8000, rtx_8000
+H100
+H100, h100
+L40S
+L40S, l40s, L40s, l40S
+Common Errors
+Listed below are a few common errors when requesting GPU nodes and memory from chip-gpu. Refer to 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1354399761
+ for more.
+Unavailable GPU card requested
+If an incorrect identifier is provided by the user, slurm will generate a message stating the same, e.g. when the identifier for the GPU card is 'RTX_3000', which is still a GPU card, but it is not available on the chip cluster. The message would look like the following:
+[user1@chip ~]$ srun --cluster=chip-gpu --mem=200G --time=1:00:00 --gres=gpu:2 --constraint='RTX_3000' --pty $SHELL
+
+srun: error: Unable to allocate resources: Invalid feature specification
+Excessive GPU cards requested
+In this example, the user is requesting 12 GPU cards from one GPU node, which is an invalid request as the maximum number of GPU cards available on a single node on chip is 8 (i.e. the nodes with the RTX 2080 Ti, RTX 6000, and the RTX 8000 GPU cards).
+[user1@chip ~]$ srun --cluster=chip-gpu --mem=200G --time=1:00:00 --gres=gpu:12 --constraint='RTX_8000' --pty $SHELL
+
+srun: error: Unable to allocate resources: Requested node configuration is not available
+When an user requests one or multiple GPU cards, they will be allocated the amount of GPU memory available on the requested GPU architecture * # of GPUs
+Ex: Flags 
+--gres=gpu:7
+ and 
+--constraint='RTX_2080TI'
+ will allocate the user with ~77 GiB of GPU memory (7x GPUs * 11GB per RTX 2080TI)
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1354399761
+ 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1266647043
+ 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439
+ 
+ 

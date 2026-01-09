@@ -1,0 +1,152 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1072267344/Storage
+TITLE: Storage
+
+Table of Contents:
+1
+ 
+Persistent Storage
+1.1
+ 
+Home Directories
+1.2
+ 
+HPCF Research Volumes
+1.3
+ 
+Temporary Storage
+2
+ 
+Accessing Research Volumes
+3
+ 
+How Much Space Is Left?
+4
+ 
+Back to Main Page
+Related Articles:
+
+
+How to check home directory usage on chip?
+What to do if I run out of space in my chip home directory?
+How do I access ada research storage ?
+'umask' Setting
+Permissions for files/directories
+Posture on Sensitive Data
+Scratch Space/Temporary Storage Directory
+Common Storage Errors
+Uploading Data to the Cluster
+Persistent Storage
+Open 
+This graphic shows the two types of persistent storage. Home Directories and Research Volumes.
+Storage on the chip cluster environment is comprised of a personal 
+home directory
+, shared 
+research volume
+, and 
+temporary/scratch storage
+. The first two types of storage are remotely hosted volumes from our Dell Isilon Storage System mounted with Network File System (NFS). With this, all of these volumes are able to be available across the chip cluster environment. Scratch storage is local to the allocated compute hardware you are using. It should be considered the fastest, but also most transient storage. 
+Home Directories
+This is the home directory for your account, and will be your working directory immediately upon login. This directory should be sued for setting up your Unix user environment, as well as storing small amounts of data (eg., some small code, config files, etc). The storage space in 
+/home/$USER
+ is quite limited, only offering 500 MB of space. So utilize this space carefully. 
+Some common software packages will often attempt to write to the user home directory include conda, pip, and vscode, MATlab. These types of software all create “hidden” directories within the user home directory by default to store their data for operation. However, this can cause the home directory to be filled up quickly. To avoid this, please refer to the following links for managing home directory storage and avoiding those “hidden” directories from using all of your storage space. 
+How to check home directory usage on chip?
+Preview
+ 
+ 
+What to do if I run out of space in my chip home directory?
+Preview
+HPCF Research Volumes
+On chip, the research storage is split into two volumes named after the research groups. 
+Location
+Description
+Location
+Description
+/umbc/rs/$GROUP/common
+Shared storage for your research group
+/umbc/rs/$GROUP/users/$USER
+Personal storage in your research volume 
+This is where you will be storing majority of the data and projects being worked on. 
+Consider storing your personal data, model files, or experimental output in your 
+/umbc/rs/$GROUP/users/$USER
+ directory.
+Consider storing group data or code in your 
+/umbc/rs/$GROUP/common
+ directory.
+How to check research volume usage on chip?
+Preview
+ 
+Temporary Storage
+On all machines, the 
+/tmp
+ directory can be used for storing small, temporary data. For example, this directory is commonly used when installing packages with pip or conda. For more information about the 
+/tmp
+ directory, please review the following webpage: 
+Why am I getting "OSError: [Errno 28] No space left on device" error ?
+Preview
+ 
+On all machines, the 
+/scratch
+ directory also exists. This storage is available on the compute nodes while jobs are running. This storage space is mainly intended to be temporary storage and provide extremely high I/O throughput to or from disk. 
+Because the 
+/scratch
+ space is local to the compute node, it is generally much faster than your 
+/home/$USER
+ directory or research volume (mounted via NFS). This enables it to provide much better latency when performing a large number of I/O operations. It is ideal for storing intermediate data files for running jobs, which can help reduce the load on the system-wide storage and local network. 
+For more information about the scratch space, refer to the following webpage: 
+Scratch Space/Temporary Storage Directory
+ 
+Accessing Research Volumes
+As stated previously, it’s in your best interest to avoid storing large datasets in your home directory. To avoid this conundrum, and encourage collaboration among the PI’s group, we give access to research volumes with large amounts of space. 
+By default, new PI groups start with 250GB, and all users in a PI group have access to these volumes. Each research volume comes with a “common” directory, which is where any user in the PI group can view/edit/run files. Additionally, when a new user is added, a private directory is made within the research volume that only the user has access to. 
+The path for this volume can be found at 
+/umbc/rs/$GROUP
+, the common directory can be found under 
+/umbc/rs/$GROUP}/common
+ and the user directory can be found under 
+/umbc/rs/$GROUP/users/$USER
+. We have also created aliases for you to quickly access these directories. You can view these aliases by typing the command 
+alias
+ into your command.
+For example:
+[regularUser1@chip ~]$ alias
+
+alias doit_ada='cd /umbc/ada/doit'
+
+alias doit_common='cd /umbc/rs/doit/common'
+
+alias doit_user='cd /umbc/rs/doit/users/regularUser1'
+
+alias sinfo='sinfo -M chip-cpu,chip-gpu -p 2024,2021,2018,general,gpu'
+
+alias squeue='squeue -M chip-cpu,chip-gpu'
+Note: The user and common directories in the volume share the same space, so filling one up will also fill the other up. Please reference the diagram at the top of the page.
+How Much Space Is Left?
+You only have a limited amount of disk space, and in some cases, you will be sharing disk space with other users. Please be aware of what you are using. 
+You should be aware of your storage consumption in the following areas:
+HPCF Research Storage: 
+/umbc/rs/$GROUP/
+ and 
+/umbc/rs/$GROUP/users/$USER/
+Home Directory: 
+/home/$USER/
+ - This directory only has 500 MB of storage.
+Commands for checking usage:
+du -h ./
+ - Lists the size of all the files in 
+./
+ directory
+df -h ./
+ - Lists statistics about amount of free disk space on the specified location (
+./
+)
+Refer to the following web page for more information on checking directory usage:
+How to check home directory usage on chip?
+Preview
+ 
+How to check research volume usage on chip?
+Preview
+ 
+ 
+Back to Main Page
+ 

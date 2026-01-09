@@ -1,0 +1,103 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1033142321/Slurm
+TITLE: Slurm
+
+ 
+Table of Contents:
+1
+ 
+What is Slurm?
+1.1
+ 
+How to use Slurm: Basic Commands
+1.2
+ 
+Chip Slurm Usage Rules
+1.2.1
+ 
+Slurm Accounts vs. Users
+1.2.2
+ 
+Related Topics
+2
+ 
+Back to Main Page
+Related Articles:
+
+
+How do I run an interactive job?
+chip-cpu QOS Restrictions
+chip Partitions and Usage
+More about the srun, sbatch, and salloc commands
+How do I request GPU memory?
+Common Errors running Python and Spark in Parallel computing
+Basic Slurm Commands
+Common Slurm Errors
+Apptainer on Chip (via Slurm)
+What is Slurm?
+Slurm
+ (Simple Linux Utility for Resource Management) is a 
+free and open-source workload manager and job scheduler
+ widely used in high-performance computing (HPC) environments, including many of the world’s top supercomputers. On chip, Slurm manages how computational jobs are submitted, scheduled, and run across the cluster. It performs three primary functions:
+Allocating resources:
+ Grants users access to compute nodes (CPUs, GPUs, memory) for a specified period so they can perform work.
+Job execution and monitoring:
+ Provides a framework for starting, running, and tracking jobs, including parallel and batch workloads.
+Queue management:
+ Arbitrates resource contention by managing a queue of pending jobs and deciding which jobs run when and where.
+Slurm is highly scalable, fault-tolerant, and configurable, making it suitable for clusters of all sizes. For more background, see 
+Slurm on Wikipedia
+ or the 
+official Slurm documentation
+.
+How to use Slurm: Basic Commands
+You can access resources by interacting with our workload manager, Slurm. Here is more information on Basic Slurm Commands: 
+Basic Slurm Commands
+
+
+
+
+
+
+
+
+Confluence
+Open preview modal
+Chip Slurm Usage Rules
+Our cluster's compute resources are divided into two categories: 
+chip-cpu
+ and 
+chip-gpu
+. These are then each subdivided into partitions, in which only certain users can access certain partitions of hardware. Each partition and CPU/GPU requires specific options when using 
+srun
+ or 
+sbatch
+.
+Slurm Accounts vs. Users
+It's important to understand the distinction between Slurm 
+accounts
+ and 
+users
+. An account is a group that a user (you) belongs to.
+An overview of which types of accounts can run on what can be found here:
+chip Partitions and Usage
+Preview
+ 
+Related Topics
+How do I run an interactive job?
+Preview
+ 
+chip-cpu QOS Restrictions
+Preview
+ 
+chip Partitions and Usage
+Preview
+ 
+More about the srun, sbatch, and salloc commands
+Preview
+ 
+Basic Slurm Commands
+Preview
+ 
+ 
+Back to Main Page
+ 

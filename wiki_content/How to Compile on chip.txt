@@ -1,0 +1,246 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235
+TITLE: How to Compile on chip
+
+1
+ 
+Introduction and Compiling with the Intel Compiler
+1.1
+ 
+Loading the Intel Compiler
+2
+ 
+Serial Hello World
+2.1
+ 
+Downloading Files with wget
+3
+ 
+Parallel Hello World
+4
+ 
+Logging Which Nodes are Used
+This compiling tutorial assumes that you are able to log in to the chip cluster in the UMBC High Performance Computing Facility. For information, how to log in and use your account up to this point, please visit the 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439/Getting+Started+on+chip?atlOrigin=eyJpIjoiMmM1NjQwMzBmNWI0NDI3ZWE1MGNiZTUwM2Q4MGRmNWEiLCJwIjoiYyJ9
+ first.
+NOTE:
+ Whenever you see “userid” this is a dummy username used in the tutorial. When you work through the tutorial, make sure to substitute your username in the relevant places. Similarly, for “pi_userid” this is a dummy PI account name. Please make sure you are referring to the PI account for your case.
+Introduction and Compiling with the Intel Compiler
+In this tutorial, we will illustrate how to compile C source code and run the resulting executable on the CPU cluster chip-cpu in chip in the UMBC High Performance Computing Facility. Working on a distributed cluster like chip is fundamentally different from working on a standard server or a personal computer, so please make sure to read and understand this material. We will first start with a classical serial example, and work our way to compiling parallel code using the most important parallel processing library MPI (Message Passing Interface). For more information on MPI see the 
+Wikipedia article
+. We will assume that you know some basic programming concepts, so the code will not be explained in explicit detail. More details can be found in manual pages on the system that are available for Linux commands (e.g., try “man mkdir”, “man cd”, “man pwd”, “man ls”) as well as for C functions (e.g., try “man fprintf”).
+Since we want to use parallel code with MPI, we need to use the Intel compiler suite, since that has MPI available with it. See the 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439/Getting+Started+on+chip?atlOrigin=eyJpIjoiMmM1NjQwMzBmNWI0NDI3ZWE1MGNiZTUwM2Q4MGRmNWEiLCJwIjoiYyJ9
+ documentation on how to access chip. This tutorial assumes that you are logged in to your account on chip.
+Loading the Intel Compiler
+After logging in to chip’s login node (also known as the user node), you need to be on a compute node to compile with the Intel compiler and with MPI, since the module for the Intel compiler suite needs to be loaded (and loading of modules cannot be done on the login node). For more information about modules see 
+https://umbc.atlassian.net/wiki/x/BQBHTw
+.
+To find out the names of the modules available to load, do “module spider Intel“; this command can be issued on the login node or a compute node, but the actual “module load ...” command can only be issued on a compute node. 
+Before starting an interactive session you can check available resources on the cluster using the sinfo command (see 
+sinfo manual
+ for more information). Here is a sample case:
+[userid@chip ~]$ sinfo
+
+CLUSTER: chip-cpu
+
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+
+2024         up   infinite      2    mix c24-[01,29]
+
+2024         up   infinite      1  alloc c24-30
+
+2024         up   infinite     48   idle c24-[02-28,31-51]
+
+2021         up   infinite      1   drng c21-04
+
+2021         up   infinite     14    mix c21-[01-03,05,09-18]
+
+2021         up   infinite      3  alloc c21-[06-08]
+
+2018         up   infinite      7  down* c18-[02,23,25,28,31-32,36]
+
+2018         up   infinite      2   drng c18-[03,24]
+
+2018         up   infinite      6    mix c18-[01,04,19,21,30,37]
+
+2018         up   infinite      7  alloc c18-[05-09,14-15]
+
+2018         up   infinite     20   idle c18-[10-13,16-18,20,22,26-27,29,33-35,38-42]
+
+general      up   infinite      7  down* c18-[02,23,25,28,31-32,36]
+
+general      up   infinite      3   drng c18-[03,24],c21-04
+
+general      up   infinite     20    mix c18-[01,04,19,21,30,37],c21-[01-03,05,09-18]
+
+general      up   infinite     10  alloc c18-[05-09,14-15],c21-[06-08]
+
+general      up   infinite     20   idle c18-[10-13,16-18,20,22,26-27,29,33-35,38-42]
+
+
+
+CLUSTER: chip-gpu
+
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+
+gpu*         up   infinite      1   drng g24-05
+
+gpu*         up   infinite     23    mix g20-[01-13],g24-[01-04,06-11]
+
+This shows the available resources by cluster type (CPU/GPU), partition, and if there are available nodes for computation. Once you have confirmed available resources use “srun” to start an interactive session on a node from the “general” partition, substituting “pi_userid” for your relevant account information:
+srun --cluster=chip-cpu --mem=500 --time=1:00:00 --qos=short --account=pi_userid --partition=general --pty $SHELL
+Once you have started the interactive session, you can check which modules are currently loaded:
+[userid@c18-04 ~]$ module list
+
+
+
+Currently Loaded Modules:
+
+  1) slurm/chip-gpu/23.11.4   2) git/2.33.1   3) shared   4) DefaultModules
+When you issue this command, the prompt (“userid@c18-04” in the example above) will change to show your username and the compute node you started the interactive session on. You can see that we need to load the Intel compilers. Now issue this command:
+module load intel
+ This will load the default Intel compilers for chip. You can request a specific version of the compiler by modifying the command slightly (e.g., module load intel/2024a will load the 2024a version of the Intel compiler). If we list the modules again, we can now see that the Intel compiler and corresponding MPI modules are now loaded:
+[userid@c18-04 ~]$ module load intel
+
+[userid@c18-04 ~]$ module list
+
+
+
+Currently Loaded Modules:
+
+  1) slurm/chip-gpu/23.11.4   6) zlib/1.3.1-GCCcore-13.3.0      11) impi/2021.13.0-intel-compilers-2024.2.0
+
+  2) git/2.33.1               7) binutils/2.42-GCCcore-13.3.0   12) imkl/2024.2.0
+
+  3) shared                   8) intel-compilers/2024.2.0       13) iimpi/2024a
+
+  4) DefaultModules           9) numactl/2.0.18-GCCcore-13.3.0  14) imkl-FFTW/2024.2.0-iimpi-2024a
+
+  5) GCCcore/13.3.0          10) UCX/1.16.0-GCCcore-13.3.0      15) intel/2024a
+To confirm that an MPI-capable MPI compiler has been loaded, issue the following:
+[userid@c18-04 ~]$ which mpiicc
+
+/usr/ebuild/installs/software/impi/2021.13.0-intel-compilers-2024.2.0/mpi/2021.13/bin/mpiicc
+The “which” command looks up the path associated with a command. If a path is returned like our sample case above, you have successfully loaded a compiler. One last preparation step is to create a shell environmental variable to tell the system the Intel compiler’s name:
+export I_MPI_CC=icx
+This finishes the setup to use the Intel compiler suite with the icx C compiler. You have to repeat these steps every time you want to compile with the Intel compiler.
+Serial Hello World
+In this example, you will compile a simple serial program (a program that runs on one node) to run on the chip cluster. Make sure you have followed all the instructions above and are logged into a compute node with the compiler loaded before proceeding (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1284276235#Loading-the-Intel-Compiler
+ ).
+It is a good idea to collect all the files for a project in a directory. This project is a serial version of the classic “Hello, world!” program. Therefore, use the mkdir (= “make directory”) command to create a directory “Hello_Serial” and cd (= “change directory”) into it.
+[userid@c18-04 ~]$ mkdir Hello_Serial
+
+[userid@c18-04 ~]$ cd Hello_Serial
+
+[userid@c18-04 Hello_Serial]$ pwd
+
+/home/userid/Hello_Serial
+
+[userid@c18-04 Hello_Serial]$
+Notice that the command prompt indicates that you are now in the “Hello_Serial” directory. Use the “pwd” (= “print working directory”) command any time to confirm where you are in your directory structure and “ll” (short for “ls -l”) to list the files that are there.
+Given below is the C source code for our simple serial example:
+
+
+DOWNLOAD LINK:
+ 
+https://umbc-research.github.io/wiki-code/Hello_Serial/hello_serial.c
+Downloading Files with wget
+A convenient way to save the example code on this page directly into the current directory of your project uses the “wget” command as follows. There is a “download” link under each code example on this page. You can copy the link address (by the right button or similar) and paste it after the wget command in your chip terminal session to download the file to the local directory, as shown here:
+[userid@c18-04 Hello_Serial]$ wget https://umbc-research.github.io/wiki-code/Hello_Serial/hello_serial.c
+
+--2025-07-04 19:25:36--  https://umbc-research.github.io/wiki-code/Hello_Serial/hello_serial.c
+
+Resolving umbc-research.github.io (umbc-research.github.io)... 185.199.109.153, 185.199.108.153, 185.199.111.153, ...
+
+Connecting to umbc-research.github.io (umbc-research.github.io)|185.199.109.153|:443... connected.
+
+HTTP request sent, awaiting response... 200 OK
+
+Length: 184 [text/x-c]
+
+Saving to: ‘hello_serial.c’
+
+
+
+hello_serial.c               100%[===========================================>]     184  --.-KB/s    in 0s      
+
+
+
+2025-07-04 19:25:36 (7.25 MB/s) - ‘hello_serial.c’ saved [184/184]
+
+You can list all files to see that the file is present now:
+[userid@c18-04 Hello_Serial]$ ll
+
+total 24
+
+-rw-rw---- 1 userid pi_userid 184 Jul  4  19:05 hello_serial.c
+
+We have shown the prompt in the examples above to emphasize that a command is being issued. When following the examples, your prompt may look a bit different (e.g., your own username will be there instead of “userid”!), but be careful to only issue the command part, not the prompt or the example output.
+Once you have saved this code to your directory, you have to compile it before you can execute it, since C is a source code programming language. Compile using the Intel icx compiler with the following command:
+[userid@c18-01 Hello_Serial]$ icx hello_serial.c -o hello_serial
+
+The -o option of icx specifies the desired name of the output file; it is customary to use the base filename without extension for an executable in C/C++. If successful, no errors or warnings will appear and an executable hello_serial will have been created, in addition to the source code in hello_serial.c.
+[userid@c18-01 Hello_Serial]$ ll
+
+total 120
+
+-rwxrwx--- 1 userid pi_userid 16600 May 29 11:59 hello_serial*
+
+-rw-rw---- 1 userid pi_userid   184 May 29 11:54 hello_serial.c
+
+Notice that the “x” in the permissions “-rwxrwx—” indicates that hello_serial is an executable. Depending on your terminal emulator, this may also be indicated by the asterisk “*” following its name (the “*” is not part of the filename, it is just an indication of an executable from the ls command). When a file is not an executable (or there is no permission to execute it), a dash “-” appears in place of the “x”; the dashes in “-rw-rw—-” for hello_serial.c confirm that this C source code is not executable in its source code form.
+To see how to run your serial executable on the cluster, jump to 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1325957222#Running-Serial-Hello-World
+.
+Parallel Hello World
+In this example, you will compile a simple parallel program (a program that runs on multiple nodes) to run on the chip cluster. Make sure you have followed all the instructions above and are logged into a compute node with the compiler loaded before proceeding (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1284276235#Loading-the-Intel-Compiler
+).
+You may want to create a new directory for this project using “mkdir Hello_Parallel”. Use the link or wget again (see above 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Downloading-Files-with-wget
+) to save the following code to your directory:
+
+
+DOWLOAD LINK:
+ 
+https://umbc-research.github.io/wiki-code/Hello_Parallel/hello_parallel.c
+This version of the “Hello, world!” program collects several pieces of information at each MPI process: the MPI processor name (i.e., the hostname), the process ID, and the number of processes in our job. Notice that we needed a new header file mpi.h to get access to the MPI commands. We also need to call MPI_Init before using any other MPI commands, and MPI_Finalize is needed at the end to clean up. Compile the code with the following command:
+[userid@c18-01 Hello_Parallel]$ mpiicc hello_parallel.c -o hello_parallel
+After a successful compilation with no errors or warnings, an executable “hello_parallel” should have been created, which we confirm by “ll”.
+[userid@c18-01 Hello_Parallel]$ ll
+
+total 120
+
+-rwxrwx--- 1 userid pi_userid 16776 May 29 12:04 hello_parallel*
+
+-rw-rw---- 1 userid pi_userid   490 May 29 12:00 hello_parallel.c
+
+To see how to run your parallel executable on the cluster, see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1325957222#Running-Paralell-Hello-World
+.
+In this example, we have written output from our MPI program to stdout. As a general guide, stdout and stderr should be used for reporting status information, and not for returning large datasets. If your program does need to write out a lot of data, it would be more appropriate to use file I/O instead.
+Logging Which Nodes are Used
+In this final example you will compile a parallel program that logs which nodes were used and outputs information in an ordered fashion to file instead in addition to stdout. Make sure you have followed all the instructions above and are logged into a compute node with the compiler loaded before proceeding (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1284276235#Loading-the-Intel-Compiler
+).
+For a parallel program, it is always a good idea to log which compute nodes you have used. We can extend our parallel “Hello, world!” program to accomplish this, namely in addition to printing the information to stdout, we will save it to file. This functionality is contained in a self-contained function nodesused() that you can also copy into other programs and then call from the main program, as shown in the code below:
+
+
+DOWNLOAD LINK: 
+https://umbc-research.github.io/wiki-code/Nodesused/nodesused.c
+You may want to create a new directory for this project using “mkdir Nodesused”. Use the link or wget again (see above 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Downloading-Files-with-wget
+) to save the above code to your directory.
+If you ran the parallel “Hello, world!” above (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1325957222#Running-Paralell-Hello-World
+ ) you will have noticed that the processes reported back in a random order to stdout. This is difficult to read for large numbers of processes, so for the output to file, we have the process with ID 0 receive the greeting message from each other process, in order by process ID, and only Process 0 will write the messages to file. 
+The code actually creates and writes to two files: 
+The file “nodes_used.log” contains only the process ID and hostname, which is the same information as printed stdout already, but ordered. 
+The file “nodesused_cpuid.log” additionally outputs the CPU ID, that is, the number of the computational core in the two CPUs on the node that the MPI process executed on.
+Message sending is accomplished using the MPI_Send() function, and receiving with the MPI_Recv() function. Each process prepares its own message, then execution varies depending on the current process. Process 0 writes its own message first, then receives and writes the others in order by process ID. All other processes simply send their message to process 0. The fprintf function is used to write one line for each MPI process to each of the two output files.
+This program is compiled for use with MPI using the following command:
+[userid@c18-01 Nodesused]$ mpiicc nodesused.c -o nodesused
+To see how to run your parallel executable of the nodesused program on the cluster, use the same slurm script as above and just replace the jobname and executable name by nodesused, see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1325957222#Parallel-Nodesused-Runs
+.

@@ -1,0 +1,507 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1335951387
+TITLE: Basic Slurm Commands
+
+Table of Contents
+1
+ 
+Job Submission and Resource Allocation
+1.1
+ 
+Flags and what they mean
+1.2
+ 
+Jobs, Tasks, CPU cores, and Nodes
+1.2.1
+ 
+Example
+1.3
+ 
+sbatch
+1.4
+ 
+srun
+1.4.1
+ 
+salloc
+2
+ 
+Monitoring and Inspecting Jobs
+2.1
+ 
+squeue
+2.1.1
+ 
+sinfo
+2.1.2
+ 
+scontrol
+2.1.3
+ 
+sacct
+2.1.4
+ 
+sstat
+3
+ 
+Managing and Controlling Jobs
+3.1
+ 
+scancel
+3.1.1
+ 
+scontrol hold <jobid>
+3.1.2
+ 
+scontrol release <jobid>
+3.1.3
+ 
+scontrol requeue <jobid>
+4
+ 
+Common sbatch Script Directives
+5
+ 
+Additional Resources
+Slurm provides a suite of commands to help users submit, monitor, and manage jobs on a compute cluster. Below is a reference for the most commonly used Slurm commands, with short descriptions and example usage. For more details and advanced options, see the linked documentation for each command.
+Job Submission and Resource Allocation
+Flags and what they mean
+All the commands, i.e. srun, sbatch, and salloc require a set of flags (some of which are optional), and the values that they can take are as follows:
+--cluster
+chip-cpu
+chip-gpu
+--account
+pi_<name of the principal investigator>
+--partition
+ (
+only needed for chip-cpu
+, as the chip-gpu does not have any partitions. Refer to 
+chip Partitions and Usage
+Preview
+ for more details.)
+general
+ 
+2018
+2021
+2024
+ (can only be accessed by contributing PIs)
+--qos
+ (refers to Quality of service, and is 
+only needed for chip-cpu
+. Refer to 
+chip-cpu QOS Restrictions
+Preview
+ for more details.)
+--time
+ (refers to the total amount of time the user wants to allocate for the job)
+in HH:MM:SS 
+--mem
+ (refers to the upper bound on the CPU memory the user needs for that job from that node)
+the memory limit can be checked by concatenating the “free -h” command with the srun command for a particular node, and then the value should be a number representing the memory in MB.
+--cpus-per-task 
+(refers to the number of CPU cores the user wants to allocate to each task) - 
+Optional Flag
+ 
+Defaults to 1 if the flag is not provided. Refer to 
+Cluster Specifications
+Preview
+ for more details.
+--ntasks
+ (refers to the number of parallel tasks the user wants the job to run) - 
+Optional Flag
+ 
+Defaults to 1 if the flag is not provided
+--ntasks-per-node
+ (specifies the maximum number of tasks to be ran on each allocated node) - 
+Optional Flag
+Defaults to 1 if flag is not specified 
+--nodes
+ (refers to the 
+minimum
+ number of worker nodes needed by the user to split the task into) - 
+Optional Flag
+ 
+Defaults to 1 if the flag is not provided. Refer to 
+Cluster Specifications
+Preview
+ for more details.
+--nodelist
+ (refers to the specific node the user wants to run their jobs on) - 
+Optional Flag
+ 
+--constraint
+ (refers to some constraint specifying the one of many parameters on the compute node, such as the GPU cards on the node) - 
+Optional Flag
+ 
+--gres
+ (refers to generic resources, and is 
+only needed for chip-gpu
+)
+gpu:n
+, where 
+n
+ refers o the number of GPU cards needed by the user
+--pty
+ (refers to allocating a pseudo-terminal, for running an interactive session, and is 
+only needed for the 
+srun
+ command
+)
+$SHELL
+Path to shell - ex: 
+/bin/bash
+, 
+/bin/zsh
+, etc
+Jobs, Tasks, CPU cores, and Nodes
+Slurm organizes computational resources through a hierarchy of jobs and tasks:
+Jobs: Container for all allocated resources that can span multiple compute node
+Tasks: Individual units of execution within a job, each confined to a single compute node
+When submitting work to Slurm, you specify:
+The number of parallel tasks you need, and
+The resources (CPUs, memory, GPUs) required for each task
+Slurm then allocates the appropriate resources across one or more nodes to accommodate all your tasks.
+The interaction between the 
+--cpus-per-task
+, 
+--ntasks
+, 
+--ntasks-per-node
+, and 
+--nodes
+ flags is worth noting:
+--cpus-per-task
+ - Specifies the number of CPU cores the user wants to allocate to each task
+--ntasks
+ - Specifies the number of tasks the user wants each job to be split into
+--ntasks-per-node
+ - Specifies the number of tasks to be ran on each allocated node
+--nodes
+ - Specifies the 
+minimum
+ number of nodes to use for a job
+Example
+--cpus-per-task
+ and 
+--ntasks
+#SBATCH --cpus-per-task=4
+
+#SBATCH --ntasks=5
+This job has 5 parallel tasks, each with 4 CPU cores (20 cores total)
+--nodes
+ defaults to 1, so this job can run on a single node, or on multiple nodes (depending on current node availability)
+--cpus-per-task
+ and 
+--nodes
+ 
+#SBATCH --cpus-per-task=4
+
+#SBATCH --nodes=5
+This job has 4 CPU cores per task, and will run across a minimum of 5 nodes (20 cores total)
+Each task will run on 
+separate
+ nodes
+--cpus-per-task
+, 
+--ntasks
+, and 
+--nodes
+#SBATCH --cpus-per-task=4
+
+#SBATCH --ntasks=5
+
+#SBATCH --nodes=2
+This job has 4 CPU cores per task and 5 tasks (20 cores total) to be run across a minimum of 2 
+separate
+ nodes
+The 5 tasks will be divided between 2 (or more) nodes
+--cpus-per-task
+, 
+--ntasks
+, 
+--ntasks-per-node
+, and 
+--nodes
+#SBATCH --cpus-per-task=4
+
+#SBATCH --ntasks=5
+
+#SBATCH --ntasks-per-node=2
+
+#SBATCH --nodes=2
+This job has 4 CPU cores per task and 5 tasks (20 cores total) to be run across a 
+minimum 
+of 2 
+separate
+ nodes
+However, this job only allows to 2 tasks per node, so a third node will be allocated for the remaining task
+#SBATCH --cpus-per-task=4
+
+#SBATCH --ntasks=5
+
+#SBATCH --nodes=6
+In the example above, since slurm cannot run 5 tasks on 6 nodes, as each task has to be confined to a single node, it will set 
+--nodes
+ to 
+5
+, and show the following message before allocating the resources:
+srun: warning: can't run 5 processes on 6 nodes, setting nodes to 5
+To avoid the warning, ensure that the number of nodes requested 
+--nodes
+ is less than or equal to the number of tasks 
+--ntasks
+.
+sbatch
+Using the sbatch command, a user can take a bash script as its input and execute a series of tasks using the compute resources. Functionally, it does the same thing as the 
+srun 
+command, but it does not let the user do so in an interactive way like the 
+srun 
+command does.
+Example
+Create a file (ending with the extension .slurm) using your favorite text editor that should look like the following:
+[user@chip ~]$ cat sbatchTest.slurm 
+
+#!/bin/bash
+
+
+
+#SBATCH --cluster=chip-cpu 
+
+#SBATCH --mem=500
+
+#SBATCH --time=1000 
+
+#SBATCH --qos=long 
+
+#SBATCH --account=pi_doit
+
+#SBATCH --partition=general 
+
+python test.py 
+
+
+
+[user@chip ~]$ sbatch sbatchTest.slurm
+As shown above, after the file is created, run the sbatch command to submit the job to the cluster.
+srun
+Run a command or script interactively or within a job allocation.
+srun --pty bash 
+Launch a parallel job step inside a script:
+srun ./my_parallel_program 
+Required Parameters on chip-cpu
+--cluster, which should be set to
+chip-cpu
+--account, which should be set to
+pi_<name of the principal investigator> (as described above)
+--partition
+--qos
+--time
+--mem
+--pty
+Required Parameters on chip-gpu
+--cluster, which should be set to 
+chip-gpu
+--account, which should be set to
+pi_<name of the principal investigator> (as described above)
+--mem
+--time
+--gres
+--pty
+Example
+These slurm commands require special “flags” that modify the way they work. Very simple examples that will be explained in more detail elsewhere are given below
+[regularUser1@chip ~]$ srun -M chip-gpu --time=1 --mem=1 --gres=gpu:1 hostname
+
+srun: job 8675309 queued and waiting for resources
+
+srun: job 8675309 has been allocated resources
+
+g24-03
+ 
+[regularUser1@chip ~]$ srun -M chip-cpu --time=1 --mem=1 --partition=general --qos=short hostname
+
+c18-01
+More information about srun: 
+How do I run an interactive job?
+Preview
+ 
+ 
+salloc
+The salloc command can be used to allocate the specified computing resources to an user, and hence the usage is similar to that of srun but without the command the users needs to run once the resources have been allocated, e.g.
+salloc --cluster=chip-cpu --account=pi_doit --partition=general --qos=normal --time=1:00:00 --mem=5000
+Monitoring and Inspecting Jobs
+squeue
+View jobs in the queue (pending, running, etc.).
+squeue 
+Show only your jobs:
+squeue -u <your_username> 
+Example
+Running 
+squeue
+ by itself is not recommended. Be sure to specify the cluster as noted above. 
+Below is a sample output of running 
+squeue -M chip-cpu
+ to see the jobs running on the chip-cpu resources.
+[regularUser1@chip ~]# squeue -M chip-cpu
+
+CLUSTER: chip-cpu
+
+             JOBID PARTITION     NAME        USER  ST       TIME  NODES NODELIST(REASON)
+
+             1116      2021      demo regularUser1  R        7:02      1  c18-01
+
+             1210      2018      demo regularUser2  R        2:01      1  c18-02
+Above, we see two jobs making use of two different CPU nodes (c18-01 and c18-02). Both jobs have been running for only a few minutes. 
+Below is a sample output of running 
+squeue -M chip-gpu
+ to see the jobs running on the chip-cpu resources.
+[regularUser1@chip ~]# squeue -M chip-gpu
+
+CLUSTER: chip-cpu
+
+             JOBID PARTITION     NAME        USER  ST             TIME  NODES NODELIST(REASON)
+
+             1116      gpu      demo regularUser2  R        1-04:22:01      1  g20-01
+Above we see just one job making use of one GPU node (g20-01). The job has been running for over a day.
+sinfo
+Display the status of cluster nodes and partitions.
+sinfo 
+Example
+You can often “get away with” running 
+sinfo
+ by itself. It is best practice to always specify the cluster(s) as noted above.
+[regularUser1@chip ~]# sinfo -M chip-cpu,chip-gpu
+
+CLUSTER: chip-cpu
+
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+
+2024         up   infinite      1    mix c24-05
+
+2024         up   infinite      9  alloc c24-[01-04,06-10]
+
+2024         up   infinite     41   idle c24-[11-51]
+
+2021         up   infinite     18    mix c21-[01-18]
+
+2018         up   infinite     35    mix c18-[01,05,08-13,15-41]
+
+2018         up   infinite      2  alloc c18-[14,42]
+
+general      up   infinite     53    mix c18-[01,05,08-13,15-41],c21-[01-18]
+
+general      up   infinite      2  alloc c18-[14,42]
+
+
+
+CLUSTER: chip-gpu
+
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+
+gpu*         up   infinite      1   resv g24-08
+
+gpu*         up   infinite     21    mix g20-[01-10,13],g24-[01-07,09-11]
+
+gpu*         up   infinite      2   idle g20-[11-12]
+
+[regularUser1@chip ~]#
+Above we see all of the cluster compute resources, separated by the type of resource (chip-cpu or chip-gpu). See the man page for 
+sinfo
+ for more detailed information.
+scontrol
+Show detailed information about a specific job.
+scontrol show job <jobid> 
+sacct
+Show accounting information for jobs (historical and current).
+sacct -u <your_username> 
+Example
+[regularUser1@chip ~]$ sacct
+
+JobID           JobName  Partition    Account  AllocCPUS      State ExitCode 
+
+------------ ---------- ---------- ---------- ---------- ---------- -------- 
+
+8675309        hostname        gpu    pi_doit          1  COMPLETED      0:0
+
+58041          hostname               pi_doit          1  COMPLETED      0:0  
+In cases where a job submission fails, 
+sacct
+ can be helpful in understanding what might have happened.
+sstat
+Display status information for running jobs.
+sstat --format=AveCPU,AveRSS -j <jobid> 
+Managing and Controlling Jobs
+scancel
+Ensure you specify the cluster your job is running on in your scancel command using 
+-M chip-[cpu,gpu]
+ or 
+--cluster=chip-[cpu,gpu]
+Cancel a running or pending job.
+scancel -M chip-cpu <jobid> 
+Cancel all your jobs:
+scancel -M chip-cpu -u <your_username> 
+Example
+[regularUser1@chip ~]# squeue -M chip-cpu
+
+CLUSTER: chip-cpu
+
+             JOBID PARTITION     NAME        USER  ST       TIME  NODES NODELIST(REASON)
+
+             1116      2021      demo regularUser1  R        7:02      1  c18-01
+
+             1210      2018      demo regularUser2  R        2:01      1  c18-02
+
+[regularUser1@chip ~]# scancel -M chip-cpu 1116
+
+[regularUser1@chip ~]# squeue -M chip-cpu
+
+CLUSTER: chip-cpu
+
+             JOBID PARTITION     NAME        USER  ST       TIME  NODES NODELIST(REASON)
+
+             1210      2018      demo regularUser2  R        2:01      1  c18-02
+Above we can see that the 
+scancel
+ command was used to cancel slurm job with ID 1116. 
+A user can’t cancel the jobs of another user.
+scontrol hold <jobid>
+Place a job on hold (pause it in the queue).
+scontrol release <jobid>
+Release a held job.
+scontrol requeue <jobid>
+Requeue a job (cancel and resubmit).
+Common sbatch Script Directives
+When writing a batch script for 
+sbatch
+, you can specify resource requests and job options using 
+#SBATCH
+ directives:
+#!/bin/bash
+
+#SBATCH --job-name=myjob 
+
+#SBATCH --cluster=chip-cpu 
+
+#SBATCH --mem=500
+
+#SBATCH --time=1000 
+
+#SBATCH --qos=long 
+
+#SBATCH --account=pi_doit
+
+#SBATCH --partition=general 
+
+python test.py 
+Additional Resources
+Slurm Workload Manager - Quick Start User Guide
+ 
+Ubuntu Manpage: Slurm - Slurm Workload Manager overview.
+ 
+More about the srun, sbatch, and salloc commands
+Preview
+ 
+Tip:
+ Replace 
+<your_username>
+ and 
+<jobid>
+ with your actual username and job ID.

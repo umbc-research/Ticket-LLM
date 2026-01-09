@@ -1,0 +1,460 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1325957222
+TITLE: How to Run on chip
+
+1
+ 
+Introduction
+2
+ 
+Interacting with the SLURM Scheduling System
+2.1
+ 
+scancel
+2.2
+ 
+sbatch
+2.3
+ 
+squeue
+2.4
+ 
+scontrol
+2.5
+ 
+sinfo
+3
+ 
+Running Serial Hello World
+3.1
+ 
+Interactive run on a compute node
+3.2
+ 
+Batch run using srun without a Slurm script
+3.3
+ 
+Batch run using sbatch with a Slurm script
+4
+ 
+Running Parallel Hello World
+5
+ 
+Parallel Nodesused Runs
+This tutorial tutorial demonstrates how to run serial and parallel jobs on the cluster. Before starting this tutorial please make sure you have completed 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235
+ first, as you will need those compiled programs for this tutorial.
+NOTE:
+ Whenever you see “userid” this is a dummy username used in the tutorial. When you work through the tutorial, make sure to substitute your username in the relevant places. Similarly, for “pi_userid” this is a dummy PI account name. Please make sure you are referring to the PI account for your case.
+Introduction
+Running a program on chip is different than running one on a standard workstation. When we log into the cluster, we are interacting with the login node. But we would like our programs to run on the compute nodes, which is where the real computing power of the cluster is. We will walk through the processes of running serial and parallel code on the cluster, and then later discuss some of the finer details. 
+On chip, jobs must be run on the compute nodes of the cluster. You cannot execute jobs directly on the compute nodes yourself; you must request the cluster’s batch system do it on your behalf. To use the batch system, you will submit a special script which contains instructions to execute your job on the compute nodes. When submitting your job, you specify a partition (group of nodes, e.g., 2018, 2021, or 2018; see 
+https://umbc.atlassian.net/wiki/x/AQB6Sg
+ for more) and a QOS (a classification that determines what kind of resources your job will need; see 
+https://umbc.atlassian.net/wiki/x/D4DwRQ
+ for more). Your job will wait in the queue until it is “next in line”, and free processors on the compute nodes become available. Once a job is started, it continues to run until it either completes (with or without error) or reaches its time limit, in which case it is terminated by the scheduler.
+During the runtime of your job, your instructions will be executed across the compute nodes. These instructions will have access to the resources of the nodes on which they are running. Notably, the memory, processors, and local disk space (/scratch space; see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1072267344/Storage#Temporary-Storage
+  for more). Note that the /scratch space is cleared after every job terminates.
+The batch system (also called the scheduler or work load manager) used on chip is called SLURM (or Slurm), which is short for 
+Simple Linux Utility for Resource Management
+.
+Interacting with the SLURM Scheduling System
+The examples below on this page are designed for running code on the CPU cluster such as the C programs in 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235
+.
+There are several basic commands you need to know to submit jobs, cancel them, and check their status. These are:
+sinfo – view the current status of the queues
+sbatch – submit a job to the batch queue system
+squeue – check the current jobs in the batch queue system
+scontrol – find out details about a particular job
+scancel – cancel a job
+scancel
+The first command we will mention is “scancel”. If you have submitted a job that you no longer want, you should be a responsible user and kill it. This will prevent resources from being wasted, and allows other users’ jobs to run. Jobs can be killed while they are pending (waiting to run), or while they are actually running. To remove a job from the queue or to cancel a running job cleanly, use the scancel command with the identifier of the job to be deleted, for instance:
+[userid@c18-01 Nodesused]$ scancel --cluster=chip-cpu 999999
+Substitute the job identifier in the example above, “999999”, for the one you wish to cancel. The job identifier can be obtained from the job listing from squeue (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1325957222#squeue
+ ) or immediately after using batch (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1325957222#sbatch
+), when you originally submitted the job (also below). See “man scancel” for more information.
+sbatch
+Now that we know how to cancel a job, we will see how to submit one. You can use the “sbatch” command to submit a script to the queue system:
+[userid@c18-01 Nodesused]$ sbatch run-nodesused-n2ppn4mpi.slurm
+
+Submitted batch job 999999 on cluster chip-cpu
+In this example, run-nodesused-n2ppn4mpi.slurm is the script we are sending to the slurm scheduler. We will see shortly how to formulate such a script. Notice that sbatch returns a job identifier. We can use this to kill the job later if necessary (as in the scancel example above; see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/edit-v2/1325957222#scancel
+), or to check its status. For more information, see “man sbatch”.
+squeue
+You can use the “squeue” command to check the status of jobs in the batch queue system. Here is an example of the basic usage on chip-cpu and for the user “userid”; to see your jobs, replace userid with your username on chip:
+[userid@c18-01 Nodesused]$ squeue --cluster=chip-cpu -u userid
+
+CLUSTER: chip-cpu
+
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+
+            999999      2018 nodesuse   userid  R       0:01      2 c18-[41-42]
+
+            999998      2018     bash   userid  R      47:04      1 c18-01
+The most interesting column is the one titled “ST” for “status”. It shows what a job is doing at this point in time. The state “PD” (“pending”) indicates that the job has been queued. When enough free processor cores become available, it will change to the “R” (“running”) state and begin running. You may also see a job with status “CG” or “CF”, which means it is completing (such as still writing stdout and stderr), and about to exit the batch system. Other statuses are possible too, see “man squeue”. Once a job has exited the batch queue system, it will no longer show up in the squeue display.
+We can also see several other pieces of useful information. The TIME column shows the current walltime used by the job up to the present time. For example, job 999999 has been running for 1 second so far. The NODES column shows the number of nodes used by the job and the NODELIST column shows which compute node(s) has(/have) been assigned to the job. For job 999999, the 2 nodes are c18-41 and c18-42, which get contracted together as c18-[41-42].
+scontrol
+After submitting a job while it is queued, during a job, and for a limited period of time after the job has finished (a few hours), the “scontrol” command can give access to the full details of the job. See “man scontrol” for more information; here we demonstrate basic output with “show job”, using the job ID from above as our example again:
+[userid@c18-01 Nodesused]$ scontrol --cluster=chip-cpu show job 999999
+
+JobId=999999 JobName=nodesused
+
+   UserId=userid(999000) GroupId=pi_userid(8888) MCS_label=N/A
+
+   Priority=1 Nice=0 Account=pi_userid QOS=shared
+
+   JobState=COMPLETED Reason=None Dependency=(null)
+
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+
+   RunTime=00:00:02 TimeLimit=00:05:00 TimeMin=N/A
+
+   SubmitTime=2025-05-28T13:36:41 EligibleTime=2025-05-28T13:36:41
+
+   AccrueTime=2025-05-28T13:36:41
+
+   StartTime=2025-05-28T13:36:41 EndTime=2025-05-28T13:36:43 Deadline=N/A
+
+   PreemptEligibleTime=2025-05-28T13:36:41 PreemptTime=None
+
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2025-05-28T13:36:41 Scheduler=Main
+
+   Partition=2018 AllocNode:Sid=c18-01:122675
+
+   ReqNodeList=(null) ExcNodeList=(null)
+
+   NodeList=c18-[41-42]
+
+   BatchHost=c18-01
+
+   NumNodes=2 NumCPUs=8 NumTasks=8 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+
+   ReqTRES=cpu=8,mem=8G,node=2,billing=8
+
+   AllocTRES=cpu=8,mem=8G,node=2,billing=8
+
+   Socks/Node=* NtasksPerN:B:S:C=4:0:*:1 CoreSpec=*
+
+   MinCPUsNode=4 MinMemoryNode=4G MinTmpDiskNode=0
+
+   Features=(null) DelayBoot=00:00:00
+
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+
+   Command=/home/userid/Nodesused/run-nodesused-n2ppn4mpi.slurm
+
+   WorkDir=/home/userid/Nodesused
+
+   StdErr=/home/userid/Nodesused/slurm.err
+
+   StdIn=/dev/null
+
+   StdOut=/home/userid/Nodesused/slurm.out
+
+   Power=
+This is very dense output, but if reading carefully, you can find all details of the job, such as number of nodes, node list, time limit, directory of the job, slurm script used, stdout and stderr files, etc.
+sinfo
+The “sinfo” command also shows the current status of the batch system, but from the point of view of the Slurm partitions. Here is a sample output that can show how many nodes in which partition are available:
+[userid@chip ~]$ sinfo --cluster=chip-cpu
+
+CLUSTER: chip-cpu
+
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+
+2018         up   infinite     12  alloc c18-[29-40]
+
+2018         up   infinite     39   idle c18-[01-28,41-51]
+
+2021         up   infinite      5    mix c21-[01-05]
+
+2021         up   infinite     13   idle c21-[06-18]
+
+2018         up   infinite      3  down* c18-[17,19,23]
+
+2018         up   infinite      1  drain c18-39
+
+2018         up   infinite      5    mix c18-[18,20-21,30,40]
+
+2018         up   infinite     33   idle c18-[01-16,22,24-29,31-38,41-42]
+
+To see more details of available equipment, use sinfo with options specified using format codes such as:
+sinfo -o "%10N %4c %10m %40f %10G"
+The format of each field is "
+%[[.]size]type[suffix]
+":
+“size”
+—Minimum field size. If no size is specified, whatever is needed to print the information will be used.
+“.”— Indicates the output should be right justified and size must be specified.  By default output is left justified.
+In this example we are asking sinfo to display the names of nodes used, the number of CPUs per node (N), size of memory per node in MB (m), available features on nodes (f), and any generic resources (G; which for chip will list GPUs available on GPU-type nodes). See “man sinfo” for all available format codes. Using our example above gives:
+[userid@chip ~]$ sinfo -o "%10N %4c %10m %40f %10G"
+
+CLUSTER: chip-cpu
+
+NODELIST   CPUS MEMORY     AVAIL_FEATURES                           GRES
+
+c18-[14-51 64   476837     location=local,low_mem                   (null)
+
+c18-[01-13 64   953674     location=local,high_mem                  (null)
+
+c18-[01,05 36+  182524+    location=local                           (null)
+
+
+
+CLUSTER: chip-gpu
+
+NODELIST   CPUS MEMORY     AVAIL_FEATURES                           GRES
+
+g20-[01,03 96   385581     RTX_2080TI,RTX_2080ti,rtx_2080TI,2080,20 gpu:8
+
+g20-[12-13 96   238418     RTX_8000,rtx_8000,8000                   gpu:8
+
+g24-[01-08 32   257443     L40S,l40s,L40s,l40S                      gpu:4
+
+g24-[09-10 32   257443     h100,H100                                gpu:2
+
+g20-[02,04 96   385581     RTX_2080TI,RTX_2080ti,rtx_2080TI,2080,20 gpu:6
+
+g20-[05-11 96   385581     RTX_6000,rtx_6000,6000                   gpu:8
+The key use of this output is to know how many nodes have what type of equipment exactly and how to spell their names to request them in your srun or sbatch commands.
+Running Serial Hello World
+This section assumes you have already compiled the serial “Hello, world!” example (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Serial-Hello-World
+). Now we will see how to run it in several different ways.
+Interactive run on a compute node
+The most obvious way to run the program is interactively, that is, from the Linux command line on the compute node, where you are while compiling.
+[userid@c18-01 Hello_Serial]$ ./hello_serial
+
+Hello world from c18-01
+
+We can see the reported hostname that confirms that the program ran on the compute node c18-01 while we were running an interactive session.
+Batch run using srun without a Slurm script
+For jobs that take more than a few seconds, interactive running is not really appropriate. The srun command reserves a compute node for your job, runs the job there, and then releases the compute node again, so others can use it. A most basic srun command can be issued without a slurm script (see next sub-section), meaning that you issue the srun command from the Linux command line. However, 
+note carefully that this srun command works only from the login node, not if you are in an interactive session on a compute node!
+ This is as opposed to the sbatch command in the following sub-section that can be issued either from the login node or a compute node.
+srun --cluster=chip-cpu --account=pi_userid --partition=general --qos=short --time=00:05:00 --mem=4G ./hello_serial
+Batch run using sbatch with a Slurm script
+To submit a batch job, it is best to assemble all srun options in a Slurm file and then use sbatch with this file. Download the Slurm script to your workspace where the executable “hello_serial” is already located, using either the link or wget (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Downloading-Files-with-wget
+). 
+
+
+DOWNLOAD LINK:
+ 
+https://umbc-research.github.io/wiki-code/Hello_Serial/run-hello_serial.slurm
+The flags used in the Slurm script are described below:
+job-name:
+ sets the string that is displayed as the name of the job in squeue. 
+output/error:
+ set the file names for capturing standard output (stdout) and standard error (stderr), respectively. 
+cluster:
+ sets the cluster (CPU or GPU) that the job will run on. Here we are requesting CPU nodes.
+account:
+ the PI account which the job will associated with.
+partition:
+ chooses the “general” partition of the CPU cluster to request for the job to run on. The QOS flag requests the short queue, since this particular “Hello, world!” job should only run for a few seconds or less. 
+time:
+ provides a more precise estimate of the maximum possible time for the job to take. After a job has reached its time limit, it is stopped by the scheduler. This is done to ensure that everyone has a fair chance to use the cluster. It is good practice to slightly overestimate this to ensure your job does not get terminated before completion.
+mem:
+ requested memory per node for the job. Similar to the time flag it is good practice to slightly overestimate this to ensure your job does not run out of memory while running.
+nodes:
+ the total number of nodes requested; set to one for this serial job example.
+ntasks-per-node:
+ number of MPI tasks per node; set to one for this serial job example. 
+We are now ready to submit our job to the scheduler. To accomplish this, use the sbatch command as follows:
+[userid@c18-01 Hello_Serial]$ sbatch run-hello-serial.slurm
+
+Submitted batch job 222222 on cluster chip-cpu
+If the submission is successful, the sbatch command returns a job ID, here 222222. We can use this to check the status of the job (squeue), or delete it (scancel) if necessary. To check on running jobs by user “userid” in this example, use the squeue command like
+[userid@c18-01 Hello_Serial]$ squeue --cluster=chip-cpu -u userid
+
+CLUSTER: chip-cpu
+
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+
+            111111      2018     bash   userid  R    1:38:59      1 c18-01
+Notice that this is actually NOT the job that we just submitted, see the job ID! Rather, this is showing the job of my interactive session itself from which the job was submitted. The issue is that this “Hello, world!” job just takes fractions of a second, so we are typically not able to catch it in squeue while it is running. But looking at the files in the directory now, we see that the files slurm.err and slurm.out exist, so the job definitely ran. If slurm.err is not empty (i.e., it contains error messages), check the contents carefully as something may have gone wrong. The file slurm.out contains our stdout output; it should contain the “hello world” message from our program.
+[userid@c18-01 Hello_Serial]$ ll
+
+total 192
+
+-rwxrwx--- 1 userid pi_userid 16600 May 29 16:46 hello_serial*
+
+-rw-rw---- 1 userid pi_userid   184 Feb  1  2014 hello_serial.c
+
+-rw-rw---- 1 userid pi_userid   628 May 29 17:06 run-hello-serial.slurm
+
+-rw-rw---- 1 userid pi_userid     0 May 29 17:27 slurm.err
+
+-rw-rw---- 1 userid pi_userid    24 May 29 17:27 slurm.out
+
+[userid@c18-01 Hello_Serial]$ more slurm.err
+
+[userid@c18-01 Hello_Serial]$ more slurm.out
+
+Hello world from c18-01
+Running Parallel Hello World
+This section assumes you have already compiled the parallel “Hello, world!” example (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Parallel-Hello-World
+). Now we will see how to conduct a parallel run across multiple compute nodes. Download the Slurm script to your workspace where the executable “hello_parallel” is already located, using either the link or wget (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Downloading-Files-with-wget
+).
+
+
+DOWNLOAD LINK:
+ 
+https://umbc-research.github.io/wiki-code/Hello_Parallel/run-hello_parallel-n2ppn4mpi.slurm
+The Slurm script above is very similar to the serial slurm script in the options for sbatch set at the top of the file, except that we specify two nodes with the  “--nodes=2” flag, and four processes per node with “--ntasks-per-node=4”. These are just examples. You can choose numbers of nodes from one to however many are available and processes per node from one to how many cores there on one node; e.g, on a 2018 node, there are two 18-core CPUs for a total of 36 cores (see 
+https://umbc.atlassian.net/wiki/x/EQDcT
+ for more).
+A major difference of a parallel slurm script is the use of “mpirun” in front of the executable in the last line of the slurm script. There are also some extra lines before the mpirun line. The “module load” command is used to load the necessary Intel MPI libraries to run the program. This needs to be the same modules you used when compiling (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Loading-the-Intel-Compiler
+ and 
+https://umbc.atlassian.net/wiki/x/BQBHTw
+ for more). The command we use here loads multiple modules simultaneously.
+The mpirun option “-print-rank-map”  prints the hostnames of the nodes assigned and a list of the MPI ranks on each node to stdout; this is perfectly optional, you do not have to use this option. The two lines (those starting with “unset” and “export”) before the mpirun line fix the MPI processes to the assigned cores, which may make the job more efficient; these lines are also optional, you do not have to use them.
+You can now submit the script to the batch queue system:
+[userid@c18-01 Hello_Parallel]$ sbatch run-hello-n2ppn4mpi.slurm
+
+Submitted batch job 110025 on cluster chip-cpu
+The parallel Hello World program does not run long, but we managed to capture some output in squeue:
+[userid@c18-41 Hello_Parallel]$ squeue --cluster=chip-cpu -u userid
+
+CLUSTER: chip-cpu
+
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+
+110025      2018    hello  userid  R       0:01      2 c18-[41-42]
+
+110023      2018     bash  userid  R      14:25      1 c18-41
+
+
+
+[userid@c18-41 Hello_Parallel]$ squeue --cluster=chip-cpu -u userid
+
+CLUSTER: chip-cpu
+
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+
+110023      2018     bash  userid  R      14:30      1 c18-41
+This time, squeue shows the job running briefly, with 1 second elapsed, before the job again completes quickly and is gone from the queue with the second output of squeue. Notice again that the job with the name “bash” is an interactive shell that can be seen along with the parallel Hello World job.
+We check the output that we obtained now:
+[userid@c18-41 Hello_Parallel]$ ll
+
+total 192
+
+-rwxrwx--- 1 userid pi_userid 16776 May 28 11:57 hello_parallel*
+
+-rw-rw---- 1 userid pi_userid   490 Feb  1  2014 hello_parallel.c
+
+-rw-rw---- 1 userid pi_userid   726 May 28 12:09 run-hello-n2ppn4mpi.slurm
+
+-rw-rw---- 1 userid pi_userid     0 May 28 12:09 slurm.err
+
+-rw-rw---- 1 userid pi_userid   539 May 28 12:09 slurm.out
+
+[userid@c18-41 Hello_Parallel]$ more slurm.err
+
+[userid@c18-41 Hello_Parallel]$ more slurm.out
+
+(c18-41:0,1,2,3)
+
+(c18-42:4,5,6,7)
+
+Hello world from process 0002 out of 0008, processor name c18-41
+
+Hello world from process 0003 out of 0008, processor name c18-41
+
+Hello world from process 0005 out of 0008, processor name c18-42
+
+Hello world from process 0001 out of 0008, processor name c18-41
+
+Hello world from process 0006 out of 0008, processor name c18-42
+
+Hello world from process 0007 out of 0008, processor name c18-42
+
+Hello world from process 0004 out of 0008, processor name c18-42
+
+Hello world from process 0000 out of 0008, processor name c18-41
+
+We see that the error file “slurm.err” is empty again, indicating that no error occurred. The output file “slurm.out” lists the MPI ranks and the compute node that each ran on, here c18-41 for MPI ranks 0, 1, 2, 3 and c18-42 for MPI ranks 4, 5, 6, 7. Clearly, the output is mixed up and in random order. This is to be expected, as several output streams write to the same file. Regardless, we clearly see that two nodes were used and that each node had four MPI processes per node running. The first two lines of slurm.out are caused by the “-print-rank-map” option to mpirun; they show the hostname and the MPI ranks run on each node.
+Parallel Nodesused Runs
+This section assumes you have already compiled the parallel “Nodesused” example (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Logging-Which-Nodes-are-Used
+). This program is similar to the parallel Hello world program, but it logs which nodes were used and outputs information in an ordered fashion to file instead in addition to stdout. Download the Slurm script to your workspace where the executable “nodesused” is already located, using either the link or wget (see 
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235/How+to+Compile+on+chip#Downloading-Files-with-wget
+).
+
+
+DOWNLOAD LINK:
+ 
+https://umbc-research.github.io/wiki-code/Nodesused/run-nodesused-n2ppn4mpi.slurm
+The submission script reads for the nodesused program, with minor changes to the job-name and the mpirun line. Submit the script with sbatch:
+[userid@c18-01 Nodesused]$ sbatch run-nodesused-n2ppn4mpi.slurm
+
+Submitted batch job 110026 on cluster chip-cpu
+We can now examine the output:
+[userid@c18-41 Nodesused]$ ll
+
+total 240
+
+-rwxrwx--- 1 userid pi_userid 17504 May 28 12:40 nodesused*
+
+-rw-rw---- 1 userid pi_userid  3809 Oct 22  2018 nodesused.c
+
+-rw-rw---- 1 userid pi_userid   440 May 28 12:42 nodesused_cpuid.log
+
+-rw-rw---- 1 userid pi_userid   320 May 28 12:42 nodesused.log
+
+-rw-rw---- 1 userid pi_userid   721 May 28 12:41 run-nodesused-n2ppn4mpi.slurm
+
+-rw-rw---- 1 userid pi_userid     0 May 28 12:42 slurm.err
+
+-rw-rw---- 1 userid pi_userid   555 May 28 12:42 slurm.out
+
+[userid@c18-41 Nodesused]$ more slurm.err
+
+[userid@c18-41 Nodesused]$ more slurm.out
+
+(c18-41:0,1,2,3)
+
+(c18-42:4,5,6,7)
+
+Hello world from process 0001 out of 0008, processor name c18-41
+
+Hello world from process 0000 out of 0008, processor name c18-41
+
+Hello world from process 0003 out of 0008, processor name c18-41
+
+Hello world from process 0002 out of 0008, processor name c18-41
+
+Hello world from process 0004 out of 0008, processor name c18-42
+
+Hello world from process 0006 out of 0008, processor name c18-42
+
+Hello world from process 0005 out of 0008, processor name c18-42
+
+Hello world from process 0007 out of 0008, processor name c18-42
+
+Notice that the node numbers confirm that the job was run on two nodes with four processes per node again. As before for the parallel “Hello, world!” program, the order of output lines to stdout is random. However, the listing of the file “nodesused.log” shows that our code in the nodesused() function ordered the output by the MPI process IDs:
+[userid@c18-41 Nodesused]$ more nodesused.log
+
+MPI process 0000 of 0008 on node c18-41
+
+MPI process 0001 of 0008 on node c18-41
+
+MPI process 0002 of 0008 on node c18-41
+
+MPI process 0003 of 0008 on node c18-41
+
+MPI process 0004 of 0008 on node c18-42
+
+MPI process 0005 of 0008 on node c18-42
+
+MPI process 0006 of 0008 on node c18-42
+
+MPI process 0007 of 0008 on node c18-42
+The output file “nodesused_cpuid.log” shows similar output, but also shows the CPU ID in addition to the other information.

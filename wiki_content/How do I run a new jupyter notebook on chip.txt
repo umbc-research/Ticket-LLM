@@ -1,0 +1,201 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1104805915
+TITLE: How do I run a new jupyter notebook on chip?
+
+1
+ 
+How do I run a new jupyter notebook on chip?
+2
+ 
+How do I run an existing jupyter notebook on chip?
+3
+ 
+Deleting Old slurm files from the directory
+4
+ 
+How do I make sure jupyter is aware of my virtual environments?
+5
+ 
+Common Errors:
+5.1
+ 
+Jupyter "FileNotFound" or "Runtime_dir" Errors
+How do I run a new jupyter notebook on chip?
+There are example files that can be copied and modified to your research volumes in `/cm/shared/sampleScripts/` for both chip-gpu and chip-cpu. For this example, we’ll use the chip-cpu script.
+[mb17@chip ~]$ doit_user #note this is the name of my doit staff's research volume, you should put in your own research volume
+
+[mb17@chip mb17]$ mkdir jupyterSample
+
+[mb17@chip mb17]$ cd jupyterSample/
+
+[mb17@chip jupyterSample]$ cp /cm/shared/sampleScripts/chip-cpu/jupyter.slurm ./
+
+[mb17@chip jupyterSample]$ ls
+
+jupyter.slurm
+
+[mb17@chip jupyterSample]$
+Once you’ve copied the jupyter script that you require to your research directory, you’ll need to modify it. 
+[mb17@chip jupyterSample]$ cat jupyter.slurm
+
+#!/bin/bash
+
+#------------------------------------------
+
+# MAKE SURE TO RUN THIS slurm FILE FROM
+
+# WITHIN THE FOLDER THAT CONTAIN THE OUTPUT
+
+# AND ERROR FILES
+
+#------------------------------------------
+
+#SBATCH --cluster chip-cpu
+
+#SBATCH --job-name <JOB_NAME>
+
+#SBATCH --output=<JOB_NAME>-%j.out
+
+#SBATCH --error=<JOB_NAME>-%j.err
+
+#SBATCH --time=<WALL_TIME>
+
+#SBATCH --mem=<CPU_MEMORY>
+
+#SBATCH --account=<ACCOUNT_NAME>
+
+#SBATCH --qos=<QOS>
+
+#SBATCH --partition=<PARTITION>
+Using your favorite text editor, modify the options that are in arrow brackets to be what you need for your job. 
+#!/bin/bash
+
+#------------------------------------------
+
+# MAKE SURE TO RUN THIS slurm FILE FROM
+
+# WITHIN THE FOLDER THAT CONTAIN THE OUTPUT
+
+# AND ERROR FILES
+
+#------------------------------------------
+
+#SBATCH --cluster chip-cpu
+
+#SBATCH --job-name jupyterTest
+
+#SBATCH --output=jupyterTest-%j.out
+
+#SBATCH --error=jupyterTest-%j.err
+
+#SBATCH --time=1:00:00
+
+#SBATCH --mem=5000
+
+#SBATCH --account=pi_doit
+
+#SBATCH --qos=normal
+
+#SBATCH --partition=general
+Note, there are other “#SBATCH” options that can be set, but these are the minimum required. 
+Once you’ve set those, you can save and exit the text editor. Now you’ll want to run the file through sbatch:
+[mb17@chip jupyterSample]$ sbatch jupyter.slurm
+
+Submitted batch job 2252 on cluster chip-cpu
+After a moment, if you `ls` your current directory, you’ll see there are two new files, named after the settings “--output” and “--error” set in the slurm file. 
+[mb17@chip jupyterSample]$ ls
+
+jupyter.slurm  jupyterTest-2252.err  jupyterTest-2252.out
+`cat` the .out file. At the bottom of the file, you’ll see something like the following:
+Command to create ssh tunnel below. Run this on your local machine.
+
+ssh -N -f -L 17560:c18-30:17560 mb17@chip.rs.umbc.edu
+Open a new terminal and copy the ssh command into your local terminal. You’ll be prompted for your UMBC password, enter it as normal. 
+➜  ~ ssh -N -f -L 17560:c18-30:17560 mb17@chip.rs.umbc.edu
+
+(mb17@chip.rs.umbc.edu) Password:
+
+➜  ~
+Once you’ve done that, go back to your terminal with the jupyter files on chip. Now, `cat` the .err file. Find the section that looks like this:
+    To access the server, open this file in a browser:
+
+        file:///home/mb17/.local/share/jupyter/runtime/jpserver-2641834-open.html
+
+    Or copy and paste one of these URLs:
+
+        http://c18-30:17560/lab?token=8c4f3f611fa3e0643ce0b94780680f495944b0e9e75af89c
+
+        http://127.0.0.1:17560/lab?token=8c4f3f611fa3e0643ce0b94780680f495944b0e9e75af89c
+Take the line that starts with “
+http://127.0.0.1
+” and paste that into your web browser, and hit enter. You should now be taken to a jupyter notebook:
+How do I run an existing jupyter notebook on chip?
+If the user has exceeded the time limit specified on the slurm file on a new jupyter notebook, it will shut down. In such cases, repeat steps 3 - 8 above to get the same jupyter notebook running again on the cluster. Note that if the user needs to make changes to the slurm file, they need to run step 3, and if they do not, they can run steps 4 - 8 instead of steps 3 - 8.
+The other instance where a user would want to do this is when they are done with the notebook for a particular session, and they want to spin it up again.
+Deleting Old slurm files from the directory
+Every time an user runs steps 4 - 8 above, a new set of slurm files (extensions ending with .err and .out will be created). The older .err and .out are rendered useless once the user is done working on the jupyter notebook for those particular sessions (for those particular job IDs, which will part of the filenames for the .err and .out files). The user can delete those files on such occassions.
+How do I make sure jupyter is aware of my virtual environments?
+If you run a jupyter notebook, you may notice your virtual environments are not available. To resolve this, you’ll need to verify that the conda has been initialized. Run the commands described in 
+How do I create a Virtual Environment using Anaconda?
+ Or 
+How do I create a Python Virtual Environment?
+ Once that’s completed, in the same interactive environment run:
+ipython kernel install --user --name=$environment_name
+If you used anaconda, or:
+python -m ipykernel install --user --name $environment_name
+If you used the python virtual environment. 
+From there, run the 
+How do I run a jupyter notebook on chip?
+ section. You should now be able to see the environments in your jupyter notebook. 
+Common Errors:
+Jupyter "FileNotFound" or "Runtime_dir" Errors
+If your Jupyter Slurm job fails immediately and your 
+.err
+ file contains a traceback ending in: 
+FileNotFoundError: [Errno 2] No such file or directory: '/home/username/.local/share'
+The Cause
+This usually means your 
+symbolic link
+ for the 
+.local
+ directory is broken. On Chip, your home directory has limited space, so 
+.local
+ is often linked to a research volume. If that link points to an incorrect path (e.g., missing the 
+pi_
+ prefix), Jupyter cannot create the temporary files it needs to run.
+1. Check for a Broken Link
+Run the following command in your terminal:
+ls -ld ~/.local
+Look at the path after the arrow (
+->
+). If it points to a directory that doesn't exist (e.g., 
+/umbc/rs/doit/...
+ instead of 
+/umbc/rs/pi_doit/...
+), the link is broken.
+2. The Fix
+You need to remove the old link and point it to the correct research volume. Replace 
+your_username
+ and 
+your_pi_volume
+ with your actual details:
+# 1. Ensure the destination directory actually exists
+
+mkdir -p /umbc/rs/pi_your_volume/users/your_username/.local
+
+
+
+# 2. Remove the broken symbolic link
+
+rm ~/.local
+
+
+
+# 3. Create the correct link
+
+ln -s /umbc/rs/pi_your_volume/users/your_username/.local ~/.local
+3. Verify
+Run 
+ls -ld ~/.local
+ again. The path should now be highlighted in blue (or green), indicating a healthy link. You can now resubmit your 
+jupyter.slurm
+ script.

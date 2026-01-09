@@ -1,0 +1,526 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439/Getting+Started+on+chip
+TITLE: Getting Started on chip
+
+A video walk-through of this tutorial is available on YouTube: 
+Getting Started With Chip (July 2025)
+Preview
+ 
+
+
+
+
+This page is meant to help users new to the 
+chip
+ cluster get started. You can follow along or skip to specific sections. Understanding this page requires some familiarity with Linux and no familiarity with HPC, and will run through the basics of how to access the cluster, access research storage, run jobs, and load software modules.
+Table of Contents
+1
+ 
+Requesting a User Account on chip  
+2
+ 
+Accessing chip
+3
+ 
+The Login Node
+3.1
+ 
+Your Home Directory
+3.2
+ 
+Accessing Research Volumes
+3.3
+ 
+Accessing Resources
+3.3.1
+ 
+Basic Slurm Commands
+3.3.2
+ 
+Using 
+slurm
+ to access resources on 
+chip-cpu
+3.3.3
+ 
+Using 
+slurm
+ to access resources on 
+chip-gpu
+4
+ 
+Software Modules
+4.1
+ 
+Using LMod (The Software System)
+4.2
+ 
+Software On Different Nodes
+Requesting a User Account on chip  
+Note: If you had access to either taki or ada, you likely have an account available on chip.
+Every user account on chip must exist within a group dedicated to a lab, course, or special project. Be sure to identify what group you would like to be a part of and note the UMBC Email Address of the group owner.
+User Accounts are requested by going to 
+hpcf.umbc.edu
+ and navigating to the “User Support” dropdown and selecting “Request Help“. Once logged in … 
+Request A Chip Account Here
+If you are a faculty or staff member requesting a new group…
+In the section marked “New Group Type”, indicate whether the group is for a class or for a research lab/group.
+For groups supporting classes, you’ll need to provide the class name. Please note that groups made for classes are cleared at the end of every regular semester, in consultation with the course lead.
+For groups supporting research labs, you’ll need to provide a project title, and project abstract.
+By default, the group requestor is automatically provisioned as a user within the new group
+If you are a student requesting to join a group…
+In the section marked “Research Computing Action:”, press the dropdown and click “High Performance Computing”
+In the section marked “HPC Action:”, press the dropdown and “User Account Creation/Modification”
+In the section marked “Existing PI Email:”, enter your PI’s UMBC email (this is the group owner).
+In the section marked “Existing Group:”, enter the name of your PI group (this is usually ‘pi_$USERNAME’, where $USERNAME is your PI’s UMBC username).
+In the section marked “Project Title”, enter the title of the project you are working on with your PI.
+In the section marked “Project Abstract”, enter the abstract of the project you are working on with your PI.
+In the section marked “Subject”, enter the fields of research your project would fall under. 
+In the section marked “Notes/Comments”, enter any additional comments you might have, otherwise, type “N/A”, and hit enter. 
+Once you’ve put in this request, your ticket will be sent to the DoIT staff where they will await approval from the group owner. Once that has been received, you’ll get a message within three business days saying your account has been created on chip. 
+Accessing chip
+Start by opening a terminal on your local machine.
+This can be done by accessing the search function of your machine. 
+Mac/Linux: “CMD” + “space”
+Windows: Windows Key
+Typing “terminal”, and hitting enter.
+Once you’ve opened a new terminal, you’ll want to use 
+ssh
+ (secure socket shell) to access the cluster. 
+Type into the terminal 
+ssh ${yourUMBCUsername}@chip.rs.umbc.edu
+You’ll then be prompted to enter your UMBC password.
+If you are not on campus wifi or the VPN, you may be prompted for a Duo login. 
+For more information on UMBC’s VPN: 
+How do I get connected with the UMBC GlobalProtect VPN?
+Preview
+ 
+For more information UMBC’s Duo login: 
+Multi-Factor Authentication with DUO
+Preview
+ 
+The prompt for a Duo authentication should look something like the following:
+➜  ~ ssh regularUser@chip.rs.umbc.edu
+
+(regularUser@chip.rs.umbc.edu) Duo two-factor login for regularUser
+
+
+
+Enter a passcode or select one of the following options:
+
+
+
+ 1. Duo Push to XXX-XXX-XXXX
+
+ 2. Phone call to XXX-XXX-XXXX
+
+ 3. SMS passcodes to XXX-XXX-XXXX
+
+
+
+Passcode or option (1-3):
+When you first login, you’ll notice something akin to the following:
+Open 
+This is the Message-of-the-Day (MotD), sometimes information about cluster status may be displayed here, so remember to check it when logging in
+The Login Node
+When you first access 
+chip
+, you’ll be sent to what we call the “login node” (also known as: “user node”, or “edge node”). This is where you’ll mostly be interacting with 
+chip
+  compute resources. 
+Your Home Directory
+When you first login to the login node, a prompt is generated with the working directory set to your home directory. It is highly limited in space, only allowing you to store up to 500MB of data in this space. You should do your best to avoid storing large amounts of data in this space, as going over the quota can have many unintended consequences such as not allowing you to make new directories, move files, or preventing you from logging in to 
+chip
+.
+See also …
+How to check home directory usage on chip?
+Preview
+ 
+What to do if I run out of space in my chip home directory?
+Preview
+ 
+Accessing Research Volumes
+In addition to the home directory, research directories or “volumes” with large amounts of space exist on chip. By default, new groups start with 1TB, and all users in a group have access to these volumes. Each research volume comes with a “common” directory, which is meant to be used for files shared with the entire group. Each research volume also comes with a “users” directory. Within this directory, a more private directory is made that only specific group members have access to. The path for the research volume containing these directories can be found at 
+/umbc/rs/${PIsName}
+, the common directory can be found under 
+/umbc/rs/${PIsName}/common
+ and the user directory can be found under 
+/umbc/rs/${PIsName}/users/${yourUsername}
+. We have also created aliases for your working directory to be changed to these directories. You can view these aliases by typing the command 
+alias
+ into your command.
+Example:
+[regularUser@chip ~]$ pwd
+
+/home/regularUser
+
+[regularUser@chip rs]$ alias
+
+alias doit_ada='cd /umbc/ada/doit'
+
+alias doit_common='cd /umbc/rs/doit/common'
+
+alias doit_user='cd /umbc/rs/doit/users/regularUser'
+
+[regularUser@chip ~]$ doit_user
+
+[regularUser@chip regularUser]$ pwd
+
+/umbc/rs/doit/users/regularUser
+
+[regularUser@chip regularUser]$ df -h ./
+
+Filesystem                             Size  Used Avail Use% Mounted on
+
+nfs.iss.rs.umbc.edu:/ifs/data/rs/doit  500G  154G  347G  31% /umbc/rs/doit
+Do note that the “user” and “common” directories in the volume share the same storage quota. Reference the diagram below:
+Open 
+How to check research volume usage on chip?
+Preview
+ 
+How can I avoid duo when logging into Chip?
+Preview
+ 
+Accessing Resources
+To access the resources in chip, you must use a program called 
+slurm
+. Slurm is a scheduling program used by many HPC facilities designed to help make sure jobs are run in the most efficient manner. At a high level, slurm works by a user telling slurm what specific resources they need (cores, time, memory, GPU cards, etc), and slurm putting that program in an environment with those resources available. All of this is done from the login node. 
+chip-cpu
+ and 
+chip-gpu
+ have slightly different requirements when putting in a slurm request as described below. 
+chip Partitions and Usage
+Preview
+  has a breakdown of available resources
+Basic Slurm Commands
+srun
+srun
+ is a command that allows users to run individual commands on compute resources. Using 
+srun
+ can allow users to start interactive jobs, which can be helpful for development and testing of code. 
+sbatch
+sbatch
+ is a command that takes a bash script as its input and executes the series of tasks using the compute resources.
+Functionally, these commands do the same thing. Which command you use boils down to preference and need. 
+Additionally, you can find information about the status of your job, or nodes:
+sinfo
+sinfo
+ is a command that lets you see the status of all nodes. Usually a node has one of three states 
+idle
+: no one is using that node.
+mix
+: some users are using the node, but still has some available resources.
+alloc
+: the entirety of the node’s resources are being used, and slurm will not attempt to put any new jobs on it.
+squeue
+squeue
+ is a command that lets you see the status of all jobs on the cluster. You’ll typically see a job in one of three states, though there are more. 
+PD
+ (pending): The job has not been started yet because it could not be scheduled. Typically this occurs because slurm could not find a node that could fill your request, or your using the maximum amount of resources given to your group
+R
+ (running): The job is running.
+C
+ (Completing): The job has finished running, and is cleaning up any remnants of the job from the node.
+Using 
+slurm
+ to access resources on 
+chip-cpu
+First, we will describe the necessary flags for 
+slurm
+ when running on 
+chip-cpu
+ and then show an example (*note that these flags can be run in any order):
+--cluster
+: specifies the cluster on which you want to run on. Options are 
+chip-cpu
+ or 
+chip-gpu
+--time
+: The amount of time you want to hold the resources your requesting. Default format is in minutes, but can also be written in DD-HH:MM:SS
+--mem
+: The amount of memory you want to reserve. Default format is in MB.
+--partition
+: This is the specific set of hardware you would like to use. A standard user has access to 
+general
+, 
+2018
+, or 
+2021
+--qos
+: QoS stands for “quality of service”, and is how we limit the amount of time/cpu resources a user can take up. Options are short, normal, medium, and long. 
+See 
+here
+ for more information on the specific qos’ and partitions available. 
+--account
+: The slurm account you want to “charge” time to. This will typically be 
+pi_${yourPIsName}
+, with few exceptions.
+Here is an example of an 
+srun
+ command on 
+chip-cpu
+:
+srun --cluster=chip-cpu --mem=500 --time=1000 --qos=long --account=pi_doit --partition=general "python test.py"
+As you may be able to see from above, I am telling slurm to run on the 
+chip-cpu
+ cluster, using 500MB of memory, for up to 1000 minutes (or completion of the program, whichever comes first), using the “long” QoS, in the general partition, using the “pi_doit” account, and to run 
+python test.py
+Similarly, using sbatch would require a file with the same flags, and would look something like the following:
+[regularUser@chip ~]$ cat sbatchTest.slurm
+
+#!/bin/bash
+
+
+
+#SBATCH --cluster=chip-cpu
+
+#SBATCH --mem=500
+
+#SBATCH --time=1000
+
+#SBATCH --qos=long
+
+#SBATCH --account=pi_doit
+
+#SBATCH --partition=general
+
+
+
+python test.py
+
+[regularUser@chip ~]$ sbatch sbatchTest.slurm
+Using 
+slurm
+ to access resources on 
+chip-gpu
+First, we will describe the necessary flags for 
+slurm
+ when running on 
+chip-gpu
+ and then show an example (*note that these flags can be run in any order):
+--cluster
+: specifies the cluster on which you want to run on. Options are 
+chip-cpu
+ or 
+chip-gpu
+--time
+: The amount of time you want to hold the resources your requesting. Default format is in minutes, but can also be written in DD-HH:MM:SS
+--mem
+: The amount of memory you want to reserve. Default format is in MB.
+--gres
+: The amount of GPU cards you need. This follows the form  
+--gres=gpu:X
+ where X is the number of gpus you want. 
+Here is an example of an 
+srun
+ command on 
+chip-gpu
+:
+srun --cluster=chip-gpu --time=1000 --mem=500 --gres=gpu:1 nvidia-smi
+As you may be able to see from the above, I am using srun to tell slurm to run on the 
+chip-gpu
+, for up to 1000 minutes (or until completion of the program, whichever comes first), and asking for gpu, to run the program 
+nvidia-smi
+.
+Similarly, using sbatch would require a file with the same flags, and would look something like the following:
+[regularUser@chip ~]$ cat sbatchTest.slurm
+
+#!/bin/bash
+
+
+
+#SBATCH --cluster=chip-gpu
+
+#SBATCH --time=1000
+
+#SBATCH --mem=500
+
+#SBATCH --gres=gpu:1 
+
+
+
+nvidia-smi
+
+[regularUser@chip ~]$ sbatch sbatchTest.slurm
+Slurm
+Preview
+ 
+How do I run an interactive job?
+Preview
+ 
+Software Modules
+Many different pieces of software with different versions and dependencies are available to use on the 
+chip
+ cluster compute resources. Users may interact with the library of software modules via the 
+module
+ command. In order to keep the login node performant and accessible, software modules are 
+not
+ loadable on the login node. Attempting to load a module on the login node will result in the following:
+[regularUser@chip ~]$ module load Anaconda3
+
+Note: Modules do not function on the login nodes
+
+[regularUser@chip ~]$ 
+Using LMod (The Software System)
+Check out our documentation on how to use the module system:
+What is the chip module system?
+Preview
+ 
+Software On Different Nodes
+To facilitate the use of software modules, you must use a slurm allocation. For testing and developing code, the easiest thing to do is start an interactive session. Instructions for this can be found 
+here
+. However, we do allow users to see what modules are available and on what nodes. Using the command 
+module avail
+, we can see all the modules available and what category set of nodes they can be run under. For instance, 
+Core & Custom Modules
+ are modules that can be used on any node, and are hand made by the systems administrators. Anything under the section labeled 
+For use on 2018 & 2021 Machines
+ is for use only on 
+chip-cpu
+ and specifically, on the nodes that start with 
+c21
+ or 
+c18
+. Anything under the section labeled 
+For use on 2020 & 2024 Machines
+ can only be used on 
+chip-gpu
+ and the nodes on 
+chip-cpu
+ that start with 
+c24
+. This is because the cpu architecture of the nodes on 
+chip-gpu
+ and the 2024 nodes of 
+chip-cpu
+ are different enough from the 2018 and 2021 machines of 
+chip-cpu
+ that they warrant new build of software to make them as efficient as possible. A good example of this is the 
+QuantumESPRESSO/7.3.1-intel-2023a
+ module. It is under the 
+For use on 2020 & 2024 Machines
+ but not under the 
+For use on 2018 & 2021 Machines
+. If you were to start an interactive session on a 
+chip-cpu
+ 2021 node, you would not be able to load the QuantumESPRESSO module:
+[regularUser@chip ~]$ srun --cluster=chip-cpu --mem=500 --time=1000 --qos=long --account=pi_doit --partition=general --pty $SHELL
+
+
+
+The following have been reloaded with a version change:
+
+  1) slurm/chip-gpu/23.11.4 => slurm/chip-cpu/23.11.4
+
+
+
+(base) [regularUser@c18-05 ~]$ module keyword quantumespresso
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+The following modules match your search criteria: "quantumespresso"
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+To learn more about a package execute:
+
+
+
+   $ module spider Foo
+
+
+
+where "Foo" is the name of a module.
+
+
+
+To find detailed information about a particular package you
+
+must specify the version if there is more than one version:
+
+
+
+   $ module spider Foo/11.1
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(base) [regularUser@c18-05 ~]$exit
+
+exit
+
+[regularUser@chip ~]$ srun -M chip-gpu --time=10 --mem=10 --gres=gpu:1 --pty $SHELL
+
+srun: job 4423 queued and waiting for resources
+
+srun: job 4423 has been allocated resources
+
+(base) [regularUser@g24-06 ~]$ module keyword quantumespresso
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+The following modules match your search criteria: "quantumespresso"
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+  QuantumESPRESSO: QuantumESPRESSO/7.3.1-intel-2023a
+
+    Quantum ESPRESSO is an integrated suite of computer codes for electronic-structure calculations and materials modeling at the nanoscale. It is based
+
+    on density-functional theory, plane waves, and pseudopotentials (both norm-conserving and ultrasoft).
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+To learn more about a package execute:
+
+
+
+   $ module spider Foo
+
+
+
+where "Foo" is the name of a module.
+
+
+
+To find detailed information about a particular package you
+
+must specify the version if there is more than one version:
+
+
+
+   $ module spider Foo/11.1
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(base) [regularUser@g24-06 ~]$
+So when searching software on the login node, be careful to make sure you are using compatible software stacks with their node types. 
+Using Python on chip
+Preview
+ 
+What is the chip module system?
+Preview
+ 
+ 
+ 
+ 
+ 
+ 

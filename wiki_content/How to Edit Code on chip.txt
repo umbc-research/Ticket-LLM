@@ -1,0 +1,247 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1333854245
+TITLE: How to Edit Code on chip
+
+1
+ 
+Nano
+1.1
+ 
+Opening Files
+1.2
+ 
+Basic Commands
+1.3
+ 
+Tips
+1.4
+ 
+Example
+2
+ 
+Vim
+2.1
+ 
+Opening Files
+2.2
+ 
+Modes
+2.3
+ 
+Essential Commands
+2.4
+ 
+Navigation (Normal Mode)
+2.5
+ 
+Example
+3
+ 
+Emacs
+3.1
+ 
+Opening Files
+3.2
+ 
+Basic Commands
+3.3
+ 
+Navigation
+3.4
+ 
+Example
+4
+ 
+VSCode
+Once SSHed into chip, there are several editors the user can make use of to edit their code or other files. The sections below briefly explains how the user can execute some of the basic functions required for code editing on each of the editors.
+Nano
+For more detailed information, refer to the manual page 
+nano(1) - Linux man page
+ 
+GNU nano is a small and friendly text editor. Besides basic text editing, nano offers many extra features like an interactive search and replace, go to line and column number, auto-indentation, feature toggles, internationalization support, and filename tab completion. 
+Opening Files
+nano filename.py
+Basic Commands
+Save
+: 
+Ctrl+O
+ (then press Enter)
+Exit
+: 
+Ctrl+X
+Cut line
+: 
+Ctrl+K
+Copy Line
+: 
+Alt+6
+Paste
+: 
+Ctrl+U
+Search
+: 
+Ctrl+W
+Go to line
+: 
+Ctrl+_
+Search for specific text
+: 
+Ctrl+W
+Access the help menu
+: 
+Ctrl+G
+Tips
+Commands are shown at the bottom of the screen
+^
+ means Ctrl key
+Great for quick edits and beginners
+Example
+Open file with 
+nano
+nano hello.py
+Write code/make changes to file 
+print("Hello World!")
+Save with 
+Ctrl+O
+Exit with 
+Ctrl+X
+Vim
+For more detailed information, refer to the manual page 
+vi(1): Vi IMproved, programmers text editor - Linux man page
+ 
+Vim (Vi IMproved) is a highly configurable, modal text editor built for efficiency. It operates in different modes - Normal for navigation, Insert for typing, and Command for operations. While it has a steeper learning curve, vim offers powerful text manipulation capabilities and is favored by experienced users for its speed and extensive customization options.
+Opening Files
+vim filename.py
+Modes
+Normal mode
+: Default mode for navigation
+Insert mode
+: Press 
+i
+ to enter, 
+Esc
+ to exit
+Command mode
+: Press 
+:
+ in normal mode
+Essential Commands
+Command
+Action
+Command
+Action
+:w
+Save file
+:q
+Quit
+:wq
+Save and quit
+:q!
+Quit without saving
+i
+Enter insert mode
+Esc
+Return to normal mode
+dd
+Delete line
+yy
+Copy line
+dw
+Delete word
+yw
+Copy word
+p
+Paste
+/text
+Search for "text"
+:set number
+Show line numbers
+Navigation (Normal Mode)
+h
+, 
+j
+, 
+k
+, 
+l
+ - Left, down, up, right
+gg
+ - Go to beginning
+G
+ - Go to end
+:n
+ - Go to line n
+Example
+Open file with 
+vim
+vim hello.py
+Press 
+i
+ to enter insert mode
+Write code/make changes to file 
+print("Hello World!")
+Press 
+Esc
+ to return to normal mode
+Type 
+:wq
+ to save and quit
+Emacs
+For more detailed information, refer to the manual page 
+emacs(1): GNU project Emacs - Linux man page
+ 
+Emacs is a powerful, extensible text editor that functions almost like an operating system. It uses key combinations (chords) for commands and can be customized extensively through Emacs Lisp. Beyond text editing, emacs can handle email, debugging, version control, and more, making it a comprehensive development environment.
+Opening Files
+emacs filename.py
+Basic Commands
+Save
+: 
+Ctrl+x Ctrl+s
+Exit
+: 
+Ctrl+x Ctrl+c
+Cut
+: 
+Ctrl+w
+Copy
+: 
+Alt+w
+Paste
+: 
+Ctrl+y
+Undo
+: 
+Ctrl+_
+Go to next line
+: 
+Ctrl+N
+Go to previous line
+: 
+Ctrl+P
+Search
+: 
+Ctrl+s
+Navigation
+Arrow keys work normally
+Ctrl+a
+ - Beginning of line
+Ctrl+e
+ - End of line
+Alt+<
+ - Beginning of file
+Alt+>
+ - End of file
+Example
+Open file with 
+emacs
+emacs hello.py
+Write code/make changes to file 
+print("Hello World!")
+Save with 
+Ctrl+x Ctrl+s
+Exit with 
+Ctrl+x Ctrl+c
+VSCode
+To edit code on chip using VSCode, please refer to our tutorial for configuring VSCode for Remote SSH: 
+How to connect to chip with VSCode?
+Preview
+ 

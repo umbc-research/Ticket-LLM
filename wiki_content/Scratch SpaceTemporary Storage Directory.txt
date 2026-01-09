@@ -1,0 +1,41 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1285718125
+TITLE: Scratch Space/Temporary Storage Directory
+
+Page Contents
+What is Scratch?
+When to use Scratch?
+How to use Scratch?
+Disadvantages of Scratch
+What is Scratch?
+Scratch is a temporary storage folder on the compute node which exists and is accessible only while the job is running. It is deleted when the job finishes. Hence, any critical data stored the scratch space should be promptly moved to a permanent location on the cluster, as it is not backed up. 
+When to use Scratch?
+The Scratch space is useful for intensive input/output (I/O) operations, i.e. heavy reading and writing of data, involving very large files and/or a large number of very small files. Typically, scratch storage should be used when the user's job performs intensive I/O operations. A users permanent storage (located under /umbc/rs/${pi_group}/) is mounted over the network, which causes the read and write throughput speeds to be limited by the speed of the network. Compared to this, the scratch storage is high speed storage located directly on the node, allowing each compute node direct access to the storage space. This allows for significantly higher read/write speeds, allowing data to be accessed and modified much quicker. An example of when using the scratch space can be beneficial is when a users job involves large datasets, that are read and written to frequently.
+How to use Scratch?
+For users who have large datasets that need to be read into memory, it is strongly recommended that they
+copy their relevant data to the 
+/scratch
+ volume,
+execute the required application,
+redirect the output back onto 
+/scratch
+ storage, and finally
+move the desired data from 
+/scratch
+ to a permanent location.
+When creating a job in Slurm, a sub directory is created under 
+/scratch
+, named 
+/scratch/$SLURM_JOB_ID
+. For the job the user is running, the 
+/scratch/$SLURM_JOB_ID
+ sub directory is where the user copies the necessary data to.  After the execution of the program inside slurm, the data can be moved from 
+/scratch/$SLURM_JOB_ID
+ to the research volume.
+This directory created inside 
+/scratch
+ will be deleted after the job has completed running. It can only be used when the job is running.
+Disadvantages of Scratch
+The capacity of the Scratch space is shared with other jobs that are running on the same compute/worker node.
+The data stored in the Scratch space in one compute node cannot be directly accessed by a different compute/worker node and the processes that are running there.
+Compute jobs that are running across multiple compute nodes have their own Scratch space in the respective compute nodes.
+If the compute job fails, the output is not saved.

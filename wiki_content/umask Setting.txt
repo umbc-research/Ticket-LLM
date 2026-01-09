@@ -1,0 +1,89 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1239744625
+TITLE: 'umask' Setting
+
+For quick access to the following sub-sections, use the links below:
+Calculating ‘umask’ values
+Setting the default ‘umask’ value
+Setting the default ‘umask’ in .bashrc
+When an user creates a file (or a directory) in linux, they can use the ‘umask’ command or setting to set default permissions. It is to be noted that the ‘umask’ setting is only for creating a new file. In other words, after a file has been created, using the ‘umask’ setting on it will have no effect.
+Specifically, the ‘umask’ command states the permissions that the user 
+does not want
+ to be given out to the newly created file/directory. 
+It works by doing a bitwise AND operation between 
+the value of the default octal permission for a file/directory, and
+the bitwise complement of the ‘umask’.
+ 
+The bits set in the ‘umask’ value are not assigned by default. Since these values are subtracted from the maximum permissions for files/directories, they refer to the permissions for the files/directories once they have been created.
+ 
+It is to be noted that the default ‘umask’ setting on the cluster is ‘0007’.
+Calculating ‘umask’ values
+In chip, typing and entering 
+umask
+on the terminal or command prompt will result in the following output:
+0007
+The first digit, 0, is the special bit, and it is a special security feature. It can take other values, such as 1, 2, and 3, but the meanings and uses of those are outside the scope of this article. 
+The next 3 (007) digits represent the octal values of the ‘umask’ for a file/directory.
+The table below shows the description and meaning of each digit from the above output from umask:
+Permissions
+Octal Value
+Binary Value
+Description
+Permissions
+Octal Value
+Binary Value
+Description
+– – – 
+0
+000
+No permission
+– – x
+1
+001
+Permission to execute only
+– w – 
+2
+010
+Permission to write only
+– w x
+3 
+011
+Permission to write and execute
+r – – 
+4
+100
+Permission to read only
+r – x
+5
+101
+Permission to read and execute
+r w – 
+6
+110
+Permission to read and write
+r w x
+7
+111
+Permission to read, write, and execute
+In the remaining output from umask on chip, i.e. 007, each digit represents the permission a different class of users:
+The owner
+The group members
+Everyone else
+in that order (from left to right). 
+Since umask subtracts from default permissions:
+For a file, the default permission is 666, which means rw-rw-rw- (i.e. Permission to read and write for owner, group members, and everyone else). The umask 0007 results in 660, which means rw-rw---- (i.e. owner and group member permissions stay the same, and everyone else have no permission).
+For a directory, the default permission is 777, which means rwxrwxrwx (i.e. Permission to read, write and execute for owner, group members, and everyone else). The umask 0007 results in 770, which means rwxrwx--- (i.e. owner and group member permissions stay the same, and everyone else have no permission). 
+Setting the default ‘umask’ value
+Typing and entering
+umask 543
+in the terminal/command prompt will set the default permissions with which files/directories will be created. It is to be noted that this value of the ‘umask’ holds as long as the terminal is open. The value will be reset to the default value when the terminal is closed.
+For a file, since the full permission set is 666, subtracting 543 results in 123, which means
+1 for the owner, which is 001 in binary, so execute permission for the owner. However, since Linux does not provide execute permission for making a directory by default, the value is promoted by one, and we get 010. Hence, write permission will be granted to the owner.
+2 for the group members, which is 010 in binary, so write permissions for the group members
+3 for everyone else, which is 011 in binary, so write and execute permission for everyone else. However, since execute permission cannot be provided, the value is promoted again, and we get 100. Hence, read permission will be granted to everyone else.
+For a directory, since the full permission set is 777, subtracting 543 results in 234, which means
+2 for the owner, which is 010 in binary, so only write permission for the owner. 
+3 for the group members, which is 011 in binary, so write and execute permissions for the group members
+4 for everyone else, which is 100 in binary, so only read permission for everyone else. 
+Setting the default ‘umask’ in .bashrc
+Entering the ‘umask’ value in the .bashrc hidden file and saving it will ensure that value of the ‘umask’ being used every time for that specific user, even after closing the terminal and reopening it.
+ 

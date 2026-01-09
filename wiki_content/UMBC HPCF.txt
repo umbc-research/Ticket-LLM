@@ -1,0 +1,171 @@
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1082589207/UMBC+HPCF+-+chip
+TITLE: UMBC HPCF
+
+ 
+Overview
+As of April 2025, the UMBC HPCF(High Performance Computing Facility) is composed of a single cluster, named 
+chip
+.
+Any UMBC staff, faculty, or student may request an account on the cluster to access cluster resources. Accounts must each belong to one or more cluster groups. Cluster groups may only be requested by faculty or staff. Groups are created for research groups, grant awards, or classes.
+All of the machines (or computers) composing the cluster are called “cluster nodes”. The “compute nodes” are those intended for computationally intensive tasks. In contrast, the “login nodes” (a.k.a., edge nodes or user nodes) are not meant for intense processing and are only intended for file editing, navigating the file system and storage, and kicking-off slurm jobs. Attempting to run load-generating tasks on the login node can cause a noticeable slow down for other users. These tasks will be killed by system administrators. Repeated offenses may result in a lock of your cluster account. Instead, computationally intensive tasks should be run via Slurm, the cluster workload manager.
+Open 
+Tutorials
+Walk-throughs of common tasks on chip, leveraging our UMBC-Research GitHub 
+Welcome to the chip cluster
+These tutorials are designed to get new users on chip comfortable with the environment and common tasks.
+Getting Started on Chip
+Quick Run Guide
+ 
+Common Questions
+How to Edit Code on Chip
+How to Compile on Chip
+ 
+How to Run on Chip
+ 
+HPCF Documentation
+(individual pages on specific topics) 
+Connecting
+Information on how to connect and access the chip cluster.
+Helpful Pages
+Terminal Emulators
+Credentials
+MFA (Multi-Factor Authentication)
+ (VPN & Duo)
+File transfers
+Accessing GUI Applications on Chip using X11 Forwarding
+ 
+Removing Users from Chip
+ 
+Common Questions
+How To Create a Chip Account
+ 
+How to Connect to Chip
+ 
+How to Access Research Volumes
+Storage
+ 
+Information on accessing and using home directories, research storage, permissions, etc
+Helpful Pages
+Home directories
+Research Volumes
+Available Space
+umask Settings
+Permissions for files/directories
+Posture on Sensitive Data
+Scratch Space
+Common Questions
+How to check home directory usage
+What to do if you run out of space in your home directory
+ 
+Cluster Specifications
+Information about the cluster and its components.
+Helpful Pages
+CPU and GPU Specifications
+Node Schematics
+ 
+Operating System
+ 
+Network Connections
+Available Storage Space
+ 
+Common Questions
+How we deal with sensitive data
+How to be Removed from Chip
+ 
+Editing Code
+ 
+Information on using various code editors such as emacs, nano, vim, vscode, etc
+Helpful Pages
+Emacs
+Nano
+Vim
+VSCode
+Bash commands
+Common Questions
+How to Edit Code on Chip
+ 
+ 
+Slurm
+ 
+Information on submitting, monitoring, and running jobs on the cluster.
+Helpful Pages
+Basic Slurm Commands
+Partitions within a chip
+Chip Slurm usage rules
+How do I request GPU memory?
+Common Slurm Errors
+Common Questions
+What is Slurm?
+ 
+How to run an interactive job
+ 
+Available Software and Packages
+ 
+Information on using Python virtual environments, module systems, etc
+Helpful Pages
+Modules
+Python Virtual Environments
+ 
+List of All Modules
+ 
+Common Questions
+How to use modules
+ 
+How to use Python on chip
+ 
+How to run a Jupyter notebook on chip
+ 
+How do I use multiple GPUs in a Jupyter Notebook?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
