@@ -40,22 +40,30 @@ The 70B Model
 
 This setup uses a 70-Billion parameter Llama 3.1 model.
 
-    Memory Requirement: ~43GB of VRAM.
+Memory Requirement: ~43GB of VRAM.
 
-    Loading Time: Takes ~60-90 seconds to load into the GPU on initial query.
+Loading Time: Takes ~60-90 seconds to load into the GPU on initial query.
 
 Updating Knowledge
 
 To add new tickets or update the wiki_map.txt:
 
-    Delete the current database: rm -rf ticket_db/
+Delete the current database: 
+```
+rm -rf ticket_db/
+```
+Run
+```
+python rag_search.py.
+```
 
-    Run rag_search.py.
+The script will automatically detect the missing folder and re-index the CSV/Wiki Map (approx. 15-minute process).
 
-    The script will automatically detect the missing folder and re-index the CSV/Wiki Map (approx. 15-minute process).
+Github Quick-Guide:
+```
+git add .
 
-💡 Pro-Tips for the Team
+git commit -m "Update"
 
-    Interactive Mode: The assistant stays in a loop. Type exit to quit and free up the GPU.
-
-    Troubleshooting Stalls: If the assistant stops responding, check ollama_server.log or run nvidia-smi to see if the process is actually active or if the GPU memory is full.
+git push
+```
