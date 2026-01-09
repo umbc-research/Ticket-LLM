@@ -19,6 +19,7 @@ ollama serve > ollama_server.log 2>&1 &
 Activate Environment & Run:
 
 ```
+conda env create -f environment.yml
 conda activate hpc_assistant
 python rag_search.py
 ```
