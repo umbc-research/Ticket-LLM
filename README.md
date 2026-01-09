@@ -26,15 +26,20 @@ python rag_search.py
 
 ### File Overview
 
-| File / Directory | Description |
+| File / Folder | Description |
 | :--- | :--- |
 | `rag_search.py` | The main application. Handles retrieval logic, database loading, and LLM interaction. |
 | `clean_tickets.py` | Pre-processes raw ticketing CSVs—strips HTML and merges threads by ID. |
-| `check_Database_Size.py` | Utility script to verify the number of text chunks currently indexed. |
-| `hpc_70b.Modelfile` | The configuration for the llama-70b-hpc model (32k context window). |
+| `environment.yml` | (New) The Conda environment export. Allows teammates to recreate your setup. |
 | `wiki_map.txt` | A high-density reference file mapping keywords to official UMBC Wiki links. |
-| `cleaned_tickets.csv` | The primary knowledge source generated from the raw ticketing data. |
-| `ticket_db/` | The Chroma vector database folder containing all indexed ticket embeddings. |
+| `hpc_70b.Modelfile` | The configuration for the high-end llama-70b-hpc model (requires ~43GB VRAM). |
+| `hpc_8b.Modelfile` | (New) A lighter version for smaller GPUs (requires ~5.5GB VRAM). |
+| `check_Database_Size.py` | Utility script to verify the number of text chunks currently indexed. |
+| `README.md` | Project documentation and Quick Start guide. |
+| `allDoitTickets.csv` | Raw ticketing data containing sensitive user information. |
+| `cleaned_tickets.csv` | The processed text used to build the database. |
+| `ticket_db/` | The folder containing the indexed vector embeddings. |
+| `ollama_server.log` | Debug log for the Ollama background process. |
 
 
 ### Configuration & Customization
