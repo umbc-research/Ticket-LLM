@@ -16,6 +16,21 @@ Initialize Ollama:
 module load ollama/0.13.5
 ollama serve > ollama_server.log 2>&1 &
 ```
+Move the ollama folder to your common directory, so nothing gets full:
+```
+mv ~/.ollama /umbc/rs/pi_group/users/user1/.ollama
+ln -s /umbc/rs/pi_group/users/user1/.ollama ~/.ollama
+```
+Download the models needed:
+```
+ollama pull nomic-embed-text
+ollama pull llama3.1:70b
+```
+
+Build the custom model:
+```
+ollama create llama-70b-hpc -f hpc_70b.Modelfile
+```
 Activate Environment & Run:
 
 ```
