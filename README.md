@@ -1,7 +1,8 @@
-UMBC HPC Support Assistant (RAG)
+## UMBC HPC Support Assistant (RAG)
 
 A Retrieval-Augmented Generation (RAG) system built to help HPC Sysadmins troubleshoot cluster issues using institutional knowledge from 3,000+ past support tickets.
-🚀 Quick Start (HPC Workflow)
+
+### Quick Start (HPC Workflow)
 
 Follow these steps to get the assistant running on a GPU compute node:
 
@@ -22,7 +23,7 @@ conda activate hpc_assistant
 python rag_search.py
 ```
 
-📂 File Overview
+### File Overview
 
 | File / Directory | Description |
 | :--- | :--- |
@@ -35,7 +36,7 @@ python rag_search.py
 | `ticket_db/` | The Chroma vector database folder containing all indexed ticket embeddings. |
 
 
-🛠️ Configuration & Customization
+### Configuration & Customization
 The 70B Model
 
 This setup uses a 70-Billion parameter Llama 3.1 model.
@@ -59,7 +60,7 @@ python rag_search.py.
 
 The script will automatically detect the missing folder and re-index the CSV/Wiki Map (approx. 15-minute process).
 
-Github Quick-Guide:
+### Github Quick-Guide:
 ```
 git add .
 
