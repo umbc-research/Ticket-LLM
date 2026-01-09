@@ -8,53 +8,48 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # --- CONFIGURATION ---
 CSV_FILE = 'cleaned_tickets.csv'
+WIKI_FILE = 'wiki_map.txt'  # New high-priority source
 DB_DIR = './ticket_db'
 EMBED_MODEL = "nomic-embed-text"
 LLM_MODEL = "llama-70b-hpc"
 
 def build_or_load_db():
-    # 1. Setup the 'Translator' (Embeddings)
     embeddings = OllamaEmbeddings(model=EMBED_MODEL)
 
-    # 2. Check if we already have a saved database
     if os.path.exists(DB_DIR):
         print(f"--- Loading existing database from {DB_DIR} ---")
         return Chroma(persist_directory=DB_DIR, embedding_function=embeddings)
 
-    # 3. If no database exists, create one
-    print(f"--- Creating new database from {CSV_FILE} ---")
-    df = pd.read_csv(CSV_FILE)
-    
-    # We'll process all tickets now that we have a splitter
-    print(f"Processing {len(df)} tickets...")
-    
-    raw_documents = []
-    for idx, row in df.iterrows():
-        # Combine subject and content for context
-        text_content = f"SUBJECT: {row['SubjectNoHTML']}\nCONTENT: {row['TransactionContent']}"
+    print(f"--- Creating new database ---")
+    all_docs = []
+
+    # 1. Process Ticket Data (Requires Splitting)
+    if os.path.exists(CSV_FILE):
+        print(f"Processing tickets from {CSV_FILE}...")
+        df = pd.read_csv(CSV_FILE)
+        raw_ticket_docs = []
+        for idx, row in df.iterrows():
+            text_content = f"TICKET ID: {row['TicketID']}\nSUBJECT: {row['SubjectNoHTML']}\nCONTENT: {row['TransactionContent']}"
+            metadata = {"source": "ticket", "id": str(row['TicketID'])}
+            raw_ticket_docs.append(Document(page_content=text_content, metadata=metadata))
         
-        # Keep track of Ticket ID and User in metadata
-        metadata = {
-            "id": str(row['TicketID']),
-            "date": str(row['CreatedDate']),
-            "subject": str(row['SubjectNoHTML']),
-            "requestor": str(row['Requestor'])
-        }        
-        raw_documents.append(Document(page_content=text_content, metadata=metadata))
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
+        all_docs.extend(text_splitter.split_documents(raw_ticket_docs))
 
-    # 4. Split long tickets into manageable chunks (Fixes the 500 error)
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2000,
-        chunk_overlap=200
-    )
-    documents = text_splitter.split_documents(raw_documents)
-    print(f"Split tickets into {len(documents)} searchable chunks.")
+    # 2. Process Wiki Map (No Splitting - keep links whole)
+    if os.path.exists(WIKI_FILE):
+        print(f"Processing Wiki Map from {WIKI_FILE}...")
+        with open(WIKI_FILE, 'r') as f:
+            for line in f:
+                if line.strip():
+                    # Prefix with 'WIKI LINK' so the LLM knows this is official
+                    wiki_content = f"WIKI LINK / OFFICIAL DOCUMENTATION: {line.strip()}"
+                    all_docs.append(Document(page_content=wiki_content, metadata={"source": "wiki"}))
 
-    # 5. Build and save the Vector Store
-    print("Indexing... this may take a few minutes for 3,000 tickets.")
+    print(f"Indexing {len(all_docs)} total chunks...")
     db = Chroma.from_documents(
-        documents=documents, 
-        embedding=embeddings, 
+        documents=all_docs,
+        embedding=embeddings,
         persist_directory=DB_DIR
     )
     print("Database built successfully!")
@@ -62,49 +57,41 @@ def build_or_load_db():
 
 def ask_assistant(db, question):
     print(f"\n[USER QUESTION]: {question}")
-    
-    # 1. Search for the 15 most relevant pieces of past tickets
+
+    # Search for top 15 results (Wiki links + Tickets)
     results = db.similarity_search(question, k=15)
-    
-    # 2. Extract the text for the LLM context
     context_text = "\n\n---\n\n".join([res.page_content for res in results])
-    
-    # 3. Craft the prompt for the 70B model
+
     prompt = f"""
     You are an HPC Sysadmin Assistant at UMBC. 
-    Use the following pieces of PAST TICKET HISTORY to answer the USER QUESTION.
-    
-    PAST TICKET HISTORY:
+    Your goal is to provide accurate technical support using the context below.
+
+    STRICT GUIDELINES:
+    1. If the context contains a 'WIKI LINK', provide that link to the user as the primary source of truth.
+    2. Use the 'TICKET ID' entries to provide real-world troubleshooting steps from past issues.
+    3. If the context doesn't have the answer, provide general HPC best practices (sbatch, module loads, etc.).
+    4. Be professional, technical, and include direct links whenever they are found in the context.
+
+    CONTEXT (TICKETS & WIKI):
     {context_text}
-    
+
     USER QUESTION:
     {question}
-    
-    INSTRUCTIONS:
-    - If the history contains a solution, summarize it as a step-by-step guide.
-    - Reference specific ticket IDs or past usernames if it helps establish context.
-    - If the history is not relevant, provide general HPC troubleshooting steps.
-    - Be professional, technical, and concise.
-    """
+
+    ANSWER:"""
 
     print("--- 70B is thinking ---")
     response = ollama.generate(model=LLM_MODEL, prompt=prompt)
-    
+
     print("\n[ASSISTANT RESPONSE]:")
     print(response['response'])
     print("\n--------------------------")
 
-# --- MAIN EXECUTION ---
 if __name__ == "__main__":
-    # Ensure the 70B model is ready
-    # Initialize the database
     vector_db = build_or_load_db()
 
-    # Test it out!
-    # ask_assistant(vector_db, "I'm getting an 'Invalid account or partition' error when submitting an sbatch job.")
-    
-    # You can uncomment this to run an interactive loop:
     while True:
-         query = input("\nAsk the HPC Assistant (or type 'exit'): ")
-         if query.lower() == 'exit': break
-         ask_assistant(vector_db, query)
+        query = input("\nAsk the HPC Assistant (or type 'exit'): ")
+        if query.lower() == 'exit': break
+        if query.strip():
+            ask_assistant(vector_db, query)
