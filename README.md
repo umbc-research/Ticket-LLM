@@ -44,7 +44,7 @@ python rag_search.py
 | File / Folder | Description |
 | :--- | :--- |
 | `rag_search.py` | The main application. Handles retrieval logic, database loading, and LLM interaction. |
-| `clean_tickets.py` | Pre-processes raw ticketing CSVs—strips HTML and merges threads by ID. |
+| `clean_tickets.py` | Uses a mixture of straight python code, and AI to clean the code of names, html junk, redundancy, etc. |
 | `environment.yml` | (New) The Conda environment export. Allows teammates to recreate your setup. |
 | `wiki_map.txt` | A high-density reference file mapping keywords to official UMBC Wiki links. |
 | `hpc_70b.Modelfile` | The configuration for the high-end llama-70b-hpc model (requires ~43GB VRAM). |
