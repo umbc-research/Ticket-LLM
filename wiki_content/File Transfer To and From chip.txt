@@ -46,16 +46,19 @@ Command Line Users: scp
 A basic command available on most Unix (Linux, Mac, etc.) machines and some other operating systems. For more information on this command, run “man scp” on your terminal to see the manual page.
 scp: File transfer to chip
 Ensure you have your account set up and access configured as detailed in 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439
+Getting Started on chip
+Preview
 . At that point you can transfer files directly to chip, such as code, data sets, etc. directly from your terminal window.
 Open a terminal and run the following:
 $ scp /my/file.txt userid@chip.rs.umbc.edu:/target/directory
 You will then be prompted for your password in the way as when accessing via ssh.
 If you are not on campus wifi or the VPN, you may be prompted for a Duo login.
 For more information on UMBC’s VPN: 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/30754220
+How do I get connected with the UMBC GlobalProtect VPN?
+Preview
 For more information on UMBC’s Duo login: 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/30743265
+Multi-Factor Authentication with DUO
+Preview
 You will need to repeat these steps for every scp command you issue.
 scp: File transfer from chip
 The process to retrieve files from chip is very similar. Run the following:
@@ -65,16 +68,19 @@ Command Line Users: rsync
 A more robust alternative to scp is rsync, as if there is a network issue you can still finish your file transfer. For more information on this command, run “man rsync” on your terminal to see the manual page.
 rsync: File transfer to chip
 Ensure you have your account set up and access configured as detailed in 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439
+Getting Started on chip
+Preview
 . At that point you can transfer files directly to chip, such as code, data sets, etc. directly from your terminal window.
 Open a terminal and run the following:
 $ rsync -av --progress --partial /my/file.txt userid@chip.rs.umbc.edu:"/target/directory"
 You will then be prompted for your password in the way as when accessing via ssh.
 If you are not on campus wifi or the VPN, you may be prompted for a Duo login.
 For more information on UMBC’s VPN: 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/30754220
+How do I get connected with the UMBC GlobalProtect VPN?
+Preview
 For more information on UMBC’s Duo login: 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/30743265
+Multi-Factor Authentication with DUO
+Preview
 You will need to repeat these steps for every rsync command you issue.
 If the file transfer fails and --partial is set, the target file will be named as the actual file name (i.e. FileYouAreSending.txt), even though the file is not complete. You can later complete the transfer by running rsync again with either --append or --append-verify:
 $ rsync -av --progress --append /my/file.txt userid@chip.rs.umbc.edu:"/target/directory"
@@ -111,9 +117,11 @@ Open
 You will then be prompted for your password in the way as when accessing via ssh.
 If you are not on campus wifi or the VPN, you may be prompted for a Duo login.
 For more information on UMBC’s VPN: 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/30754220
+How do I get connected with the UMBC GlobalProtect VPN?
+Preview
 For more information on UMBC’s Duo login: 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/30743265
+Multi-Factor Authentication with DUO
+Preview
 Transferring Files
 You can navigate through folders using your keys or mouse (Press 
 F1 
@@ -153,9 +161,11 @@ not
 enter a password and click on the “Save” button. You will be prompted to give the connection a name. The default will be something like “userid@chip.rs.umbc.edu“. This will save the connection for future use in the white box on the left hand side of the login dialog box. When you ready select the connection and press “Login”.
 You will be prompted for your password. If you are not on campus wifi or the VPN, you may be prompted for a Duo login.
 For more information on UMBC’s VPN: 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/30754220
+How do I get connected with the UMBC GlobalProtect VPN?
+Preview
 For more information on UMBC’s Duo login: 
-https://umbc.atlassian.net/wiki/spaces/faq/pages/30743265
+Multi-Factor Authentication with DUO
+Preview
 Transferring Files
 Similar to Midnight Commander, the interface is split in two panels with your local files on the left hand side and the chip folder on the right hand side. Navigate to the desired location on both the local and remote panels. To make a transfer to chip, select the files folders on the left hand side in the local panel, then press the “Upload” button just above the panel. This will upload your selection to the the remote folder you have open on chip in the remote panel. To download simply select files in the remote panel and then press the “Download” button. This will download your selection from chip to the local folder you have open on your computer in the left hand panel.
 Open 

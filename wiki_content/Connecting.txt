@@ -37,26 +37,19 @@ Related Resources
  
 Back to Main Page
 Related Articles
-File Transfer To and From chip
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1161756678
  
-Accessing GUI Applications on Chip Using X11 Forwarding
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1202749443
  
-User Environment
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1072693277
  
-How can I avoid duo when logging into Chip?
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1133543431
  
-How to request a user/group account on chip
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1327431728
  
-How to check research volume usage on chip?
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1105002503
  
-Removing Users from Chip
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1357283329
  
 Overview
 This page serves as a comprehensive guide for users to understand how to access the 
@@ -129,14 +122,11 @@ Related Resources
 For more in-depth guidance on using the 
 chip
  cluster, please refer to the following helpful pages and tutorials:
-Getting Started on chip
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439
  
-Basic Slurm Commands
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1335951387
  
-How to Compile on chip
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1284276235
  
 How to Run on chip
 Preview

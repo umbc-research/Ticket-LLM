@@ -23,7 +23,7 @@ How to Compile on Chip
 How to Run on Chip
  
 HPCF Documentation
-(individual pages on specific topics) 
+(Individual pages on specific topics) 
 Connecting
 Information on how to connect and access the chip cluster.
 Helpful Pages
@@ -116,56 +116,5 @@ How to use Python on chip
 How to run a Jupyter notebook on chip
  
 How do I use multiple GPUs in a Jupyter Notebook?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
  

@@ -242,6 +242,5 @@ Exit with
 Ctrl+x Ctrl+c
 VSCode
 To edit code on chip using VSCode, please refer to our tutorial for configuring VSCode for Remote SSH: 
-How to connect to chip with VSCode?
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1141800970
  

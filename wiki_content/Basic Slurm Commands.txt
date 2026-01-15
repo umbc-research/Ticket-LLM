@@ -75,8 +75,7 @@ pi_<name of the principal investigator>
  (
 only needed for chip-cpu
 , as the chip-gpu does not have any partitions. Refer to 
-chip Partitions and Usage
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1249509377
  for more details.)
 general
  
@@ -88,8 +87,7 @@ general
  (refers to Quality of service, and is 
 only needed for chip-cpu
 . Refer to 
-chip-cpu QOS Restrictions
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1173389327
  for more details.)
 --time
  (refers to the total amount of time the user wants to allocate for the job)
@@ -102,8 +100,7 @@ the memory limit can be checked by concatenating the “free -h” command with 
 Optional Flag
  
 Defaults to 1 if the flag is not provided. Refer to 
-Cluster Specifications
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1289486353
  for more details.
 --ntasks
  (refers to the number of parallel tasks the user wants the job to run) - 
@@ -121,8 +118,7 @@ minimum
 Optional Flag
  
 Defaults to 1 if the flag is not provided. Refer to 
-Cluster Specifications
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1289486353
  for more details.
 --nodelist
  (refers to the specific node the user wants to run their jobs on) - 
@@ -320,8 +316,7 @@ g24-03
 
 c18-01
 More information about srun: 
-How do I run an interactive job?
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1134264329
  
  
 salloc
@@ -496,8 +491,7 @@ Slurm Workload Manager - Quick Start User Guide
  
 Ubuntu Manpage: Slurm - Slurm Workload Manager overview.
  
-More about the srun, sbatch, and salloc commands
-Preview
+https://umbc.atlassian.net/wiki/spaces/faq/pages/1266647043
  
 Tip:
  Replace 

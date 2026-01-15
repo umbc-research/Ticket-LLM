@@ -1,4 +1,4 @@
-SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439/Getting+Started+on+chip
+SOURCE URL: https://umbc.atlassian.net/wiki/spaces/faq/pages/1112506439
 TITLE: Getting Started on chip
 
 A video walk-through of this tutorial is available on YouTube: 
