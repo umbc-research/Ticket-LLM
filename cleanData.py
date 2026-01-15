@@ -8,12 +8,11 @@ from tqdm import tqdm
 INPUT_FILE = 'trimmed_file.csv'   # Your main 3,000 ticket file
 FINAL_FILE = 'cleanedData.csv'
 TEMP_FILE = 'temp_draft_tickets.csv' # Temporary holding file
-MODEL = "llama-hpc"
+MODEL = "llama3.1:70b"
 
 # LIST THE COLUMNS YOU WANT TO DELETE PERMANENTLY
 # (TransactionType and CreatedDate are NOT here; we delete them at the very end)
 COLUMNS_TO_DELETE = [
-    'TransactionID',
     'TicketOwnerUsername',
     'RequestorUsername',
     'TransactionName',
@@ -49,7 +48,12 @@ def clean_content_with_ai(raw_text):
     try:
         response = ollama.generate(model=MODEL, prompt=prompt)
         text = response['response'].strip()
-        
+        if text.lower().startswith("Here is the cleaned text"):
+            # Split by the first colon and take the second part
+            # e.g., "Here is the text: [Result]" -> "[Result]"
+            if ":" in text:
+                text = text.split(":", 1)[1].strip()
+ 
         # SANITIZATION: Prevents CSV corruption
         text = text.replace('"', "'")        # No double quotes allowed
         text = text.replace('\n', ' ')       # No newlines
@@ -91,24 +95,32 @@ def main():
     df = df[df['CreatedDate'] >= '2025-01-01']
     print(f"Tickets remaining: {len(df)}")
 
+    # --- NEW OPTIMIZATION: Keep Only Latest Transaction ---
+    print(f"--- 2.5 Optimizing: Keeping only the latest transaction per ticket ---")
+    
+    # Sort by Ticket (to group them) and TransactionID (Descending order: Big numbers first)
+    # This puts the NEWEST message at the top of each ticket group.
+    df = df.sort_values(by=['TicketID', 'TransactionID'], ascending=[True, False])
+    
+    # Drop duplicates keeps the first occurrence (which is now the latest transaction)
+    # This instantly deletes all the partial/redundant history rows.
+    df = df.drop_duplicates(subset=['TicketID'], keep='first')
+    
+    print(f"Unique tickets to process (Redundancy Removed): {len(df)}")
+
     # 3. AI CLEANING
     print(f"--- 3. AI Cleaning & Anonymizing ---")
     if 'TransactionContent' in df.columns:
         tqdm.pandas(desc="Processing Tickets")
         df['TransactionContent'] = df['TransactionContent'].progress_apply(clean_content_with_ai)
     
-    # 4. CONSOLIDATE
-    print(f"--- 4. Consolidating Threads ---")
-    df = df.sort_values(by=['TicketID', 'CreatedDate'])
-    df = df.groupby('TicketID').apply(merge_thread).reset_index(drop=True)
-
-    # 5. SAVE DRAFT (The 'First Save')
+    # 4. SAVE DRAFT (The 'First Save')
     print(f"--- 5. Saving Draft to {TEMP_FILE} ---")
     df = df.drop(columns=['TransactionType'], errors='ignore')
     # We MUST save this so the validator can read it
     df.to_csv(TEMP_FILE, index=False, quoting=csv.QUOTE_ALL)
 
-    # --- 6. VALIDATION (The "Look-Ahead" Integrity Check) ---
+    # --- 5. VALIDATION (The "Look-Ahead" Integrity Check) ---
     print(f"--- 6. Running Precision Integrity Check ---")
     verified_rows = []
     dropped_count = 0
@@ -158,7 +170,7 @@ def main():
         if row_prev:
             verified_rows.append(row_prev)
 
-    # 7. FINAL SAVE
+    # 6. FINAL SAVE
     with open(FINAL_FILE, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f, quoting=csv.QUOTE_ALL)
         writer.writerows(verified_rows)
