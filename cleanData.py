@@ -5,7 +5,7 @@ import os
 from tqdm import tqdm
 
 # --- CONFIGURATION ---
-INPUT_FILE = 'trimmed_file.csv'   # Your main 3,000 ticket file
+INPUT_FILE = 'allDoitTickets.csv'   # Your main 3,000 ticket file
 FINAL_FILE = 'cleanedData.csv'
 TEMP_FILE = 'temp_draft_tickets.csv' # Temporary holding file
 MODEL = "llama3.1:70b"
@@ -64,6 +64,42 @@ def clean_content_with_ai(raw_text):
     except Exception as e:
         return ""
 
+def anonymize_subject_with_ai(raw_text):
+    """
+    Specifically for Subject lines: Retains meaning but scrubs names/IDs.
+    """
+    if not isinstance(raw_text, str) or len(raw_text.strip()) < 2:
+        return ""
+
+    prompt = f"""
+    Act as a data privacy shield. I will give you an IT ticket Subject Line.
+    1. KEEP: Technical details, server names (e.g. knacc1), software names, and error codes.
+    2. ANONYMIZE: Replace human names, NetIDs, and email addresses with [USER], [STAFF], or [ID].
+    3. DO NOT remove the technical context.
+    
+    RAW SUBJECT:
+    {raw_text}
+
+    ---
+    CRITICAL: Return ONLY the cleaned subject line. Do not say "Here is the anonymized subject".
+    """
+
+    try:
+        response = ollama.generate(model=MODEL, prompt=prompt)
+        text = response['response'].strip()
+        
+        # --- THE MUZZLE ---
+        if text.lower().startswith("Here is "):
+            if ":" in text:
+                text = text.split(":", 1)[1].strip()
+
+        # SANITIZATION (Prevent CSV breaks)
+        text = text.replace('"', "'").replace('\n', ' ').replace('\r', ' ').replace('\t', ' ')
+        
+        return text
+    except Exception as e:
+        return raw_text
+
 def merge_thread(group):
     """
     Merges all replies for a TicketID into one row.
@@ -113,6 +149,11 @@ def main():
     if 'TransactionContent' in df.columns:
         tqdm.pandas(desc="Processing Tickets")
         df['TransactionContent'] = df['TransactionContent'].progress_apply(clean_content_with_ai)
+   
+    print("--- 3.5 Anonymizing Subjects ---")
+    if 'SubjectNoHTML' in df.columns:   
+        tqdm.pandas(desc="Processing Subjects")        
+        df['SubjectNoHTML'] = df['SubjectNoHTML'].progress_apply(anonymize_subject_with_ai) 
     
     # 4. SAVE DRAFT (The 'First Save')
     print(f"--- 5. Saving Draft to {TEMP_FILE} ---")
