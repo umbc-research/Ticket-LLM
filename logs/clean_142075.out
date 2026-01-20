@@ -1,0 +1,12 @@
+Job started on g24-08 at Tue Jan 20 01:08:01 PM EST 2026
+Loading modules...
+Activating Conda environment: hpc_assistant
+Starting local Ollama server...
+Ollama server active (PID: 1194855)
+Running python script...
+--- 1. Loading trimmed_file.csv ---
+--- 2. Filtering ---
+Tickets remaining: 400
+--- 2.5 Optimizing: Keeping only the latest transaction per ticket ---
+Unique tickets to process (Redundancy Removed): 87
+--- 3. AI Cleaning & Anonymizing ---
