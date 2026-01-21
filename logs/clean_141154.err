@@ -1,56 +1,0 @@
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 3063: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 3065: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 3068: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 3071: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 4999: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 5000: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10460: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10474: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10476: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10477: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10479: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10481: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10483: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10484: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10486: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10488: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 10490: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-/umbc/rs/pi_doit/users/elliotg2/ticketAssistant/cleanData.py:125: ParserWarning: Skipping line 13888: field larger than field limit (131072)
-
-  df = pd.read_csv(INPUT_FILE, engine='python', on_bad_lines='warn', quoting=0, doublequote=True)
-Processing Tickets:   0%|          | 0/962 [00:00<?, ?it/s]Processing Tickets:   0%|          | 2/962 [00:23<3:09:40, 11.85s/it]Processing Tickets:   0%|          | 3/962 [00:51<4:52:47, 18.32s/it]Processing Tickets:   0%|          | 4/962 [01:37<7:37:45, 28.67s/it]Processing Tickets:   1%|          | 5/962 [02:01<7:14:35, 27.25s/it]Processing Tickets:   1%|          | 6/962 [02:24<6:52:00, 25.86s/it]Processing Tickets:   1%|          | 7/962 [02:26<4:48:53, 18.15s/it]Processing Tickets:   1%|          | 8/962 [02:53<5:33:12, 20.96s/it]Processing Tickets:   1%|          | 9/962 [02:57<4:07:08, 15.56s/it]Processing Tickets:   1%|          | 10/962 [03:01<3:12:02, 12.10s/it]Processing Tickets:   1%|          | 11/962 [03:02<2:17:54,  8.70s/it]Processing Tickets:   1%|          | 12/962 [03:37<4:25:45, 16.78s/it]Processing Tickets:   1%|▏         | 13/962 [05:06<10:09:19, 38.52s/it]Processing Tickets:   1%|▏         | 14/962 [05:33<9:12:08, 34.95s/it] Processing Tickets:   2%|▏         | 15/962 [05:42<7:07:50, 27.11s/it]Processing Tickets:   2%|▏         | 16/962 [06:02<6:35:27, 25.08s/it]Processing Tickets:   2%|▏         | 17/962 [06:10<5:14:44, 19.98s/it]Processing Tickets:   2%|▏         | 18/962 [06:39<5:58:37, 22.79s/it]Processing Tickets:   2%|▏         | 19/962 [07:27<7:54:36, 30.20s/it]Processing Tickets:   2%|▏         | 20/962 [07:44<6:49:55, 26.11s/it]Processing Tickets:   2%|▏         | 21/962 [08:48<9:49:23, 37.58s/it]Processing Tickets:   2%|▏         | 22/962 [09:10<8:38:02, 33.07s/it]Processing Tickets:   2%|▏         | 23/962 [09:47<8:53:36, 34.10s/it]Processing Tickets:   2%|▏         | 24/962 [09:50<6:28:39, 24.86s/it]Processing Tickets:   3%|▎         | 25/962 [10:08<5:56:42, 22.84s/it]Processing Tickets:   3%|▎         | 26/962 [10:41<6:41:22, 25.73s/it]Processing Tickets:   3%|▎         | 27/962 [11:22<7:52:38, 30.33s/it]Processing Tickets:   3%|▎         | 28/962 [12:38<11:26:13, 44.08s/it]Processing Tickets:   3%|▎         | 29/962 [12:44<8:26:06, 32.55s/it] Processing Tickets:   3%|▎         | 30/962 [13:33<9:42:01, 37.47s/it]Processing Tickets:   3%|▎         | 31/962 [14:01<8:57:08, 34.62s/it]Processing Tickets:   3%|▎         | 32/962 [14:10<7:01:28, 27.19s/it]Processing Tickets:   3%|▎         | 33/962 [15:27<10:49:29, 41.95s/it]Processing Tickets:   4%|▎         | 34/962 [16:47<13:45:53, 53.40s/it]Processing Tickets:   4%|▎         | 35/962 [16:50<9:52:44, 38.36s/it] Processing Tickets:   4%|▎         | 36/962 [17:07<8:11:54, 31.87s/it]Processing Tickets:   4%|▍         | 37/962 [17:12<6:05:51, 23.73s/it]Processing Tickets:   4%|▍         | 38/962 [17:45<6:49:50, 26.61s/it]Processing Tickets:   4%|▍         | 39/962 [17:52<5:18:37, 20.71s/it]Processing Tickets:   4%|▍         | 40/962 [18:23<6:04:19, 23.71s/it]Processing Tickets:   4%|▍         | 41/962 [18:45<5:56:29, 23.22s/it]Processing Tickets:   4%|▍         | 42/962 [19:17<6:39:41, 26.07s/it]Processing Tickets:   4%|▍         | 43/962 [19:24<5:08:54, 20.17s/it]Processing Tickets:   5%|▍         | 44/962 [21:28<13:05:01, 51.31s/it]Processing Tickets:   5%|▍         | 45/962 [22:25<13:30:00, 53.00s/it]Processing Tickets:   5%|▍         | 46/962 [22:53<11:34:30, 45.49s/it]Processing Tickets:   5%|▍         | 47/962 [23:13<9:37:11, 37.85s/it] Processing Tickets:   5%|▍         | 48/962 [23:25<7:40:44, 30.25s/it]Processing Tickets:   5%|▌         | 49/962 [23:36<6:11:46, 24.43s/it]Processing Tickets:   5%|▌         | 50/962 [23:51<5:25:38, 21.42s/it]Processing Tickets:   5%|▌         | 51/962 [24:07<5:03:49, 20.01s/it]Processing Tickets:   5%|▌         | 52/962 [24:24<4:49:25, 19.08s/it]Processing Tickets:   6%|▌         | 53/962 [24:48<5:10:33, 20.50s/it]Processing Tickets:   6%|▌         | 54/962 [25:03<4:45:56, 18.90s/it]Processing Tickets:   6%|▌         | 55/962 [25:21<4:42:34, 18.69s/it]Processing Tickets:   6%|▌         | 56/962 [25:37<4:29:54, 17.87s/it]Processing Tickets:   6%|▌         | 57/962 [26:21<6:25:20, 25.55s/it]Processing Tickets:   6%|▌         | 58/962 [26:29<5:06:37, 20.35s/it]Processing Tickets:   6%|▌         | 59/962 [26:39<4:17:41, 17.12s/it]Processing Tickets:   6%|▌         | 60/962 [26:54<4:08:00, 16.50s/it]Processing Tickets:   6%|▋         | 61/962 [27:06<3:49:43, 15.30s/it]Processing Tickets:   6%|▋         | 62/962 [27:21<3:46:56, 15.13s/it]Processing Tickets:   7%|▋         | 63/962 [27:34<3:37:41, 14.53s/it]Processing Tickets:   7%|▋         | 64/962 [28:07<4:58:42, 19.96s/it]Processing Tickets:   7%|▋         | 65/962 [28:20<4:27:06, 17.87s/it]Processing Tickets:   7%|▋         | 66/962 [28:50<5:22:28, 21.59s/it]Processing Tickets:   7%|▋         | 67/962 [28:55<4:09:28, 16.72s/it]Processing Tickets:   7%|▋         | 68/962 [29:08<3:53:11, 15.65s/it]Processing Tickets:   7%|▋         | 69/962 [29:11<2:56:29, 11.86s/it]Processing Tickets:   7%|▋         | 70/962 [29:14<2:15:39,  9.13s/it]Processing Tickets:   7%|▋         | 71/962 [29:18<1:49:56,  7.40s/it]Processing Tickets:   7%|▋         | 72/962 [29:42<3:07:12, 12.62s/it]Processing Tickets:   8%|▊         | 73/962 [29:57<3:14:54, 13.15s/it]Processing Tickets:   8%|▊         | 74/962 [30:24<4:18:50, 17.49s/it]Processing Tickets:   8%|▊         | 75/962 [30:59<5:35:18, 22.68s/it]Processing Tickets:  26%|██▋       | 254/962 [30:59<03:27,  3.42it/s] Processing Tickets:  45%|████▍     | 431/962 [30:59<01:05,  8.17it/s]Processing Tickets:  64%|██████▍   | 615/962 [30:59<00:22, 15.17it/s]Processing Tickets:  83%|████████▎ | 798/962 [31:00<00:06, 25.03it/s]Processing Tickets: 100%|██████████| 962/962 [31:00<00:00,  1.93s/it]
-Processing Subjects:   0%|          | 0/962 [00:00<?, ?it/s]Processing Subjects:  22%|██▏       | 216/962 [00:00<00:00, 2155.72it/s]Processing Subjects:  45%|████▌     | 437/962 [00:00<00:00, 2183.97it/s]Processing Subjects:  68%|██████▊   | 658/962 [00:00<00:00, 2193.76it/s]Processing Subjects:  91%|█████████▏| 878/962 [00:00<00:00, 2079.10it/s]Processing Subjects: 100%|██████████| 962/962 [00:00<00:00, 2083.36it/s]
