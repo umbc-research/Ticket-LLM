@@ -1,0 +1,569 @@
+time=2026-01-21T12:06:47.504-05:00 level=INFO source=routes.go:1554 msg="server config" env="map[CUDA_VISIBLE_DEVICES:0,1 GGML_VK_VISIBLE_DEVICES: GPU_DEVICE_ORDINAL: HIP_VISIBLE_DEVICES: HSA_OVERRIDE_GFX_VERSION: HTTPS_PROXY: HTTP_PROXY: NO_PROXY: OLLAMA_CONTEXT_LENGTH:4096 OLLAMA_DEBUG:INFO OLLAMA_FLASH_ATTENTION:false OLLAMA_GPU_OVERHEAD:0 OLLAMA_HOST:http://127.0.0.1:11434 OLLAMA_KEEP_ALIVE:5m0s OLLAMA_KV_CACHE_TYPE: OLLAMA_LLM_LIBRARY: OLLAMA_LOAD_TIMEOUT:5m0s OLLAMA_MAX_LOADED_MODELS:0 OLLAMA_MAX_QUEUE:512 OLLAMA_MODELS:/home/elliotg2/.ollama/models OLLAMA_MULTIUSER_CACHE:false OLLAMA_NEW_ENGINE:false OLLAMA_NOHISTORY:false OLLAMA_NOPRUNE:false OLLAMA_NUM_PARALLEL:1 OLLAMA_ORIGINS:[http://localhost https://localhost http://localhost:* https://localhost:* http://127.0.0.1 https://127.0.0.1 http://127.0.0.1:* https://127.0.0.1:* http://0.0.0.0 https://0.0.0.0 http://0.0.0.0:* https://0.0.0.0:* app://* file://* tauri://* vscode-webview://* vscode-file://*] OLLAMA_REMOTES:[ollama.com] OLLAMA_SCHED_SPREAD:false OLLAMA_VULKAN:false ROCR_VISIBLE_DEVICES: http_proxy: https_proxy: no_proxy:]"
+time=2026-01-21T12:06:47.951-05:00 level=INFO source=images.go:493 msg="total blobs: 21"
+time=2026-01-21T12:06:47.951-05:00 level=INFO source=images.go:500 msg="total unused blobs removed: 0"
+time=2026-01-21T12:06:47.952-05:00 level=INFO source=routes.go:1607 msg="Listening on 127.0.0.1:11434 (version 0.13.5)"
+time=2026-01-21T12:06:47.960-05:00 level=INFO source=runner.go:67 msg="discovering available GPUs..."
+time=2026-01-21T12:06:47.960-05:00 level=WARN source=runner.go:485 msg="user overrode visible devices" CUDA_VISIBLE_DEVICES=0,1
+time=2026-01-21T12:06:47.960-05:00 level=WARN source=runner.go:489 msg="if GPUs are not correctly discovered, unset and try again"
+time=2026-01-21T12:06:47.962-05:00 level=INFO source=server.go:429 msg="starting runner" cmd="/cm/shared/apps/ollama/0.13.5/bin/ollama runner --ollama-engine --port 38297"
+time=2026-01-21T12:06:48.941-05:00 level=INFO source=server.go:429 msg="starting runner" cmd="/cm/shared/apps/ollama/0.13.5/bin/ollama runner --ollama-engine --port 36711"
+time=2026-01-21T12:06:49.623-05:00 level=INFO source=runner.go:106 msg="experimental Vulkan support disabled.  To enable, set OLLAMA_VULKAN=1"
+time=2026-01-21T12:06:49.626-05:00 level=INFO source=server.go:429 msg="starting runner" cmd="/cm/shared/apps/ollama/0.13.5/bin/ollama runner --ollama-engine --port 34729"
+time=2026-01-21T12:06:49.626-05:00 level=INFO source=server.go:429 msg="starting runner" cmd="/cm/shared/apps/ollama/0.13.5/bin/ollama runner --ollama-engine --port 39217"
+time=2026-01-21T12:06:49.626-05:00 level=INFO source=server.go:429 msg="starting runner" cmd="/cm/shared/apps/ollama/0.13.5/bin/ollama runner --ollama-engine --port 43707"
+time=2026-01-21T12:06:49.626-05:00 level=INFO source=server.go:429 msg="starting runner" cmd="/cm/shared/apps/ollama/0.13.5/bin/ollama runner --ollama-engine --port 41963"
+time=2026-01-21T12:06:50.101-05:00 level=INFO source=types.go:42 msg="inference compute" id=GPU-24ad7251-9fb3-9dca-40d0-5c92ddde72f1 filter_id="" library=CUDA compute=7.5 name=CUDA0 description="Quadro RTX 6000" libdirs=ollama,cuda_v13 driver=13.0 pci_id=0000:1b:00.0 type=discrete total="24.0 GiB" available="23.5 GiB"
+time=2026-01-21T12:06:50.101-05:00 level=INFO source=types.go:42 msg="inference compute" id=GPU-ff8b7b2a-63c7-1a8d-5c2b-0e628e57cb69 filter_id="" library=CUDA compute=7.5 name=CUDA1 description="Quadro RTX 6000" libdirs=ollama,cuda_v13 driver=13.0 pci_id=0000:1c:00.0 type=discrete total="24.0 GiB" available="23.3 GiB"
+time=2026-01-21T12:08:35.371-05:00 level=INFO source=server.go:429 msg="starting runner" cmd="/cm/shared/apps/ollama/0.13.5/bin/ollama runner --ollama-engine --port 43163"
+llama_model_loader: loaded meta data with 29 key-value pairs and 724 tensors from /home/elliotg2/.ollama/models/blobs/sha256-de20d2cf2dc430b1717a8b07a9df029d651f3895dbffec4729a3902a6fe344c9 (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = llama
+llama_model_loader: - kv   1:                               general.type str              = model
+llama_model_loader: - kv   2:                               general.name str              = Meta Llama 3.1 70B Instruct
+llama_model_loader: - kv   3:                           general.finetune str              = Instruct
+llama_model_loader: - kv   4:                           general.basename str              = Meta-Llama-3.1
+llama_model_loader: - kv   5:                         general.size_label str              = 70B
+llama_model_loader: - kv   6:                            general.license str              = llama3.1
+llama_model_loader: - kv   7:                               general.tags arr[str,6]       = ["facebook", "meta", "pytorch", "llam...
+llama_model_loader: - kv   8:                          general.languages arr[str,8]       = ["en", "de", "fr", "it", "pt", "hi", ...
+llama_model_loader: - kv   9:                          llama.block_count u32              = 80
+llama_model_loader: - kv  10:                       llama.context_length u32              = 131072
+llama_model_loader: - kv  11:                     llama.embedding_length u32              = 8192
+llama_model_loader: - kv  12:                  llama.feed_forward_length u32              = 28672
+llama_model_loader: - kv  13:                 llama.attention.head_count u32              = 64
+llama_model_loader: - kv  14:              llama.attention.head_count_kv u32              = 8
+llama_model_loader: - kv  15:                       llama.rope.freq_base f32              = 500000.000000
+llama_model_loader: - kv  16:     llama.attention.layer_norm_rms_epsilon f32              = 0.000010
+llama_model_loader: - kv  17:                          general.file_type u32              = 15
+llama_model_loader: - kv  18:                           llama.vocab_size u32              = 128256
+llama_model_loader: - kv  19:                 llama.rope.dimension_count u32              = 128
+llama_model_loader: - kv  20:                       tokenizer.ggml.model str              = gpt2
+llama_model_loader: - kv  21:                         tokenizer.ggml.pre str              = llama-bpe
+llama_model_loader: - kv  22:                      tokenizer.ggml.tokens arr[str,128256]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+llama_model_loader: - kv  23:                  tokenizer.ggml.token_type arr[i32,128256]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+llama_model_loader: - kv  24:                      tokenizer.ggml.merges arr[str,280147]  = ["Ġ Ġ", "Ġ ĠĠĠ", "ĠĠ ĠĠ", "...
+llama_model_loader: - kv  25:                tokenizer.ggml.bos_token_id u32              = 128000
+llama_model_loader: - kv  26:                tokenizer.ggml.eos_token_id u32              = 128009
+llama_model_loader: - kv  27:                    tokenizer.chat_template str              = {{- bos_token }}\n{%- if custom_tools ...
+llama_model_loader: - kv  28:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:  162 tensors
+llama_model_loader: - type q4_K:  441 tensors
+llama_model_loader: - type q5_K:   40 tensors
+llama_model_loader: - type q6_K:   81 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 39.59 GiB (4.82 BPW) 
+load: printing all EOG tokens:
+load:   - 128001 ('<|end_of_text|>')
+load:   - 128008 ('<|eom_id|>')
+load:   - 128009 ('<|eot_id|>')
+load: special tokens cache size = 256
+load: token to piece cache size = 0.7999 MB
+print_info: arch             = llama
+print_info: vocab_only       = 1
+print_info: no_alloc         = 0
+print_info: model type       = ?B
+print_info: model params     = 70.55 B
+print_info: general.name     = Meta Llama 3.1 70B Instruct
+print_info: vocab type       = BPE
+print_info: n_vocab          = 128256
+print_info: n_merges         = 280147
+print_info: BOS token        = 128000 '<|begin_of_text|>'
+print_info: EOS token        = 128009 '<|eot_id|>'
+print_info: EOT token        = 128009 '<|eot_id|>'
+print_info: EOM token        = 128008 '<|eom_id|>'
+print_info: LF token         = 198 'Ċ'
+print_info: EOG token        = 128001 '<|end_of_text|>'
+print_info: EOG token        = 128008 '<|eom_id|>'
+print_info: EOG token        = 128009 '<|eot_id|>'
+print_info: max token length = 256
+llama_model_load: vocab only - skipping tensors
+time=2026-01-21T12:08:36.309-05:00 level=INFO source=server.go:429 msg="starting runner" cmd="/cm/shared/apps/ollama/0.13.5/bin/ollama runner --model /home/elliotg2/.ollama/models/blobs/sha256-de20d2cf2dc430b1717a8b07a9df029d651f3895dbffec4729a3902a6fe344c9 --port 34431"
+time=2026-01-21T12:08:36.310-05:00 level=INFO source=sched.go:443 msg="system memory" total="376.5 GiB" free="366.6 GiB" free_swap="12.0 GiB"
+time=2026-01-21T12:08:36.310-05:00 level=INFO source=sched.go:450 msg="gpu memory" id=GPU-24ad7251-9fb3-9dca-40d0-5c92ddde72f1 library=CUDA available="23.0 GiB" free="23.5 GiB" minimum="457.0 MiB" overhead="0 B"
+time=2026-01-21T12:08:36.310-05:00 level=INFO source=sched.go:450 msg="gpu memory" id=GPU-ff8b7b2a-63c7-1a8d-5c2b-0e628e57cb69 library=CUDA available="22.8 GiB" free="23.3 GiB" minimum="457.0 MiB" overhead="0 B"
+time=2026-01-21T12:08:36.310-05:00 level=INFO source=server.go:496 msg="loading model" "model layers"=81 requested=-1
+time=2026-01-21T12:08:36.312-05:00 level=INFO source=device.go:240 msg="model weights" device=CUDA0 size="19.6 GiB"
+time=2026-01-21T12:08:36.312-05:00 level=INFO source=device.go:240 msg="model weights" device=CUDA1 size="19.5 GiB"
+time=2026-01-21T12:08:36.312-05:00 level=INFO source=device.go:251 msg="kv cache" device=CUDA0 size="656.0 MiB"
+time=2026-01-21T12:08:36.312-05:00 level=INFO source=device.go:251 msg="kv cache" device=CUDA1 size="624.0 MiB"
+time=2026-01-21T12:08:36.312-05:00 level=INFO source=device.go:262 msg="compute graph" device=CUDA0 size="584.0 MiB"
+time=2026-01-21T12:08:36.312-05:00 level=INFO source=device.go:262 msg="compute graph" device=CUDA1 size="584.0 MiB"
+time=2026-01-21T12:08:36.312-05:00 level=INFO source=device.go:272 msg="total memory" size="41.4 GiB"
+time=2026-01-21T12:08:36.323-05:00 level=INFO source=runner.go:965 msg="starting go runner"
+load_backend: loaded CPU backend from /cm/shared/apps/ollama/0.13.5/lib/ollama/libggml-cpu-skylakex.so
+ggml_cuda_init: GGML_CUDA_FORCE_MMQ:    no
+ggml_cuda_init: GGML_CUDA_FORCE_CUBLAS: no
+ggml_cuda_init: found 2 CUDA devices:
+  Device 0: Quadro RTX 6000, compute capability 7.5, VMM: yes, ID: GPU-24ad7251-9fb3-9dca-40d0-5c92ddde72f1
+  Device 1: Quadro RTX 6000, compute capability 7.5, VMM: yes, ID: GPU-ff8b7b2a-63c7-1a8d-5c2b-0e628e57cb69
+load_backend: loaded CUDA backend from /cm/shared/apps/ollama/0.13.5/lib/ollama/cuda_v13/libggml-cuda.so
+time=2026-01-21T12:08:36.525-05:00 level=INFO source=ggml.go:104 msg=system CPU.0.SSE3=1 CPU.0.SSSE3=1 CPU.0.AVX=1 CPU.0.AVX2=1 CPU.0.F16C=1 CPU.0.FMA=1 CPU.0.BMI2=1 CPU.0.AVX512=1 CPU.0.LLAMAFILE=1 CPU.1.LLAMAFILE=1 CUDA.0.ARCHS=750,800,860,870,890,900,1000,1030,1100,1200,1210 CUDA.0.USE_GRAPHS=1 CUDA.0.PEER_MAX_BATCH_SIZE=128 CUDA.1.ARCHS=750,800,860,870,890,900,1000,1030,1100,1200,1210 CUDA.1.USE_GRAPHS=1 CUDA.1.PEER_MAX_BATCH_SIZE=128 compiler=cgo(gcc)
+time=2026-01-21T12:08:36.526-05:00 level=INFO source=runner.go:1001 msg="Server listening on 127.0.0.1:34431"
+time=2026-01-21T12:08:36.532-05:00 level=INFO source=runner.go:895 msg=load request="{Operation:commit LoraPath:[] Parallel:1 BatchSize:512 FlashAttention:Auto KvSize:4096 KvCacheType: NumThreads:48 GPULayers:81[ID:GPU-24ad7251-9fb3-9dca-40d0-5c92ddde72f1 Layers:41(0..40) ID:GPU-ff8b7b2a-63c7-1a8d-5c2b-0e628e57cb69 Layers:40(41..80)] MultiUserCache:false ProjectorPath: MainGPU:0 UseMmap:true}"
+time=2026-01-21T12:08:36.532-05:00 level=INFO source=server.go:1338 msg="waiting for llama runner to start responding"
+time=2026-01-21T12:08:36.532-05:00 level=INFO source=server.go:1372 msg="waiting for server to become available" status="llm server loading model"
+ggml_backend_cuda_device_get_memory device GPU-24ad7251-9fb3-9dca-40d0-5c92ddde72f1 utilizing NVML memory reporting free: 25185681408 total: 25769803776
+llama_model_load_from_file_impl: using device CUDA0 (Quadro RTX 6000) (0000:1b:00.0) - 24018 MiB free
+ggml_backend_cuda_device_get_memory device GPU-ff8b7b2a-63c7-1a8d-5c2b-0e628e57cb69 utilizing NVML memory reporting free: 25013714944 total: 25769803776
+llama_model_load_from_file_impl: using device CUDA1 (Quadro RTX 6000) (0000:1c:00.0) - 23854 MiB free
+llama_model_loader: loaded meta data with 29 key-value pairs and 724 tensors from /home/elliotg2/.ollama/models/blobs/sha256-de20d2cf2dc430b1717a8b07a9df029d651f3895dbffec4729a3902a6fe344c9 (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = llama
+llama_model_loader: - kv   1:                               general.type str              = model
+llama_model_loader: - kv   2:                               general.name str              = Meta Llama 3.1 70B Instruct
+llama_model_loader: - kv   3:                           general.finetune str              = Instruct
+llama_model_loader: - kv   4:                           general.basename str              = Meta-Llama-3.1
+llama_model_loader: - kv   5:                         general.size_label str              = 70B
+llama_model_loader: - kv   6:                            general.license str              = llama3.1
+llama_model_loader: - kv   7:                               general.tags arr[str,6]       = ["facebook", "meta", "pytorch", "llam...
+llama_model_loader: - kv   8:                          general.languages arr[str,8]       = ["en", "de", "fr", "it", "pt", "hi", ...
+llama_model_loader: - kv   9:                          llama.block_count u32              = 80
+llama_model_loader: - kv  10:                       llama.context_length u32              = 131072
+llama_model_loader: - kv  11:                     llama.embedding_length u32              = 8192
+llama_model_loader: - kv  12:                  llama.feed_forward_length u32              = 28672
+llama_model_loader: - kv  13:                 llama.attention.head_count u32              = 64
+llama_model_loader: - kv  14:              llama.attention.head_count_kv u32              = 8
+llama_model_loader: - kv  15:                       llama.rope.freq_base f32              = 500000.000000
+llama_model_loader: - kv  16:     llama.attention.layer_norm_rms_epsilon f32              = 0.000010
+llama_model_loader: - kv  17:                          general.file_type u32              = 15
+llama_model_loader: - kv  18:                           llama.vocab_size u32              = 128256
+llama_model_loader: - kv  19:                 llama.rope.dimension_count u32              = 128
+llama_model_loader: - kv  20:                       tokenizer.ggml.model str              = gpt2
+llama_model_loader: - kv  21:                         tokenizer.ggml.pre str              = llama-bpe
+llama_model_loader: - kv  22:                      tokenizer.ggml.tokens arr[str,128256]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+llama_model_loader: - kv  23:                  tokenizer.ggml.token_type arr[i32,128256]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+llama_model_loader: - kv  24:                      tokenizer.ggml.merges arr[str,280147]  = ["Ġ Ġ", "Ġ ĠĠĠ", "ĠĠ ĠĠ", "...
+llama_model_loader: - kv  25:                tokenizer.ggml.bos_token_id u32              = 128000
+llama_model_loader: - kv  26:                tokenizer.ggml.eos_token_id u32              = 128009
+llama_model_loader: - kv  27:                    tokenizer.chat_template str              = {{- bos_token }}\n{%- if custom_tools ...
+llama_model_loader: - kv  28:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:  162 tensors
+llama_model_loader: - type q4_K:  441 tensors
+llama_model_loader: - type q5_K:   40 tensors
+llama_model_loader: - type q6_K:   81 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 39.59 GiB (4.82 BPW) 
+load: printing all EOG tokens:
+load:   - 128001 ('<|end_of_text|>')
+load:   - 128008 ('<|eom_id|>')
+load:   - 128009 ('<|eot_id|>')
+load: special tokens cache size = 256
+load: token to piece cache size = 0.7999 MB
+print_info: arch             = llama
+print_info: vocab_only       = 0
+print_info: no_alloc         = 0
+print_info: n_ctx_train      = 131072
+print_info: n_embd           = 8192
+print_info: n_embd_inp       = 8192
+print_info: n_layer          = 80
+print_info: n_head           = 64
+print_info: n_head_kv        = 8
+print_info: n_rot            = 128
+print_info: n_swa            = 0
+print_info: is_swa_any       = 0
+print_info: n_embd_head_k    = 128
+print_info: n_embd_head_v    = 128
+print_info: n_gqa            = 8
+print_info: n_embd_k_gqa     = 1024
+print_info: n_embd_v_gqa     = 1024
+print_info: f_norm_eps       = 0.0e+00
+print_info: f_norm_rms_eps   = 1.0e-05
+print_info: f_clamp_kqv      = 0.0e+00
+print_info: f_max_alibi_bias = 0.0e+00
+print_info: f_logit_scale    = 0.0e+00
+print_info: f_attn_scale     = 0.0e+00
+print_info: n_ff             = 28672
+print_info: n_expert         = 0
+print_info: n_expert_used    = 0
+print_info: n_expert_groups  = 0
+print_info: n_group_used     = 0
+print_info: causal attn      = 1
+print_info: pooling type     = 0
+print_info: rope type        = 0
+print_info: rope scaling     = linear
+print_info: freq_base_train  = 500000.0
+print_info: freq_scale_train = 1
+print_info: n_ctx_orig_yarn  = 131072
+print_info: rope_yarn_log_mul= 0.0000
+print_info: rope_finetuned   = unknown
+print_info: model type       = 70B
+print_info: model params     = 70.55 B
+print_info: general.name     = Meta Llama 3.1 70B Instruct
+print_info: vocab type       = BPE
+print_info: n_vocab          = 128256
+print_info: n_merges         = 280147
+print_info: BOS token        = 128000 '<|begin_of_text|>'
+print_info: EOS token        = 128009 '<|eot_id|>'
+print_info: EOT token        = 128009 '<|eot_id|>'
+print_info: EOM token        = 128008 '<|eom_id|>'
+print_info: LF token         = 198 'Ċ'
+print_info: EOG token        = 128001 '<|end_of_text|>'
+print_info: EOG token        = 128008 '<|eom_id|>'
+print_info: EOG token        = 128009 '<|eot_id|>'
+print_info: max token length = 256
+load_tensors: loading model tensors, this can take a while... (mmap = true)
+load_tensors: offloading 80 repeating layers to GPU
+load_tensors: offloading output layer to GPU
+load_tensors: offloaded 81/81 layers to GPU
+load_tensors:   CPU_Mapped model buffer size =   563.62 MiB
+load_tensors:        CUDA0 model buffer size = 20038.81 MiB
+load_tensors:        CUDA1 model buffer size = 19940.67 MiB
+llama_context: constructing llama_context
+llama_context: n_seq_max     = 1
+llama_context: n_ctx         = 4096
+llama_context: n_ctx_seq     = 4096
+llama_context: n_batch       = 512
+llama_context: n_ubatch      = 512
+llama_context: causal_attn   = 1
+llama_context: flash_attn    = auto
+llama_context: kv_unified    = false
+llama_context: freq_base     = 500000.0
+llama_context: freq_scale    = 1
+llama_context: n_ctx_seq (4096) < n_ctx_train (131072) -- the full capacity of the model will not be utilized
+llama_context:  CUDA_Host  output buffer size =     0.52 MiB
+llama_kv_cache:      CUDA0 KV buffer size =   656.00 MiB
+llama_kv_cache:      CUDA1 KV buffer size =   624.00 MiB
+llama_kv_cache: size = 1280.00 MiB (  4096 cells,  80 layers,  1/1 seqs), K (f16):  640.00 MiB, V (f16):  640.00 MiB
+llama_context: pipeline parallelism enabled (n_copies=4)
+llama_context: Flash Attention was auto, set to enabled
+llama_context:      CUDA0 compute buffer size =   316.04 MiB
+llama_context:      CUDA1 compute buffer size =   346.55 MiB
+llama_context:  CUDA_Host compute buffer size =    48.05 MiB
+llama_context: graph nodes  = 2487
+llama_context: graph splits = 3
+time=2026-01-21T12:12:28.101-05:00 level=INFO source=server.go:1376 msg="llama runner started in 231.79 seconds"
+time=2026-01-21T12:12:28.102-05:00 level=INFO source=sched.go:517 msg="loaded runners" count=1
+time=2026-01-21T12:12:28.102-05:00 level=INFO source=server.go:1338 msg="waiting for llama runner to start responding"
+time=2026-01-21T12:12:28.102-05:00 level=INFO source=server.go:1376 msg="llama runner started in 231.79 seconds"
+[GIN] 2026/01/21 - 12:12:46 | 200 |         4m11s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:12:53 | 200 |  7.287745787s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:13:17 | 200 | 23.964847542s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:14:57 | 200 |         1m40s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:16:00 | 200 |          1m3s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:16:25 | 200 | 24.603602446s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:16:28 | 200 |  3.136395372s |       127.0.0.1 | POST     "/api/generate"
+time=2026-01-21T12:16:28.730-05:00 level=WARN source=runner.go:153 msg="truncating input prompt" limit=4096 prompt=4787 keep=5 new=4096
+[GIN] 2026/01/21 - 12:16:55 | 200 | 26.530557229s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:17:25 | 200 | 30.285580102s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:17:27 | 200 |  2.253698054s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:17:59 | 200 | 31.549880664s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:18:31 | 200 | 32.691045739s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:18:50 | 200 | 18.800291768s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:18:59 | 200 |  8.517682083s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:19:25 | 200 | 26.260737181s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:19:53 | 200 | 27.850909783s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:20:20 | 200 | 27.114100754s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:20:39 | 200 | 18.936141306s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:21:42 | 200 |          1m3s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:22:07 | 200 | 24.663265978s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:22:34 | 200 |  27.11670398s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:23:01 | 200 | 27.327479834s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:23:10 | 200 |  8.496106946s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:23:41 | 200 | 31.726426293s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:24:29 | 200 | 47.160243908s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:25:36 | 200 |          1m7s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:26:03 | 200 | 26.795426348s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:27:08 | 200 |          1m4s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:28:08 | 200 |          1m0s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:28:35 | 200 | 26.812998078s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:29:02 | 200 | 27.254148449s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:30:05 | 200 |          1m2s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:30:44 | 200 |  38.67681733s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:30:49 | 200 |  4.947011456s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:31:17 | 200 |  27.76517763s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:31:29 | 200 | 12.384941388s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:32:26 | 200 | 57.303721083s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:32:36 | 200 |  9.803945367s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:33:01 | 200 | 25.355917348s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:33:12 | 200 | 10.542450136s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:34:35 | 200 |         1m23s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:35:29 | 200 | 53.143083601s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:35:54 | 200 | 25.239950336s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:36:24 | 200 | 30.146839603s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:36:40 | 200 |  16.44601325s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:36:53 | 200 | 12.620215577s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:37:08 | 200 | 15.066690473s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:38:02 | 200 | 53.768276563s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:38:26 | 200 | 24.139155816s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:39:19 | 200 | 52.770050642s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:39:32 | 200 | 13.544091922s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:40:47 | 200 |         1m14s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:41:52 | 200 |          1m4s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:42:18 | 200 | 26.789436284s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:42:37 | 200 | 18.710341215s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:43:03 | 200 | 26.276249199s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:43:37 | 200 | 33.296157627s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:44:04 | 200 | 27.511242008s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:44:30 | 200 |  25.58409209s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:44:42 | 200 | 11.954985728s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:45:09 | 200 | 27.191340677s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:45:18 | 200 |  9.272564596s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:45:31 | 200 | 12.538360313s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:45:39 | 200 |  8.502425228s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:45:48 | 200 |   8.49173925s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:45:56 | 200 |  8.495331791s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:46:08 | 200 | 12.172742631s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:46:22 | 200 | 13.178191193s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:46:30 | 200 |   8.49963744s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:46:39 | 200 |  8.499042435s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:46:47 | 200 |  8.047168893s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:47:15 | 200 | 28.170328945s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:47:18 | 200 |  2.818177608s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:48:20 | 200 |          1m2s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:48:29 | 200 |  8.569168205s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:48:37 | 200 |  8.564753043s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:49:25 | 200 | 47.412935425s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:49:50 | 200 | 25.361293596s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:50:02 | 200 | 11.599517506s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:50:08 | 200 |  6.427012717s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:50:23 | 200 | 14.844622083s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:50:40 | 200 | 16.691633423s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:50:51 | 200 | 11.888978273s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:51:04 | 200 | 12.420366326s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:51:12 | 200 |  8.489344713s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:51:21 | 200 |  8.489711277s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:51:29 | 200 |  8.493817726s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:51:39 | 200 |  9.406046282s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:51:48 | 200 |  8.569884772s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:51:56 | 200 |  7.951351533s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:52:04 | 200 |  8.486338586s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:52:13 | 200 |  8.489849176s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:52:22 | 200 |   8.48844845s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:52:30 | 200 |  8.486381155s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:52:39 | 200 |   8.56438521s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:52:47 | 200 |  8.489472748s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:52:56 | 200 |  8.486752301s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:53:04 | 200 |  8.490220415s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:53:13 | 200 |  8.563114393s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:53:22 | 200 |  8.565695109s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:53:35 | 200 | 13.905460232s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:53:44 | 200 |  8.572339258s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:53:46 | 200 |  2.235023347s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:53:51 | 200 |  4.282339102s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:53:59 | 200 |  8.564902705s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:55:05 | 200 |          1m6s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:56:20 | 200 |         1m14s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:56:53 | 200 | 32.638771741s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:56:59 | 200 |  6.159159709s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:57:33 | 200 | 34.318029787s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:58:19 | 200 | 45.488205691s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:58:32 | 200 | 13.035333356s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:59:10 | 200 | 38.627720383s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 12:59:43 | 200 | 32.919423019s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:00:00 | 200 | 16.309350099s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:00:36 | 200 | 36.350925525s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:01:16 | 200 | 40.266884795s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:01:19 | 200 |  2.424931856s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:01:32 | 200 | 13.129841457s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:01:38 | 200 |  5.669732205s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:01:41 | 200 |  3.670022891s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:02:58 | 200 |         1m16s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:03:44 | 200 | 46.010235326s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:03:46 | 200 |  2.622265751s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:03:55 | 200 |  8.337798315s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:04:03 | 200 |   7.97052518s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:04:26 | 200 | 23.171485046s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:04:51 | 200 | 25.173195402s |       127.0.0.1 | POST     "/api/generate"
+time=2026-01-21T13:04:51.648-05:00 level=WARN source=runner.go:153 msg="truncating input prompt" limit=4096 prompt=5194 keep=5 new=4096
+[GIN] 2026/01/21 - 13:05:28 | 200 | 36.925879102s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:05:55 | 200 |  27.30450643s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:06:25 | 200 | 29.706558124s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:06:54 | 200 | 28.703339846s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:07:11 | 200 | 16.911746606s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:07:27 | 200 | 16.739146206s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:07:37 | 200 |  9.622353097s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:08:14 | 200 | 36.643271681s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:08:49 | 200 |  35.53125511s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:09:12 | 200 | 22.396507599s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:09:53 | 200 | 41.069705318s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:10:36 | 200 | 42.939834771s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:11:01 | 200 | 25.705133926s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:11:34 | 200 | 32.887478804s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:11:55 | 200 | 21.013303986s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:12:31 | 200 | 35.452013836s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:12:47 | 200 | 16.452872001s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:13:26 | 200 | 38.701101478s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:14:02 | 200 | 36.436039143s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:14:20 | 200 | 17.345820659s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:14:31 | 200 | 11.162206222s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:15:27 | 200 | 56.136239536s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:15:59 | 200 | 32.175035572s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:16:17 | 200 | 17.508643928s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:16:59 | 200 | 42.262661349s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:17:19 | 200 | 20.347298955s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:17:55 | 200 | 36.002305401s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:18:13 | 200 | 17.440798631s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:18:32 | 200 |  19.35187429s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:18:49 | 200 | 16.802731096s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:19:05 | 200 | 16.212275846s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:19:33 | 200 | 28.183419755s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:19:52 | 200 |  18.98453882s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:29 | 200 | 37.082727984s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:35 | 200 |   5.98897078s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:36 | 200 |  750.518421ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:38 | 200 |  1.796362266s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:39 | 200 |  1.165593374s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:41 | 200 |  1.744857194s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:42 | 200 |  1.303592743s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:43 | 200 |  923.620075ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:44 | 200 |  1.320935292s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:45 | 200 |  616.520693ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:46 | 200 |  1.243918036s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:48 | 200 |   1.47623083s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:49 | 200 |  1.471919829s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:51 | 200 |  1.630239426s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:52 | 200 |  1.461224521s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:54 | 200 |  1.479661747s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:55 | 200 |  1.075528143s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:56 | 200 |  1.077375356s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:57 | 200 |  1.381271195s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:20:59 | 200 |  1.380938155s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:00 | 200 |  1.378913694s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:01 | 200 |    1.3794602s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:03 | 200 |  1.383194207s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:04 | 200 |  1.383772203s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:06 | 200 |  1.382981261s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:07 | 200 |   1.45699219s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:08 | 200 |  1.459564768s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:10 | 200 |  1.381271464s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:11 | 200 |  1.057342237s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:12 | 200 |  1.381301495s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:14 | 200 |  1.385258593s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:15 | 200 |  1.454436407s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:17 | 200 |  1.537836191s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:18 | 200 |  1.455297045s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:19 | 200 |  1.075401699s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:20 | 200 |  1.246429369s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:22 | 200 |   1.15249443s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:23 | 200 |  1.307509393s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:24 | 200 |  848.765393ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:25 | 200 |  1.321425274s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:27 | 200 |  1.377855983s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:28 | 200 |  1.164726697s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:29 | 200 |   1.30440936s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:30 | 200 |  1.002537327s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:32 | 200 |  1.552961926s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:33 | 200 |  1.320037921s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:34 | 200 |  1.305159498s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:36 | 200 |  1.249068736s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:37 | 200 |  1.402806355s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:39 | 200 |  1.858115597s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:40 | 200 |  1.231396454s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:41 | 200 |  1.153236785s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:42 | 200 |   1.15204763s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:44 | 200 |  1.170007893s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:45 | 200 |   1.15064941s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:46 | 200 |  1.302294873s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:47 | 200 |  1.172662843s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:49 | 200 |  1.740026157s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:50 | 200 |  1.474564241s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:52 | 200 |  1.459815985s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:53 | 200 |   964.12151ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:54 | 200 |  1.382640716s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:55 | 200 |  1.072491482s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:57 | 200 |  1.462297623s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:21:58 | 200 |  1.381137632s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:00 | 200 |   1.38180311s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:01 | 200 |  1.079124249s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:02 | 200 |  1.457695856s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:04 | 200 |  1.457934953s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:05 | 200 |  1.072745825s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:06 | 200 |  1.382889252s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:08 | 200 |   1.44230083s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:09 | 200 |  1.436967465s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:11 | 200 |  1.460931258s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:12 | 200 |  1.074346941s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:13 | 200 |   1.07297762s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:14 | 200 |  1.455260967s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:15 | 200 |  1.076435985s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:17 | 200 |  1.379860934s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:18 | 200 |  1.242649285s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:19 | 200 |  925.648775ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:20 | 200 |  1.227113434s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:21 | 200 |  1.078243605s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:23 | 200 |   1.78208111s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:24 | 200 |  1.151731073s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:26 | 200 |  1.226223827s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:27 | 200 |  1.071421672s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:28 | 200 |  1.400130618s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:29 | 200 |  1.382356235s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:31 | 200 |  1.460107004s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:32 | 200 |  1.379166909s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:34 | 200 |  1.385316869s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:35 | 200 |  1.691902486s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:37 | 200 |  1.385225807s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:38 | 200 |  1.458076345s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:40 | 200 |   1.45586272s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:41 | 200 |  1.385801441s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:42 | 200 |  1.462059509s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:44 | 200 |  1.456858476s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:45 | 200 |  1.383555634s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:46 | 200 |  1.072613539s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:48 | 200 |  1.454566954s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:49 | 200 |  1.073709985s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:50 | 200 |  1.379944588s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:52 | 200 |  1.456101669s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:53 | 200 |  1.380899698s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:55 | 200 |  1.458501291s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:56 | 200 |  1.077954702s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:57 | 200 |  1.457673122s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:22:59 | 200 |  1.456237376s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:00 | 200 |  923.190552ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:00 | 200 |  843.362459ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:01 | 200 |  884.447389ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:03 | 200 |  1.973129607s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:05 | 200 |  1.630720253s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:06 | 200 |  846.396957ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:07 | 200 |   943.47748ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:08 | 200 |  928.454462ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:09 | 200 |  993.180254ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:10 | 200 |  1.001710682s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:11 | 200 |  1.091299625s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:12 | 200 |  1.168296365s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:13 | 200 |  1.232468809s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:14 | 200 |  922.215153ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:15 | 200 |  1.478112348s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:17 | 200 |  1.395223893s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:18 | 200 |  1.150813737s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:19 | 200 |  1.153076684s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:20 | 200 |  1.072269727s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:22 | 200 |  1.458727685s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:23 | 200 |  1.168658677s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:24 | 200 |  1.167549724s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:25 | 200 |  1.167330597s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:26 | 200 |  1.157057549s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:28 | 200 |   1.47273338s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:29 | 200 |  1.000563083s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:30 | 200 |  1.002086219s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:31 | 200 |  1.319483448s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:33 | 200 |  1.384218796s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:34 | 200 |  1.384848465s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:35 | 200 |  1.385478167s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:37 | 200 |  1.384985672s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:39 | 200 |  1.746470824s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:40 | 200 |  1.153295685s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:41 | 200 |  1.306937085s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:42 | 200 |  1.228566478s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:43 | 200 |  691.553628ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:44 | 200 |  1.243603512s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:45 | 200 |  918.195763ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:47 | 200 |  1.783115976s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:49 | 200 |  1.857399923s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:50 | 200 |  1.322883144s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:51 | 200 |  924.030363ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:52 | 200 |  922.392822ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:53 | 200 |  1.078343769s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:55 | 200 |  1.780410631s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:57 | 200 |  1.857899196s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:58 | 200 |  1.325499827s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:23:59 | 200 |  1.473601769s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:24:00 | 200 |  860.757381ms |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:24:01 | 200 |  1.155131764s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:24:04 | 200 |  2.162979864s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:24:05 | 200 |  1.821283069s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:24:07 | 200 |  1.324109982s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:24:08 | 200 |  1.397617726s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:24:10 | 200 |  2.053885359s |       127.0.0.1 | POST     "/api/generate"
+[GIN] 2026/01/21 - 13:24:12 | 200 |  1.247127766s |       127.0.0.1 | POST     "/api/generate"

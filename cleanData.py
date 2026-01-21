@@ -48,7 +48,7 @@ def clean_content_with_ai(raw_text):
     try:
         response = ollama.generate(model=MODEL, prompt=prompt)
         text = response['response'].strip()
-        if text.lower().startswith("Here is the cleaned text"):
+        if text.lower().startswith("Here is the cleaned"):
             # Split by the first colon and take the second part
             # e.g., "Here is the text: [Result]" -> "[Result]"
             if ":" in text:
