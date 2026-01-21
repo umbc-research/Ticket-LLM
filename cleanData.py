@@ -48,7 +48,7 @@ def clean_content_with_ai(raw_text):
     try:
         response = ollama.generate(model=MODEL, prompt=prompt)
         text = response['response'].strip()
-        if text.lower().startswith("Here is the cleaned"):
+        if text.lower().startswith("here is"):
             # Split by the first colon and take the second part
             # e.g., "Here is the text: [Result]" -> "[Result]"
             if ":" in text:
@@ -89,7 +89,7 @@ def anonymize_subject_with_ai(raw_text):
         text = response['response'].strip()
         
         # --- THE MUZZLE ---
-        if text.lower().startswith("Here is "):
+        if text.lower().startswith("here is "):
             if ":" in text:
                 text = text.split(":", 1)[1].strip()
 
