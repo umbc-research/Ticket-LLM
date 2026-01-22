@@ -5,7 +5,7 @@ import os
 from tqdm import tqdm
 
 # --- CONFIGURATION ---
-INPUT_FILE = 'allDoitTickets.csv'   # Your main 3,000 ticket file
+INPUT_FILE = 'trimmed_file.csv'   # Your main 3,000 ticket file
 FINAL_FILE = 'cleanedData.csv'
 TEMP_FILE = 'temp_draft_tickets.csv' # Temporary holding file
 MODEL = "llama3.1:70b"
@@ -158,6 +158,8 @@ def main():
     # 4. SAVE DRAFT (The 'First Save')
     print(f"--- 5. Saving Draft to {TEMP_FILE} ---")
     df = df.drop(columns=['TransactionType'], errors='ignore')
+    df = df.drop(columns=['TransactionID'], errors='ignore')
+
     # We MUST save this so the validator can read it
     df.to_csv(TEMP_FILE, index=False, quoting=csv.QUOTE_ALL)
 
