@@ -1,18 +1,18 @@
-Job started on g20-08 at Wed Jan 21 02:14:48 PM EST 2026
+Job started on g20-08 at Wed Jan 21 04:34:42 PM EST 2026
 Loading modules...
 Activating Conda environment: hpc_assistant
 Starting local Ollama server...
-Ollama server active (PID: 2000708)
+Ollama server active (PID: 2032983)
 Running python script...
---- 1. Loading trimmed_file.csv ---
+--- 1. Loading allDoitTickets.csv ---
 --- 2. Filtering ---
-Tickets remaining: 800
+Tickets remaining: 5655
 --- 2.5 Optimizing: Keeping only the latest transaction per ticket ---
-Unique tickets to process (Redundancy Removed): 164
+Unique tickets to process (Redundancy Removed): 962
 --- 3. AI Cleaning & Anonymizing ---
 --- 3.5 Anonymizing Subjects ---
 --- 5. Saving Draft to temp_draft_tickets.csv ---
 --- 6. Running Precision Integrity Check ---
 DONE! Dropped 0 corrupted lines.
 Clean, Anonymized, and Verified data saved to: cleanedData.csv
-Job finished at Wed Jan 21 03:34:00 PM EST 2026. Stopping Ollama...
+Job finished at Thu Jan 22 01:11:08 AM EST 2026. Stopping Ollama...
