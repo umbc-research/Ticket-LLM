@@ -129,21 +129,42 @@ def main():
     df = df.drop(columns=COLUMNS_TO_DELETE, errors='ignore')
     df['CreatedDate'] = pd.to_datetime(df['CreatedDate'])
     df = df[df['CreatedDate'] >= '2025-01-01']
-    print(f"Tickets remaining: {len(df)}")
 
-    # --- NEW OPTIMIZATION: Keep Only Latest Transaction ---
-    print(f"--- 2.5 Optimizing: Keeping only the latest transaction per ticket ---")
+    # --- NEW: Filter SubjectNoHTML ---
+    # Convert to string and lowercase to ensure case-insensitive matching
+    # .fillna('') handles empty rows so the script doesn't crash
+    subject_normalized = df['SubjectNoHTML'].fillna('').astype(str).str.lower()
+
+    # 1. Define prefixes to drop
+    prefixes_to_drop = (
+        "hpc new account", 
+        "hpc new group", 
+        "migrating research storage volume"
+    )
+
+    # 2. Create a "mask" of rows to remove (True if it matches prefix OR contains 'taki')
+    rows_to_remove_mask = (
+        subject_normalized.str.startswith(prefixes_to_drop) | 
+        subject_normalized.str.contains("taki")
+    )
+
+    # 3. Keep rows that are NOT (~) in the removal mask
+    df = df[~rows_to_remove_mask]
     
+    print(f"Tickets remaining after Subject filtering: {len(df)}")
+    # ---------------------------------
+
+    print(f"--- 2.5 Optimizing: Keeping only the latest transaction per ticket ---")
+
     # Sort by Ticket (to group them) and TransactionID (Descending order: Big numbers first)
     # This puts the NEWEST message at the top of each ticket group.
     df = df.sort_values(by=['TicketID', 'TransactionID'], ascending=[True, False])
-    
+
     # Drop duplicates keeps the first occurrence (which is now the latest transaction)
     # This instantly deletes all the partial/redundant history rows.
     df = df.drop_duplicates(subset=['TicketID'], keep='first')
-    
-    print(f"Unique tickets to process (Redundancy Removed): {len(df)}")
 
+    print(f"Unique tickets to process (Redundancy Removed): {len(df)}")
     # 3. AI CLEANING
     print(f"--- 3. AI Cleaning & Anonymizing ---")
     if 'TransactionContent' in df.columns:
