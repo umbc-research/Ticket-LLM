@@ -137,7 +137,8 @@ def main():
 
     # 1. Define prefixes to drop
     prefixes_to_drop = (
-        "hpc new account", 
+        "hpc new account",
+        "hpc user account", 
         "hpc new group", 
         "migrating research storage volume"
     )
