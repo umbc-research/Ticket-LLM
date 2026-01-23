@@ -5,7 +5,7 @@ import os
 from tqdm import tqdm
 
 # --- CONFIGURATION ---
-INPUT_FILE = 'trimmed_file.csv'   # Your main 3,000 ticket file
+INPUT_FILE = 'allDoitTickets.csv'   # Your main 3,000 ticket file
 FINAL_FILE = 'cleanedData.csv'
 TEMP_FILE = 'temp_draft_tickets.csv' # Temporary holding file
 MODEL = "llama3.1:70b"
